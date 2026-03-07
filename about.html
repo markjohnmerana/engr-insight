@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>About — ENGR INSIGHT | Mark John Merana</title>
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<div class="grid-bg"></div>
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><span class="logo-bracket">[</span><span class="logo-accent">ENGR_INSIGHT</span><span class="logo-bracket">]</span><span class="logo-dot">.</span></a>
+    <div class="nav-badge">Open to Work</div>
+    <div class="nav-links"><a href="index.html">Home</a><a href="about.html" class="active">About</a><a href="blog.html">Blog</a><a href="post-details.html">Post Details</a><a href="contact.html">Contact Me</a></div>
+    <button class="nav-toggle" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+  </div>
+  <div class="nav-mobile" id="navMobile"><a href="index.html">Home</a><a href="about.html" class="active">About</a><a href="blog.html">Blog</a><a href="post-details.html">Post Details</a><a href="contact.html">Contact Me</a></div>
+</nav>
+
+<div class="page-banner">
+  <div class="banner-bg-word">ABOUT</div>
+  <div class="container">
+    <div class="banner-eyebrow">About Me</div>
+    <h1 class="banner-title">More About <em>This Blog.</em></h1>
+  </div>
+</div>
+
+<!-- ABOUT MAIN -->
+<section class="section" style="background:var(--bg);">
+  <div class="container">
+    <div class="about-grid">
+      <!-- Photo -->
+      <div style="position:relative;" class="reveal">
+        <div class="about-photo-wrap">
+          <img src="assets/about/sample.jpeg" alt="Mark John Merana"/>
+          <div class="photo-badge">
+            <div class="photo-badge-name">Mark John Merana</div>
+            <div class="photo-badge-role"><span class="status-dot"></span>Junior Data Analyst</div>
+          </div>
+        </div>
+        <div class="about-acc" style="position:absolute;top:-0.8rem;right:-0.8rem;">
+          <div class="acc-num">1+</div>
+          <div class="acc-label">Yr Learning</div>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="reveal">
+        <div class="s-eye">About Me</div>
+        <h2 class="s-title">Analyst in Progress.<br/><em>Learning Out Loud.</em></h2>
+        <p style="color:var(--text-dim);font-size:.97rem;line-height:1.8;margin-bottom:1rem;">
+          I'm a junior data analyst currently specializing in <strong style="color:var(--text);">Power BI</strong> and 
+          <strong style="color:var(--text);">SQL Server</strong>. I'm at the beginning of my data career — 
+          building real projects, documenting what I learn, and sharing the process honestly.
+        </p>
+        <p style="color:var(--text-dim);font-size:.97rem;line-height:1.8;margin-bottom:1rem;">
+          ENGR INSIGHT is where I publish my project write-ups. It's not a course or tutorial blog — 
+          it's a record of actual things I've built, the decisions I made, what worked, and what I'd 
+          do differently.
+        </p>
+        <p style="color:var(--text-dim);font-size:.97rem;line-height:1.8;margin-bottom:2rem;">
+          My current focus is on becoming genuinely good at the fundamentals: writing clean SQL, 
+          understanding data modeling, and building Power BI reports that actually answer business questions.
+        </p>
+
+        <!-- ↓ ONLY CHANGE: Resume button added here -->
+        <div style="display:flex;gap:.8rem;flex-wrap:wrap;">
+          <a href="blog.html" class="btn-ghost">Read My Blog</a>
+          <a href="contact.html" class="btn-ghost">Get In Touch</a>
+          <a href="assets/resume/Mark John CV.pdf" download="MarkJohnMerana_Resume.pdf" class="btn-blue" style="display:inline-flex;align-items:center;gap:.4rem;">⬇ Resume</a>
+        </div>
+
+        <!-- Skill bars -->
+        <div style="margin-top:2.5rem;" class="skill-bar-section">
+          <div style="font-family:var(--mono);font-size:.6rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--text-muted);margin-bottom:1.2rem;">// Current Skill Levels</div>
+          <div style="margin-bottom:1rem;">
+            <div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:.65rem;color:var(--text-dim);margin-bottom:.35rem;"><span>Power BI (Reports, Visuals, Slicers)</span><span style="color:var(--blue)">80%</span></div>
+            <div class="skill-track"><div class="skill-fill" data-w="80"></div></div>
+          </div>
+          <div style="margin-bottom:1rem;">
+            <div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:.65rem;color:var(--text-dim);margin-bottom:.35rem;"><span>SQL Server (Queries, JOINs, Aggregations)</span><span style="color:var(--blue)">75%</span></div>
+            <div class="skill-track"><div class="skill-fill" data-w="75"></div></div>
+          </div>
+          <div style="margin-bottom:1rem;">
+            <div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:.65rem;color:var(--text-dim);margin-bottom:.35rem;"><span>DAX (Measures, Calculated Columns)</span><span style="color:var(--blue)">65%</span></div>
+            <div class="skill-track"><div class="skill-fill" data-w="65"></div></div>
+          </div>
+          <div style="margin-bottom:1rem;">
+            <div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:.65rem;color:var(--text-dim);margin-bottom:.35rem;"><span>Excel (Pivot Tables, Power Query, XLOOKUP)</span><span style="color:var(--blue)">85%</span></div>
+            <div class="skill-track"><div class="skill-fill" data-w="85"></div></div>
+          </div>
+          <div style="margin-bottom:1rem;">
+            <div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:.65rem;color:var(--text-dim);margin-bottom:.35rem;"><span>Data Modeling (Star Schema basics)</span><span style="color:var(--blue)">60%</span></div>
+            <div class="skill-track"><div class="skill-fill" data-w="60"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOCUS AREAS -->
+<section class="section-sm" style="background:var(--bg2);border-top:1px solid var(--border);">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;">
+      <div>
+        <div class="s-eye reveal">What I Can Do</div>
+        <h2 class="s-title reveal" style="margin-bottom:1.5rem;">Current Capabilities</h2>
+        <div class="focus-item reveal">
+          <div class="focus-icon">📊</div>
+          <div><div class="focus-title">Power BI Reports</div><div class="focus-desc">Interactive dashboards with KPI cards, bar/line charts, slicers, drill-through pages, and conditional formatting.</div></div>
+        </div>
+        <div class="focus-item reveal">
+          <div class="focus-icon">🗄️</div>
+          <div><div class="focus-title">SQL Queries & Data Prep</div><div class="focus-desc">SELECT, JOINs, GROUP BY, subqueries, CTEs, and basic stored procedures in SQL Server.</div></div>
+        </div>
+        <div class="focus-item reveal">
+          <div class="focus-icon">📐</div>
+          <div><div class="focus-title">DAX Measures</div><div class="focus-desc">Writing measures for totals, averages, % calculations, and basic time intelligence functions.</div></div>
+        </div>
+        <div class="focus-item reveal">
+          <div class="focus-icon">🔗</div>
+          <div><div class="focus-title">Data Modeling</div><div class="focus-desc">Building simple star schemas — fact and dimension tables — for clean Power BI relationships.</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="s-eye reveal">What I'm Learning Next</div>
+        <h2 class="s-title reveal" style="margin-bottom:1.5rem;">On the Roadmap</h2>
+        <div style="display:flex;flex-direction:column;gap:.8rem;">
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius-md);padding:1.1rem 1.3rem;display:flex;align-items:center;gap:1rem;" class="reveal">
+            <div style="width:8px;height:8px;border-radius:50%;background:var(--blue);flex-shrink:0;"></div>
+            <div>
+              <div style="font-family:var(--sans);font-size:.88rem;font-weight:600;color:var(--text);margin-bottom:.15rem;">Advanced DAX</div>
+              <div style="font-size:.8rem;color:var(--text-dim);">CALCULATE, context transition, FILTER, iterator functions</div>
+            </div>
+          </div>
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius-md);padding:1.1rem 1.3rem;display:flex;align-items:center;gap:1rem;" class="reveal">
+            <div style="width:8px;height:8px;border-radius:50%;background:var(--teal);flex-shrink:0;"></div>
+            <div>
+              <div style="font-family:var(--sans);font-size:.88rem;font-weight:600;color:var(--text);margin-bottom:.15rem;">Power Query (M Language)</div>
+              <div style="font-size:.8rem;color:var(--text-dim);">Data transformation and cleaning inside Power BI Desktop</div>
+            </div>
+          </div>
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius-md);padding:1.1rem 1.3rem;display:flex;align-items:center;gap:1rem;" class="reveal">
+            <div style="width:8px;height:8px;border-radius:50%;background:var(--text-muted);flex-shrink:0;"></div>
+            <div>
+              <div style="font-family:var(--sans);font-size:.88rem;font-weight:600;color:var(--text);margin-bottom:.15rem;">SQL Server Stored Procedures</div>
+              <div style="font-size:.8rem;color:var(--text-dim);">Automating data prep logic for repeatable reporting</div>
+            </div>
+          </div>
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius-md);padding:1.1rem 1.3rem;display:flex;align-items:center;gap:1rem;" class="reveal">
+            <div style="width:8px;height:8px;border-radius:50%;background:var(--text-muted);flex-shrink:0;"></div>
+            <div>
+              <div style="font-family:var(--sans);font-size:.88rem;font-weight:600;color:var(--text);margin-bottom:.15rem;">PL-300 Certification</div>
+              <div style="font-size:.8rem;color:var(--text-dim);">Microsoft Power BI Data Analyst certification — in progress</div>
+            </div>
+          </div>
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius-md);padding:1.1rem 1.3rem;display:flex;align-items:center;gap:1rem;" class="reveal">
+            <div style="width:8px;height:8px;border-radius:50%;background:var(--text-muted);flex-shrink:0;"></div>
+            <div>
+              <div style="font-family:var(--sans);font-size:.88rem;font-weight:600;color:var(--text);margin-bottom:.15rem;">Python for Data Analysis</div>
+              <div style="font-size:.8rem;color:var(--text-dim);">Pandas and data cleaning — a future goal, not yet a skill</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="section-sm" style="background:var(--bg);border-top:1px solid var(--border);">
+  <div class="container">
+    <div class="stats-grid reveal">
+      <div class="stat-box"><div class="stat-num" data-int="574">0</div><div class="stat-label">Days of Learning</div></div>
+      <div class="stat-box"><div class="stat-num" data-int="4">0</div><div class="stat-label">On-Going Dashboard</div></div>
+      <div class="stat-box"><div class="stat-num" data-int="1">0</div><div class="stat-label">Dashboard Published</div></div>
+      <div class="stat-box"><div class="stat-num">∞</div><div class="stat-label">Still Learning</div></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="f-logo"><span class="logo-bracket">[</span><span class="logo-accent">ENGR_INSIGHT</span><span class="logo-bracket">]</span><span class="logo-dot">.</span></div>
+        <p>Engineering | Data | Analysis. A portfolio blog by Mark John Merana — Junior Data Analyst specializing in Power BI and SQL Server.</p>
+      </div>
+      <div><div class="f-col-title">// Navigation</div><div class="f-links"><a href="index.html">Home</a><a href="about.html">About</a><a href="blog.html">Blog</a><a href="post-details.html">Post Details</a><a href="contact.html">Contact Me</a></div></div>
+      <div><div class="f-col-title">// Tools</div><div class="f-links"><a href="#">Power BI</a><a href="#">SQL Server</a><a href="#">DAX</a><a href="#">Excel</a><a href="#">Data Modeling</a></div></div>
+    </div>
+    <div class="footer-bottom">
+      <span class="f-copy">© 2026 <span>Mark John Merana</span>. ENGR INSIGHT.</span>
+      <span class="f-copy" style="font-size:.58rem;">Engineering | Data | Analysis</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>document.getElementById('navbar').classList.toggle('scrolled',scrollY>20));
+function toggleMenu(){document.getElementById('navMobile').classList.toggle('open');}
+const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');io.unobserve(x.target);}}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+const sio=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.querySelectorAll('.skill-fill').forEach(b=>b.style.width=b.dataset.w+'%');sio.unobserve(x.target);}}),{threshold:.25});
+document.querySelectorAll('.skill-bar-section').forEach(el=>sio.observe(el));
+function animVal(el,t,d){const s=performance.now(),dur=1400;function tk(n){const p=Math.min((n-s)/dur,1),v=t*(1-Math.pow(1-p,3));el.textContent=d?v.toFixed(d):Math.floor(v).toLocaleString();if(p<1)requestAnimationFrame(tk);}requestAnimationFrame(tk);}
+const cio=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){if(x.target.dataset.int)animVal(x.target,+x.target.dataset.int,0);cio.unobserve(x.target);}}),{threshold:.5});
+document.querySelectorAll('[data-int]').forEach(el=>cio.observe(el));
+</script>
+</body>
+</html>

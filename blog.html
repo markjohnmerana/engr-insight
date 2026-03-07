@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Blog — ENGR INSIGHT | Mark John Merana</title>
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<div class="grid-bg"></div>
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><span class="logo-bracket">[</span><span class="logo-accent">ENGR_INSIGHT</span><span class="logo-bracket">]</span><span class="logo-dot">.</span></a>
+    <div class="nav-badge">Open to Work</div>
+    <div class="nav-links"><a href="index.html">Home</a><a href="about.html">About</a><a href="blog.html" class="active">Blog</a><a href="post-details.html">Post Details</a><a href="contact.html">Contact Me</a></div>
+    <button class="nav-toggle" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+  </div>
+  <div class="nav-mobile" id="navMobile"><a href="index.html">Home</a><a href="about.html">About</a><a href="blog.html" class="active">Blog</a><a href="post-details.html">Post Details</a><a href="contact.html">Contact Me</a></div>
+</nav>
+
+<div class="page-banner">
+  <div class="banner-bg-word">BLOG</div>
+  <div class="container">
+    <div class="banner-eyebrow">Projects &amp; Write-ups</div>
+    <h1 class="banner-title">Power BI &amp; <em>SQL Projects.</em></h1>
+  </div>
+</div>
+
+<section class="section" style="background:var(--bg);">
+  <div class="container">
+    <div class="blog-layout">
+
+      <!-- POSTS -->
+      <main>
+
+        <!-- ═══════════════════════════════════════════════════
+             HOW TO ADD A NEW POST:
+             1. Copy this entire <div class="post-card"> block
+             2. Paste it below the last post-card
+             3. Change the category, title, excerpt, pills, date
+             4. Create a new post-details-2.html for the full post
+             5. Update the href in <a href="post-details-2.html">
+             6. Add a recent-item in the sidebar below
+        ════════════════════════════════════════════════════ -->
+
+        <!-- POST 1 — Plant Wilting Dashboard -->
+        <div class="post-card reveal" onclick="window.location='post-details.html'">
+          <div class="post-img">
+           <img src="assets/P1/project1.png" alt="Plant Wilting Dashboard"/>
+          </div>
+          <div class="post-body-wrap">
+            <span class="post-cat">Project 1 — Power BI Dashboard</span>
+            <div class="post-pills">
+              <span class="pill">Power BI</span>
+              <span class="pill">SQL Server</span>
+              <span class="pill">DAX</span>
+              <span class="pill">Star Schema</span>
+              <span class="pill">Data Modeling</span>
+            </div>
+            <h2>My First End-to-End Power BI Dashboard: Plant Wilting Detection</h2>
+            <p class="post-excerpt">
+              How I took IoT sensor data already stored in SQL Server, customized SQL query to extract and transform the data for analysis,
+              wrote DAX measures for wilt risk scoring, wilt percentage, and built a dashboard
+              that tracks plant health across three specimens in real time. A project built to learn,
+              not to impress — and what I'd do differently next time.
+            </p>
+            <div class="post-footer">
+              <div class="post-author"><div class="author-chip">MJM</div>Mark John Merana · Mar 7, 2026 · 6 min</div>
+              <a href="post-details.html" class="read-link">Read Full Post →</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- PLACEHOLDER 2 -->
+        <div class="post-card reveal" style="opacity:.35;pointer-events:none;margin-top:1.5rem;">
+          <div class="post-img"><div class="post-img-ph"><span class="ph-icon">📦</span><span>// Next project</span></div></div>
+          <div class="post-body-wrap">
+            <span class="post-cat">Coming Soon — Project 2</span>
+            <div class="post-pills"><span class="pill">Power BI</span><span class="pill">SQL Server</span></div>
+            <h2>Sales and Demand Dashboard & Reports</h2>
+            <p class="post-excerpt">Stay tune on April...</p>
+            <div class="post-footer"><div class="post-author"><div class="author-chip">MJM</div>Mark John Merana · Coming Soon</div></div>
+          </div>
+        </div>
+
+        <!-- PLACEHOLDER 3 -->
+        <div class="post-card reveal" style="opacity:.18;pointer-events:none;margin-top:1.5rem;">
+          <div class="post-img"><div class="post-img-ph"><span class="ph-icon">📦</span><span>// Future project</span></div></div>
+          <div class="post-body-wrap">
+            <span class="post-cat">Coming Soon — Project 3</span>
+            <h2>Another SQL or BI Case Study</h2>
+            <p class="post-excerpt">...</p>
+            <div class="post-footer"><div class="post-author"><div class="author-chip">MJM</div>Mark John Merana · Coming Soon</div></div>
+          </div>
+        </div>
+
+      </main>
+
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+
+        <div class="widget reveal">
+          <div class="w-head"><div class="w-head-dot"></div><span class="w-head-label">Search</span></div>
+          <div class="w-body">
+            <div class="search-row">
+              <input type="text" class="search-inp" placeholder="Search posts..." id="si"/>
+              <button class="search-btn" onclick="doSearch()">→</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="widget reveal">
+          <div class="w-head"><div class="w-head-dot"></div><span class="w-head-label">Recent Posts</span></div>
+          <div class="w-body">
+            <!-- ADD new recent-item here when you publish a new post -->
+            <a href="post-details.html" style="display:block;">
+              <div class="recent-item">
+                <div class="recent-thumb">📊</div>
+                <div class="recent-info">
+                  <h4>My First Power BI Dashboard: Plant Wilting Detection</h4>
+                  <span class="recent-date">March 7, 2026</span>
+                </div>
+              </div>
+            </a>
+            <div class="recent-item" style="opacity:.4;">
+              <div class="recent-thumb">📦</div>
+              <div class="recent-info"><h4>Next Project — Coming Soon</h4><span class="recent-date">2026</span></div>
+            </div>
+            <div class="recent-item" style="opacity:.2;">
+              <div class="recent-thumb">📦</div>
+              <div class="recent-info"><h4>Future Post — Coming Soon</h4><span class="recent-date">2026</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dashboard stats widget -->
+        <div class="widget reveal">
+          <div class="w-head"><div class="w-head-dot"></div><span class="w-head-label">Project Metrics</span></div>
+          <div class="w-body">
+            <div class="mini-stats">
+              <div class="ms-box"><div class="ms-val">0.13</div><div class="ms-label">Wilt Risk</div></div>
+              <div class="ms-box"><div class="ms-val">3,984</div><div class="ms-label">Readings</div></div>
+              <div class="ms-box"><div class="ms-val">72.6%</div><div class="ms-label">Moisture</div></div>
+              <div class="ms-box"><div class="ms-val" style="color:var(--green);">Low</div><div class="ms-label">Risk Level</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="widget reveal">
+          <div class="w-head"><div class="w-head-dot"></div><span class="w-head-label">Tags</span></div>
+          <div class="w-body">
+            <div class="tag-wrap">
+              <span class="tag">Power BI</span>
+              <span class="tag">SQL Server</span>
+              <span class="tag">DAX</span>
+              <span class="tag">Excel</span>
+              <span class="tag">Data Modeling</span>
+              <span class="tag">Star Schema</span>
+              <span class="tag">KPI</span>
+              <span class="tag">Dashboard</span>
+              <span class="tag">Reporting</span>
+              <span class="tag">BI</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="widget reveal">
+          <div class="w-head"><div class="w-head-dot"></div><span class="w-head-label">Author</span></div>
+          <div class="w-body" style="text-align:center;">
+            <div style="width:50px;height:50px;border-radius:50%;background:var(--blue-sub);border:2px solid var(--border-b);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.85rem;font-weight:700;color:var(--blue);margin:0 auto .8rem;">MJM</div>
+            <div style="font-family:var(--sans);font-size:.9rem;font-weight:700;color:var(--text);margin-bottom:.18rem;">Mark John Merana</div>
+            <div style="font-family:var(--mono);font-size:.58rem;color:var(--blue);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.7rem;">Junior Data Analyst</div>
+            <p style="font-size:.82rem;color:var(--text-dim);line-height:1.65;margin-bottom:1rem;">Specializing in Power BI and SQL Server. Building real projects and learning out loud.</p>
+            <a href="about.html" class="btn-blue" style="font-size:.65rem;padding:.55rem 1.1rem;">About Me</a>
+          </div>
+        </div>
+
+      </aside>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand"><div class="f-logo"><span class="logo-bracket">[</span><span class="logo-accent">ENGR_INSIGHT</span><span class="logo-bracket">]</span><span class="logo-dot">.</span></div><p>Junior Data Analyst portfolio blog by Mark John Merana.</p></div>
+      <div><div class="f-col-title">// Navigation</div><div class="f-links"><a href="index.html">Home</a><a href="about.html">About</a><a href="blog.html">Blog</a><a href="post-details.html">Post Details</a><a href="contact.html">Contact Me</a></div></div>
+      <div><div class="f-col-title">// Tools</div><div class="f-links"><a href="#">Power BI</a><a href="#">SQL Server</a><a href="#">DAX</a><a href="#">Excel</a></div></div>
+    </div>
+    <div class="footer-bottom"><span class="f-copy">© 2026 <span>Mark John Merana</span>. ENGR INSIGHT.</span><span class="f-copy" style="font-size:.58rem;">Engineering | Data | Analysis</span></div>
+  </div>
+</footer>
+<script>
+window.addEventListener('scroll',()=>document.getElementById('navbar').classList.toggle('scrolled',scrollY>20));
+function toggleMenu(){document.getElementById('navMobile').classList.toggle('open');}
+const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');io.unobserve(x.target);}}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+function doSearch(){const q=document.getElementById('si').value.trim();if(q)alert('Search: "'+q+'" — connect to a backend to enable full search.');}
+</script>
+</body>
+</html>

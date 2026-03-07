@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Plant Wilting Dashboard — ENGR INSIGHT</title>
+<link rel="stylesheet" href="style.css"/>
+<style>.reading-bar{position:fixed;top:0;left:0;height:2px;background:var(--blue);width:0%;z-index:300;}</style>
+</head>
+<body>
+<div class="grid-bg"></div>
+<div class="reading-bar" id="readBar"></div>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><span class="logo-bracket">[</span><span class="logo-accent">ENGR_INSIGHT</span><span class="logo-bracket">]</span><span class="logo-dot">.</span></a>
+    <div class="nav-badge">Open to Work</div>
+    <div class="nav-links"><a href="index.html">Home</a><a href="about.html">About</a><a href="blog.html">Blog</a><a href="post-details.html" class="active">Post Details</a><a href="contact.html">Contact Me</a></div>
+    <button class="nav-toggle" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+  </div>
+  <div class="nav-mobile" id="navMobile"><a href="index.html">Home</a><a href="about.html">About</a><a href="blog.html">Blog</a><a href="post-details.html" class="active">Post Details</a><a href="contact.html">Contact Me</a></div>
+</nav>
+
+<section class="section" style="background:var(--bg);padding-top:4rem;">
+  <div class="container">
+    <div class="blog-layout">
+
+      <!-- ARTICLE -->
+      <article>
+        <div class="reveal">
+          <span class="article-cat">Project 1 — Power BI Dashboard</span>
+          <div class="post-pills" style="margin-bottom:.8rem;">
+            <span class="pill">Power BI</span><span class="pill">SQL Server</span>
+            <span class="pill">DAX</span><span class="pill">Star Schema</span><span class="pill">Data Modeling</span>
+          </div>
+          <h1 class="article-title">My First End-to-End Power BI Dashboard: Plant Wilting Detection</h1>
+          <div class="article-meta">
+            <strong>Mark John Merana</strong>
+            <span class="sep">◆</span><span>March 7, 2026</span>
+            <span class="sep">◆</span><span>6 min read</span>
+            <span class="sep">◆</span><span>Power BI · SQL Server · DAX</span>
+          </div>
+        </div>
+
+        <!-- Featured image -->
+        <div class="article-feat reveal">
+          <img src="assets/P1/project1.png" alt="Plant Wilting Dashboard in Power BI"/>
+        </div>
+
+        <!-- BODY -->
+        <div class="article-body">
+
+          <p><em>This is a write-up of my first end-to-end Power BI project — from raw data in SQL Server to a published dashboard. I'm a junior analyst still learning, and I'm documenting this honestly, including what I found difficult and what I'd do differently.</em></p>
+
+          <h2>What This Project Is</h2>
+          <p>The project tracks the health of three indoor plants using sensor data — temperature, humidity, and soil moisture — that was already being collected and stored using Python and Airflow in a SQL Server database. My job was the analysis and reporting layer: take that raw data, model it properly, and build a Power BI dashboard that makes the plant health status immediately visible.</p>
+          <p>The key output on the dashboard is a <strong>Wilt Risk Score</strong> — a number between 0 and 1. Currently sitting at <strong>0.13</strong>, which means low risk. All three plants are healthy.</p>
+
+          <div class="callout">
+            <strong>Note:</strong> The IoT hardware and data collection pipeline (ESP32, Google Sheets, Airflow, Python) was my undergraduate thesis use for this project. My goal right now is building the SQL Server schema and the Power BI dashboard on top of that data.
+          </div>
+
+          <h2>The Data Model — Flat Table</h2>
+          <p>The first thing I had to figure out was how to structure the data in SQL Server so that Power BI could work with it cleanly. 
+             While researching data modeling techniques, I learned about star schemas — a design that uses a central fact table 
+             connected to several dimension tables. However, since my dataset is relatively small and comes from a single source, 
+             I decided to keep the structure simple and use a flat table where all the sensor data is stored in one table.</p>
+          <table>
+            <thead><tr><th>Table</th><th>Type</th><th>Key Columns</th></tr></thead>
+            <tbody>
+              <tr><td><code>plant_monitoring</code></td><td>Flat Table</td><td>Timestamp, Plant Name,	Status,	Confidence Score (%),	Moisture Sensor,	Nitrogen,	Phosphorus,	Potassium, Outside Temperature,	Outside Humidity,	Inside Temperature, Inside Humidity</td></tr>
+            </tbody>
+          </table>
+
+          <p>Building this, Working with one flat table and Power BI relationships were a mess. The SQL direct query in Power BI made everything clear — relationships were straightforward and my DAX measures started making more sense.</p>
+
+          <h2>The SQL — Loading the Fact Table</h2>
+          <p>The raw sensor data came in with duplicates sometimes (retry logic from the hardware side), so I needed an upsert pattern — insert new rows, but skip if the same <code>plant_id + timestamp</code> already exists.</p>
+
+          <pre><code>MERGE fact_sensor_readings AS target
+USING staging_sensor_data AS source
+  ON target.plant_id  = source.plant_id
+ AND target.timestamp = source.timestamp
+WHEN NOT MATCHED THEN
+  INSERT (plant_id, date_id, time_id,
+          inside_temp, inside_humidity,
+          soil_moisture, wilt_confidence)
+  VALUES (source.plant_id, source.date_id,
+          source.time_id, source.inside_temp,
+          source.inside_humidity,
+          source.soil_moisture,
+          source.wilt_confidence);</code></pre>
+
+          <p>This was the first time I'd used a <code>MERGE</code> statement. I had to look it up and test it a few times before it worked correctly — but it's now one of my go-to patterns for loading data.</p>
+
+          <h2>The DAX — Wilt Risk Score Measure</h2>
+          <p>In Power BI, the main KPI card on the dashboard shows the <strong>Wilt Risk Score</strong>. This is a DAX measure that averages the <code>wilt_confidence</code> column across the filtered context (date range, plant selection, etc.).</p>
+
+          <pre><code>Wilt Risk Score =
+AVERAGEX(
+    fact_sensor_readings,
+    [wilt_confidence]
+)</code></pre>
+
+          <p>Simple, but it took me a while to understand <em>why</em> it works this way — specifically, why <code>AVERAGEX</code> with a column reference is different from just using <code>AVERAGE</code>. The iterator functions in DAX were confusing at first. I'm still building intuition for when to use each one.</p>
+          <p>Other measures I wrote for this dashboard:</p>
+          <pre><code>
+Wilted % =
+DIVIDE(
+    COUNTROWS(
+        FILTER(fact_sensor_readings,
+               fact_sensor_readings[wilt_confidence] >= 0.75)
+    ),
+    COUNTROWS(fact_sensor_readings),
+    0
+) * 100</code></pre>
+
+          <!-- Video -->
+          <div class="img-block">
+               <video src="assets/P1/dashboard.mp4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;">
+               <div class="img-ph"></div>
+               </video>
+          </div>
+
+          <h2>Dashboard Layout &amp; Design Decisions</h2>
+          <p>The dashboard has four KPI cards at the top (Wilt Risk Score, Wilted %, AVG Moisture, AVG Temp), a line chart showing moisture and confidence score trends over time, and a table showing the latest reading per plant.</p>
+          <p>I added <strong>slicers</strong> for plant selection and date range so the report is actually interactive — you can filter down to a single plant or a specific day. This was one of the more satisfying parts to build because it made the data feel usable rather than just decorative.</p>
+          <p>One thing I learned: the order of visuals on the canvas matters a lot. I initially crammed everything in without thinking about reading order, and it looked cluttered. I rebuilt the layout starting from the most important metric (Wilt Risk Score) and working outward from there.</p>
+
+          <h2>What the Data Shows</h2>
+          <p>Looking at Days 5 through 10 of monitoring:</p>
+          <ul>
+            <li><strong>Day 6 anomaly:</strong> Plant 2's soil moisture dropped to ~18% — the lowest in the dataset. This was likely a missed watering. The wilt confidence score for all three plants dipped around the same time, which is interesting — I'm not sure if that's a real correlation or a model artifact.</li>
+            <li><strong>Recovery by Day 10:</strong> Moisture stabilized and confidence scores recovered to ~90% across all plants.</li>
+            <li><strong>Overall:</strong> 3,984 readings, Wilt Risk Score of 0.13, only 0.04% of readings classified as wilting events. All three plants are currently healthy.</li>
+          </ul>
+
+          <div class="callout">
+            <strong>Current status:</strong> Wilt Risk Score 0.13 — all plants healthy. AVG moisture 72.56%, AVG inside temp 33.52°C.
+          </div>
+
+          <h2>What I'd Do Differently</h2>
+          <p><strong>Build the date dimension table first.</strong> I added it halfway through and had to redo several relationships. It's easier to start with a proper calendar table before building any measures that rely on dates.</p>
+          <p><strong>Name measures consistently from the start.</strong> My first version had measures named things like "measure1" and "avg test". Renaming them later while maintaining report visuals was annoying.</p>
+          <p><strong>Use a color theme file.</strong> I spent too long manually picking colors. Power BI supports JSON theme files — I'll use that on the next project so the palette stays consistent.</p>
+
+          <h2>What's Next</h2>
+          <ul>
+            <li>Add time intelligence measures (month-over-month, rolling 7-day average)</li>
+            <li>Build a second page with plant-level drill-through</li>
+            <li>Learn Power Query M so I can transform data inside Power BI itself</li>
+            <li>Work toward the PL-300 certification</li>
+          </ul>
+
+        </div><!-- end article-body -->
+
+        <!-- Tags / Share -->
+        <div class="article-footer-row">
+          <div class="tag-wrap">
+            <span style="font-family:var(--mono);font-size:.58rem;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase;margin-right:.3rem;">Tags:</span>
+            <span class="tag">Power BI</span><span class="tag">SQL Server</span>
+            <span class="tag">DAX</span><span class="tag">Star Schema</span><span class="tag">Dashboard</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:.5rem;">
+            <span style="font-family:var(--mono);font-size:.58rem;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase;">Share:</span>
+            <div class="share-btn" onclick="copyLink()" title="Copy link">🔗</div>
+            <a href="https://www.linkedin.com/in/markjohnmera%C3%B1a/" target="_blank">
+               <div class="share-btn" title="LinkedIn">in</div>
+            </a>
+            <a href="https://github.com/markjohnmerana" target="_blank">
+               <div class="share-btn" title="GitHub">gi</div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Author box -->
+        <div class="author-box reveal">
+          <div class="author-avatar-lg">MJM</div>
+          <div>
+            <div class="author-name">Mark John Merana</div>
+            <div class="author-role">Junior Data Analyst — Power BI &amp; SQL Server</div>
+            <p class="author-bio">Learning data analytics by building real projects and writing honestly about the process. Currently specializing in Power BI, SQL Server, and DAX. This blog is my learning journal.</p>
+          </div>
+        </div>
+
+        <!-- Nav -->
+        <div style="display:flex;justify-content:space-between;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border);">
+          <a href="blog.html" style="font-family:var(--mono);font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);display:flex;align-items:center;gap:.5rem;transition:color .2s;" onmouseover="this.style.color='var(--blue)'" onmouseout="this.style.color='var(--text-dim)'">← Back to Blog</a>
+          <span style="font-family:var(--mono);font-size:.65rem;color:var(--text-muted);">Next post coming soon →</span>
+        </div>
+      </article>
+
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+        <div class="widget reveal">
+          <div class="w-head"><div class="w-head-dot"></div><span class="w-head-label">Search</span></div>
+          <div class="w-body"><div class="search-row"><input type="text" class="search-inp" placeholder="Search..."/><button class="search-btn">→</button></div></div>
+        </div>
+
+        <div class="widget reveal">
+          <div class="w-head"><div class="w-head-dot"></div><span class="w-head-label">Recent Posts</span></div>
+          <div class="w-body">
+            <a href="post-details.html" style="display:block;">
+              <div class="recent-item">
+                <div class="recent-thumb">📊</div>
+                <div class="recent-info"><h4>My First Power BI Dashboard: Plant Wilting Detection</h4><span class="recent-date">March 7, 2026</span></div>
+              </div>
+            </a>
+            <div class="recent-item" style="opacity:.4;"><div class="recent-thumb">📦</div><div class="recent-info"><h4>Next Project — Coming Soon</h4><span class="recent-date">2026</span></div></div>
+          </div>
+        </div>
+
+        <!-- ✅ NEW: Technical Doc Download Widget -->
+        <div class="widget reveal">
+          <div class="w-head"><div class="w-head-dot"></div><span class="w-head-label">Technical Doc</span></div>
+          <div class="w-body">
+            <div style="background:#050a0f;border:1px solid var(--border);border-radius:var(--radius);padding:1rem;">
+              <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:.8rem;">
+                <div style="width:38px;height:38px;border-radius:8px;background:rgba(59,158,255,.1);border:1px solid rgba(59,158,255,.2);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;">📄</div>
+                <div>
+                  <div style="font-family:var(--sans);font-size:.8rem;font-weight:600;color:var(--text);line-height:1.3;">Plant Wilting Detection</div>
+                  <div style="font-family:var(--mono);font-size:.58rem;color:var(--text-muted);margin-top:.1rem;">Technical Documentation</div>
+                </div>
+              </div>
+              <div style="font-family:var(--mono);font-size:.6rem;color:var(--text-muted);line-height:1.65;margin-bottom:.9rem;">Schema design, SQL MERGE logic, DAX measures, and dashboard layout breakdown.</div>
+              <a href="assets/P1 Docs/wilting_dashboard_documentation.pdf"
+                 download="PlantWilting_TechnicalDoc.pdf"
+                 style="display:flex;align-items:center;justify-content:center;gap:.45rem;width:100%;padding:.65rem;background:var(--blue);color:#fff;border-radius:6px;font-family:var(--mono);font-size:.65rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:all .2s;"
+                 onmouseover="this.style.background='#5aaeff';this.style.boxShadow='0 4px 16px rgba(59,158,255,.3)'"
+                 onmouseout="this.style.background='var(--blue)';this.style.boxShadow='none'">
+                ⬇ Download PDF  
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pipeline mini widget -->
+        <div class="widget reveal">
+          <div class="w-head"><div class="w-head-dot"></div><span class="w-head-label">What I Built</span></div>
+          <div class="w-body">
+            <div style="background:#050a0f;border:1px solid var(--border);border-radius:var(--radius);padding:.9rem 1rem;font-family:var(--mono);font-size:.65rem;line-height:2.1;color:var(--text-muted);">
+              <div style="color:var(--blue);margin-bottom:.2rem;">// my work</div>
+              <div>Raw data in SQL Server</div>
+              <div style="padding-left:.8rem;color:var(--teal);">→ Schema design</div>
+              <div style="padding-left:.8rem;color:var(--teal);">→ SQL MERGE upsert</div>
+              <div style="padding-left:.8rem;color:var(--teal);">→ Power BI connect</div>
+              <div style="padding-left:.8rem;color:var(--teal);">→ DAX measures</div>
+              <div style="padding-left:.8rem;color:var(--teal);">→ Dashboard layout</div>
+              <div style="margin-top:.5rem;padding-top:.5rem;border-top:1px solid var(--border);color:var(--green);">readings: 3,984 ✓</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="widget reveal">
+          <div class="w-head"><div class="w-head-dot"></div><span class="w-head-label">Tags</span></div>
+          <div class="w-body">
+            <div class="tag-wrap">
+              <span class="tag">Power BI</span><span class="tag">SQL Server</span>
+              <span class="tag">DAX</span><span class="tag">Flat Schema</span>
+              <span class="tag">MERGE</span><span class="tag">KPI</span>
+              <span class="tag">Dashboard</span><span class="tag">Data Modeling</span>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand"><div class="f-logo"><span class="logo-bracket">[</span><span class="logo-accent">ENGR_INSIGHT</span><span class="logo-bracket">]</span><span class="logo-dot">.</span></div><p>Junior Data Analyst portfolio blog by Mark John Merana.</p></div>
+      <div><div class="f-col-title">// Navigation</div><div class="f-links"><a href="index.html">Home</a><a href="about.html">About</a><a href="blog.html">Blog</a><a href="post-details.html">Post Details</a><a href="contact.html">Contact Me</a></div></div>
+      <div><div class="f-col-title">// Tools</div><div class="f-links"><a href="#">Power BI</a><a href="#">SQL Server</a><a href="#">DAX</a><a href="#">Excel</a></div></div>
+    </div>
+    <div class="footer-bottom"><span class="f-copy">© 2026 <span>Mark John Merana</span>. ENGR INSIGHT.</span><span class="f-copy" style="font-size:.58rem;">Engineering | Data | Analysis</span></div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>{
+  document.getElementById('navbar').classList.toggle('scrolled',scrollY>20);
+  const p=(scrollY/(document.body.scrollHeight-window.innerHeight))*100;
+  document.getElementById('readBar').style.width=Math.min(p,100)+'%';
+});
+function toggleMenu(){document.getElementById('navMobile').classList.toggle('open');}
+const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');io.unobserve(x.target);}}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+function copyLink(){navigator.clipboard.writeText(location.href).then(()=>alert('Link copied!'));}
+</script>
+</body>
+</html>

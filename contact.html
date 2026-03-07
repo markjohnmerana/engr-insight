@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Contact — ENGR INSIGHT | Mark John Merana</title>
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<div class="grid-bg"></div>
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><span class="logo-bracket">[</span><span class="logo-accent">ENGR_INSIGHT</span><span class="logo-bracket">]</span><span class="logo-dot">.</span></a>
+    <div class="nav-badge">Open to Work</div>
+    <div class="nav-links"><a href="index.html">Home</a><a href="about.html">About</a><a href="blog.html">Blog</a><a href="post-details.html">Post Details</a><a href="contact.html" class="active">Contact Me</a></div>
+    <button class="nav-toggle" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+  </div>
+  <div class="nav-mobile" id="navMobile"><a href="index.html">Home</a><a href="about.html">About</a><a href="blog.html">Blog</a><a href="post-details.html">Post Details</a><a href="contact.html" class="active">Contact Me</a></div>
+</nav>
+
+<div class="page-banner">
+  <div class="banner-bg-word">CONTACT</div>
+  <div class="container">
+    <div class="banner-eyebrow">Contact Me</div>
+    <h1 class="banner-title">Let's <em>Stay in Touch.</em></h1>
+  </div>
+</div>
+
+<section class="section" style="background:var(--bg);">
+  <div class="container">
+    <div class="contact-grid">
+
+      <!-- FORM -->
+      <div class="reveal">
+        <div class="form-panel">
+          <div class="form-panel-title">Send a Message</div>
+
+          <!-- Success message -->
+          <div id="successMsg" style="display:none;background:rgba(63,185,80,.08);border:1px solid rgba(63,185,80,.2);border-left:2px solid var(--green);border-radius:var(--radius);padding:.9rem 1.2rem;margin-bottom:1.2rem;font-family:var(--mono);font-size:.75rem;color:var(--green);letter-spacing:.06em;">
+            ✓ &nbsp;Message sent! I'll get back to you soon.
+          </div>
+
+          <!--
+            NETLIFY FORMS — 3 things added:
+            1. name="contact"          → form identifier in Netlify dashboard
+            2. data-netlify="true"     → activates Netlify form detection
+            3. netlify-honeypot        → spam bot trap (hidden field)
+          -->
+          <form
+            name="contact"
+            method="POST"
+            data-netlify="true"
+            netlify-honeypot="bot-field"
+            onsubmit="handleSubmit(event)"
+          >
+            <!-- Required hidden fields for Netlify -->
+            <input type="hidden" name="form-name" value="contact"/>
+            <p style="display:none;"><input name="bot-field"/></p>
+
+            <div class="f-row">
+              <div class="f-group">
+                <label class="f-label">Your Name</label>
+                <input type="text" class="f-ctrl" id="fName" name="name" placeholder="Your name" required/>
+              </div>
+              <div class="f-group">
+                <label class="f-label">Your Email</label>
+                <input type="email" class="f-ctrl" id="fEmail" name="email" placeholder="your@email.com" required/>
+              </div>
+            </div>
+            <div class="f-group">
+              <label class="f-label">Subject</label>
+              <input type="text" class="f-ctrl" id="fSubject" name="subject" placeholder="Job opportunity, question, collaboration..."/>
+            </div>
+            <div class="f-group">
+              <label class="f-label">Your Message</label>
+              <textarea class="f-ctrl" id="fMsg" name="message" placeholder="Tell me what's on your mind..." required></textarea>
+            </div>
+            <button type="submit" class="btn-blue" id="submitBtn" style="width:100%;margin-top:.2rem;justify-content:center;">
+              Send Message →
+            </button>
+          </form>
+
+        </div>
+      </div>
+
+      <!-- INFO -->
+      <div class="reveal">
+        <div class="info-panel">
+          <div class="info-panel-head">
+            <div class="info-panel-head-title">Contact Information</div>
+            <div class="info-panel-head-sub">// Junior Data Analyst · Open to opportunities</div>
+          </div>
+          <div class="info-panel-body">
+            <div class="info-row">
+              <div class="info-ico">📞</div>
+              <div><span class="info-lbl">Phone</span><span class="info-val">+63 916-240-2896</span></div>
+            </div>
+            <div class="info-row">
+              <div class="info-ico">✉️</div>
+              <div><span class="info-lbl">Email</span><span class="info-val">markjohnmerana@email.com</span></div>
+            </div>
+            <div class="info-row">
+              <div class="info-ico">📍</div>
+              <div><span class="info-lbl">Location</span><span class="info-val">Pasig, Philippines</span></div>
+            </div>
+            <div class="info-row">
+              <div class="info-ico">💼</div>
+              <div>
+                <span class="info-lbl">Open To</span>
+                <span class="info-val">Junior Data Analyst · BI Analyst · Reporting Analyst · Internships</span>
+              </div>
+            </div>
+
+            <!-- SOCIAL + RESUME BUTTONS -->
+            <div class="soc-row">
+              <a href="https://www.linkedin.com/in/markjohnmera%C3%B1a/" target="_blank" class="soc-btn">LinkedIn</a>
+              <a href="https://github.com/markjohnmerana" target="_blank" class="soc-btn">GitHub</a>
+              <a href="mailto:markjohn@email.com" class="soc-btn">Email</a>
+              <a href="assets/resume/Mark John CV.pdf" download="MarkJohnMerana_Resume.pdf" class="soc-btn soc-btn-resume" title="Download Resume">
+                ⬇ Resume
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Open to work badge -->
+        <div class="open-badge">
+          <div class="ob-label"><span class="ob-dot"></span>Currently Available</div>
+          <p class="ob-text">Open to junior data analyst roles, and BI analyst positions. Happy to discuss Power BI and SQL Server opportunities.</p>
+        </div>
+
+        <!-- What I can help with -->
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.4rem 1.6rem;margin-top:1.2rem;">
+          <div style="font-family:var(--mono);font-size:.6rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);margin-bottom:1rem;">// What I Can Help With</div>
+          <div style="display:flex;flex-direction:column;gap:.6rem;">
+            <div style="display:flex;align-items:center;gap:.7rem;font-size:.86rem;color:var(--text-dim);">
+              <span style="width:6px;height:6px;border-radius:50%;background:var(--blue);flex-shrink:0;"></span>
+              Building Power BI reports and dashboards
+            </div>
+            <div style="display:flex;align-items:center;gap:.7rem;font-size:.86rem;color:var(--text-dim);">
+              <span style="width:6px;height:6px;border-radius:50%;background:var(--blue);flex-shrink:0;"></span>
+              Writing SQL queries and data preparation
+            </div>
+            <div style="display:flex;align-items:center;gap:.7rem;font-size:.86rem;color:var(--text-dim);">
+              <span style="width:6px;height:6px;border-radius:50%;background:var(--blue);flex-shrink:0;"></span>
+              Basic data modeling (Flat table/Star Schema)
+            </div>
+            <div style="display:flex;align-items:center;gap:.7rem;font-size:.86rem;color:var(--text-dim);">
+              <span style="width:6px;height:6px;border-radius:50%;background:var(--blue);flex-shrink:0;"></span>
+              DAX measures and KPI reporting
+            </div>
+            <div style="display:flex;align-items:center;gap:.7rem;font-size:.86rem;color:var(--text-dim);">
+              <span style="width:6px;height:6px;border-radius:50%;background:var(--teal);flex-shrink:0;"></span>
+              Excel pivot tables and Xlookup/Vlookup
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand"><div class="f-logo"><span class="logo-bracket">[</span><span class="logo-accent">ENGR_INSIGHT</span><span class="logo-bracket">]</span><span class="logo-dot">.</span></div><p>Junior Data Analyst portfolio blog by Mark John Merana — specializing in Power BI and SQL Server.</p></div>
+      <div><div class="f-col-title">// Navigation</div><div class="f-links"><a href="index.html">Home</a><a href="about.html">About</a><a href="blog.html">Blog</a><a href="post-details.html">Post Details</a><a href="contact.html">Contact Me</a></div></div>
+      <div><div class="f-col-title">// Tools</div><div class="f-links"><a href="#">Power BI</a><a href="#">SQL Server</a><a href="#">DAX</a><a href="#">Excel</a></div></div>
+    </div>
+    <div class="footer-bottom"><span class="f-copy">© 2026 <span>Mark John Merana</span>. ENGR INSIGHT.</span><span class="f-copy" style="font-size:.58rem;">Engineering | Data | Analysis</span></div>
+  </div>
+</footer>
+
+<style>
+  .soc-btn-resume {
+    background: var(--blue) !important;
+    color: #fff !important;
+    border-color: var(--blue) !important;
+    font-weight: 600;
+    letter-spacing: .04em;
+    transition: background .2s, box-shadow .2s, transform .15s;
+  }
+  .soc-btn-resume:hover {
+    background: var(--blue-bright, #3b82f6) !important;
+    box-shadow: 0 0 16px rgba(37,99,235,.4);
+    transform: translateY(-1px);
+    color: #fff !important;
+  }
+</style>
+
+<script>
+window.addEventListener('scroll',()=>document.getElementById('navbar').classList.toggle('scrolled',scrollY>20));
+function toggleMenu(){document.getElementById('navMobile').classList.toggle('open');}
+const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');io.unobserve(x.target);}}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+async function handleSubmit(e) {
+  e.preventDefault();
+  const form = e.target;
+  const btn  = document.getElementById('submitBtn');
+
+  // Basic validation
+  const name    = document.getElementById('fName').value.trim();
+  const email   = document.getElementById('fEmail').value.trim();
+  const message = document.getElementById('fMsg').value.trim();
+  if (!name || !email || !message) {
+    alert('Please fill in your name, email, and message.');
+    return;
+  }
+
+  // Loading state
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+
+  try {
+    // POST to Netlify
+    const res = await fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(new FormData(form)).toString()
+    });
+
+    if (res.ok) {
+      document.getElementById('successMsg').style.display = 'block';
+      btn.textContent = '✓ Sent!';
+      btn.style.background = 'var(--green)';
+      form.reset();
+      // Scroll success message into view
+      document.getElementById('successMsg').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    } else {
+      throw new Error('Network response not ok');
+    }
+  } catch (err) {
+    btn.textContent = '⚠ Failed — try emailing directly';
+    btn.style.background = 'var(--red)';
+    btn.disabled = false;
+  }
+}
+</script>
+</body>
+</html>

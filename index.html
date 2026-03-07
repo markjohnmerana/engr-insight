@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ENGR INSIGHT — Mark John Merana | Junior Data Analyst</title>
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<div class="grid-bg"></div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <span class="logo-bracket">[</span><span class="logo-accent">ENGR</span><span class="logo-bracket">_</span><span class="logo-accent">INSIGHT</span><span class="logo-bracket">]</span><span class="logo-dot">.</span>
+    </a>
+    <div class="nav-badge">Open to Work</div>
+    <div class="nav-links">
+      <a href="index.html" class="active">Home</a>
+      <a href="about.html">About</a>
+      <a href="blog.html">Blog</a>
+      <a href="post-details.html">Post Details</a>
+      <a href="contact.html">Contact Me</a>
+    </div>
+    <button class="nav-toggle" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+  </div>
+  <div class="nav-mobile" id="navMobile">
+    <a href="index.html" class="active">Home</a>
+    <a href="about.html">About</a>
+    <a href="blog.html">Blog</a>
+    <a href="post-details.html">Post Details</a>
+    <a href="contact.html">Contact Me</a>
+  </div>
+</nav>
+
+<!-- TICKER -->
+<div class="ticker-bar">
+  <span class="ticker-label">// DASHBOARD</span>
+  <div class="ticker-inner">
+    <div class="ticker-track">
+      <span class="ti">TOOL <b>Power BI · Tableau · Looker · Excel</b><span class="ti-sep">|</span></span>
+      <span class="ti">DATABASE <b>SQL Server · MySQL</b><span class="ti-sep">|</span></span>
+      <span class="ti">LANGUAGE <b>Python · SQL</b><span class="ti-sep">|</span></span>
+      <span class="ti">PROJECT <b>Plant Wilting Dashboard</b><span class="ti-sep">|</span></span>
+      <span class="ti">PYTHON <b>Numpy · Pandas</b><span class="ti-sep">|</span></span>
+      <span class="ti">MODELLING <b>DAX · Pivot Table · XLOOKUP · VLOOKUP </b><span class="ti-sep">|</span></span>
+      <span class="ti">STATUS <b style="color:var(--green)">Actively Learning</b><span class="ti-sep">|</span></span>
+      <span class="ti">SPECIALIZATION <b>Data Analytics & Engineering</b><span class="ti-sep">|</span></span>
+      <span class="ti">TOOL <b>Power BI · Tableau · Looker · Excel</b><span class="ti-sep">|</span></span>
+      <span class="ti">DATABASE <b>SQL Server · MySQL</b><span class="ti-sep">|</span></span>
+      <span class="ti">LANGUAGE <b>Python · SQL</b><span class="ti-sep">|</span></span>
+      <span class="ti">PROJECT <b>Plant Wilting Dashboard</b><span class="ti-sep">|</span></span>
+      <span class="ti">PYTHON <b>Numpy · Pandas</b><span class="ti-sep">|</span></span>
+      <span class="ti">MODELLING <b>DAX · Pivot Table · XLOOKUP · VLOOKUP </b><span class="ti-sep">|</span></span>
+      <span class="ti">STATUS <b style="color:var(--green)">Actively Learning</b><span class="ti-sep">|</span></span>
+      <span class="ti">SPECIALIZATION <b>Data Analytics & Engineering</b><span class="ti-sep">|</span></span>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero-section" style="min-height:100vh;display:flex;align-items:center;padding:7rem 0 5rem;position:relative;z-index:2;background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(59,158,255,.06) 0%,transparent 70%);">
+  <div class="container">
+    <div class="hero-grid" style="display:grid;grid-template-columns:1fr 1.05fr;gap:4.5rem;align-items:center;">
+
+      <!-- LEFT -->
+      <div>
+        <div class="anim-1" style="font-family:var(--mono);font-size:.65rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--blue);display:flex;align-items:center;gap:.55rem;margin-bottom:1.1rem;">
+          <span style="color:var(--text-muted)">//</span> Junior Data Analyst X Computer Engineer
+        </div>
+        <h1 class="anim-2" style="font-family:var(--sans);font-size:clamp(2.8rem,5.5vw,4.4rem);font-weight:800;letter-spacing:-.03em;line-height:1.0;color:var(--text);margin-bottom:.4rem;">
+          Mark John<br/><span style="color:var(--blue)">Meraña.</span>
+        </h1>
+        <p class="anim-3" style="font-family:var(--mono);font-size:.9rem;color:var(--text-dim);margin-bottom:1.5rem;">
+          // Specializing in <span style="color:var(--teal)">Power BI</span> &amp; <span style="color:var(--teal)">SQL Server</span>
+        </p>
+        <p class="anim-4" style="font-size:.97rem;color:var(--text-dim);line-height:1.78;max-width:430px;margin-bottom:2.2rem;">
+          I turn raw data into clear, actionable dashboards. Currently building my 
+          skills in SQL Server, DAX, Excel, Python, and Power BI — and documenting every project 
+          along the way on this blog.
+        </p>
+        <div class="anim-5" style="display:flex;gap:1rem;flex-wrap:wrap;">
+          <a href="blog.html" class="btn-blue">↓ &nbsp;See My Work</a>
+          <a href="contact.html" class="btn-ghost">Get in Touch</a>
+        </div>
+      </div>
+
+      <!-- RIGHT — Dashboard mockup panel -->
+      <div class="anim-p hero-mockup">
+        <!-- Window chrome -->
+        <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-lg) var(--radius-lg) 0 0;padding:.75rem 1.2rem;display:flex;align-items:center;gap:.5rem;border-bottom:none;">
+          <div style="width:9px;height:9px;border-radius:50%;background:#f85149;"></div>
+          <div style="width:9px;height:9px;border-radius:50%;background:#f0a500;margin-left:3px;"></div>
+          <div style="width:9px;height:9px;border-radius:50%;background:#3fb950;margin-left:3px;"></div>
+          <span style="font-family:var(--mono);font-size:.62rem;color:var(--text-muted);margin-left:.6rem;">plant_wilting.pbix — Power BI</span>
+          <span style="margin-left:auto;font-family:var(--mono);font-size:.58rem;color:var(--green);display:flex;align-items:center;gap:.3rem;"><span style="width:5px;height:5px;border-radius:50%;background:var(--green);display:inline-block;animation:blink 2.5s ease infinite;"></span>Live</span>
+        </div>
+        <!-- Panel body -->
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:0 0 var(--radius-lg) var(--radius-lg);padding:1.3rem;">
+          <!-- KPI row -->
+          <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:.7rem;margin-bottom:.9rem;">
+            <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:.85rem 1rem;">
+              <div style="font-family:var(--mono);font-size:.55rem;color:var(--text-muted);letter-spacing:.14em;text-transform:uppercase;margin-bottom:.3rem;">Wilt Risk Score</div>
+              <div style="font-family:var(--mono);font-size:1.6rem;font-weight:700;color:var(--blue);line-height:1;" id="kpi1">0.00</div>
+              <div style="font-family:var(--mono);font-size:.56rem;color:var(--green);margin-top:.2rem;">▲ Low Risk</div>
+            </div>
+            <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:.85rem 1rem;">
+              <div style="font-family:var(--mono);font-size:.55rem;color:var(--text-muted);letter-spacing:.14em;text-transform:uppercase;margin-bottom:.3rem;">Total Readings</div>
+              <div style="font-family:var(--mono);font-size:1.6rem;font-weight:700;color:var(--blue);line-height:1;" id="kpi2">0</div>
+              <div style="font-family:var(--mono);font-size:.56rem;color:var(--teal);margin-top:.2rem;">3 plants</div>
+            </div>
+            <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:.85rem 1rem;">
+              <div style="font-family:var(--mono);font-size:.55rem;color:var(--text-muted);letter-spacing:.14em;text-transform:uppercase;margin-bottom:.3rem;">AVG Moisture</div>
+              <div style="font-family:var(--mono);font-size:1.6rem;font-weight:700;color:var(--blue);line-height:1;" id="kpi3">0%</div>
+              <div style="font-family:var(--mono);font-size:.56rem;color:var(--green);margin-top:.2rem;">▲ Healthy</div>
+            </div>
+            <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:.85rem 1rem;">
+              <div style="font-family:var(--mono);font-size:.55rem;color:var(--text-muted);letter-spacing:.14em;text-transform:uppercase;margin-bottom:.3rem;">AVG Temp Inside</div>
+              <div style="font-family:var(--mono);font-size:1.6rem;font-weight:700;color:var(--blue);line-height:1;" id="kpi4">0°</div>
+              <div style="font-family:var(--mono);font-size:.56rem;color:var(--amber);margin-top:.2rem;">+1.04° vs outside</div>
+            </div>
+          </div>
+          <!-- Mini bar chart -->
+          <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:.8rem 1rem;">
+            <div style="font-family:var(--mono);font-size:.56rem;color:var(--text-muted);letter-spacing:.1em;margin-bottom:.6rem;display:flex;justify-content:space-between;">
+              <span>SOIL MOISTURE % — by Plant (Day 5→10)</span>
+              <span style="color:var(--green)">All Healthy</span>
+            </div>
+            <svg viewBox="0 0 280 54" width="100%" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3b9eff" stop-opacity=".3"/><stop offset="100%" stop-color="#3b9eff" stop-opacity="0"/></linearGradient>
+                <linearGradient id="g2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2ecbc1" stop-opacity=".25"/><stop offset="100%" stop-color="#2ecbc1" stop-opacity="0"/></linearGradient>
+              </defs>
+              <polygon fill="url(#g1)" points="0,54 0,18 56,20 112,22 168,16 224,12 280,8 280,54"/>
+              <polygon fill="url(#g2)" points="0,54 0,26 56,28 112,30 168,24 224,18 280,14 280,54"/>
+              <polyline fill="none" stroke="#3b9eff" stroke-width="1.5" points="0,18 56,20 112,22 168,16 224,12 280,8"/>
+              <polyline fill="none" stroke="#2ecbc1" stroke-width="1.5" stroke-dasharray="3,2" points="0,26 56,28 112,30 168,24 224,18 280,14"/>
+              <polyline fill="none" stroke="#3fb950" stroke-width="1.5" stroke-dasharray="1,3" points="0,22 56,24 112,26 168,20 224,15 280,11"/>
+              <circle cx="280" cy="8"  r="2.5" fill="#3b9eff"/>
+              <circle cx="280" cy="14" r="2.5" fill="#2ecbc1"/>
+              <circle cx="280" cy="11" r="2.5" fill="#3fb950"/>
+            </svg>
+            <div style="display:flex;gap:1rem;margin-top:.4rem;">
+              <span style="font-family:var(--mono);font-size:.52rem;color:#3b9eff;display:flex;align-items:center;gap:.28rem;"><span style="width:8px;height:1.5px;background:#3b9eff;display:inline-block;"></span>Plant 1</span>
+              <span style="font-family:var(--mono);font-size:.52rem;color:#2ecbc1;display:flex;align-items:center;gap:.28rem;"><span style="width:8px;height:1.5px;background:#2ecbc1;display:inline-block;"></span>Plant 2</span>
+              <span style="font-family:var(--mono);font-size:.52rem;color:#3fb950;display:flex;align-items:center;gap:.28rem;"><span style="width:8px;height:1.5px;background:#3fb950;display:inline-block;"></span>Plant 3</span>
+            </div>
+          </div>
+          <!-- SQL snippet -->
+          <div style="background:#050a0f;border:1px solid var(--border);border-left:2px solid var(--blue);border-radius:var(--radius);padding:.8rem 1rem;margin-top:.8rem;">
+            <div style="font-family:var(--mono);font-size:.56rem;color:var(--text-muted);margin-bottom:.35rem;">// DAX measure</div>
+            <div style="font-family:var(--mono);font-size:.7rem;color:#7ec8a0;line-height:1.7;">
+              Wilt Risk Score =<br/>
+              &nbsp;&nbsp;AVERAGEX(<br/>
+              &nbsp;&nbsp;&nbsp;&nbsp;fact_sensor_readings,<br/>
+              &nbsp;&nbsp;&nbsp;&nbsp;[wilt_confidence]<br/>
+              &nbsp;&nbsp;)
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TECH STACK -->
+<section class="section-sm" style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:2.5rem;" class="reveal">
+      <div class="s-eye" style="justify-content:center;">Current Tech Stack</div>
+      <h2 class="s-title" style="text-align:center;">What I'm Working With <em>Right Now</em></h2>
+      <p class="s-sub" style="margin:0 auto;text-align:center;">Focused, honest, and actively building depth in each tool.</p>
+    </div>
+    <div class="stack-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;">
+      <div class="stack-card reveal">
+        <div class="sc-icon">📊</div>
+        <div class="sc-title">Power BI</div>
+        <div class="sc-level">Primary Tool</div>
+        <div class="sc-desc">Building interactive reports, KPI cards, slicers, and drill-through pages. Learning DAX measures and calculated columns.</div>
+        <div class="skill-track"><div class="skill-fill" data-w="80"></div></div>
+      </div>
+      <div class="stack-card reveal reveal-d1">
+        <div class="sc-icon">🗄️</div>
+        <div class="sc-title">SQL Server</div>
+        <div class="sc-level">Primary Tool</div>
+        <div class="sc-desc">Writing queries, JOINs, aggregations, and stored procedures. Designing simple star schemas for BI consumption.</div>
+        <div class="skill-track"><div class="skill-fill" data-w="75"></div></div>
+      </div>
+      <div class="stack-card reveal reveal-d2">
+        <div class="sc-icon">🐍</div>
+        <div class="sc-title">Python</div>
+        <div class="sc-level">Learning</div>
+        <div class="sc-desc">Writing basic automated data extraction, cleaning, and manipulation for data analysis and engineering</div>
+        <div class="skill-track"><div class="skill-fill" data-w="65"></div></div>
+      </div>
+      <div class="stack-card reveal reveal-d3">
+        <div class="sc-icon">📁</div>
+        <div class="sc-title">Excel & Sheets</div>
+        <div class="sc-level">Supporting Tool</div>
+        <div class="sc-desc">Pivot tables, VLOOKUP/XLOOKUP, Power Query for data cleaning and preparation before loading into SQL Server.</div>
+        <div class="skill-track"><div class="skill-fill" data-w="85"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- METRICS STRIP (from actual dashboard) -->
+<section class="section-sm" style="background:var(--bg);border-bottom:1px solid var(--border);">
+  <div class="container">
+    <div class="reveal" style="margin-bottom:1.5rem;">
+      <div class="s-eye">From the Dashboard</div>
+      <h2 class="s-title">Plant Wilting Project — <em>Key Metrics</em></h2>
+    </div>
+    <div class="metrics-grid-row reveal" style="display:grid;grid-template-columns:repeat(6,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;">
+      <div class="metric-card" style="border-radius:0;border:none;">
+        <div class="mc-label">Wilt Risk</div>
+        <div class="mc-val" data-float="0.13">0.00</div>
+        <div class="mc-sub mc-up">▲ Low</div>
+      </div>
+      <div class="metric-card" style="border-radius:0;border:none;">
+        <div class="mc-label">Wilted %</div>
+        <div class="mc-val" data-float="0.04">0.00</div>
+        <div class="mc-sub mc-up">▲ Healthy</div>
+      </div>
+      <div class="metric-card" style="border-radius:0;border:none;">
+        <div class="mc-label">Hum. Diff</div>
+        <div class="mc-val">+7.40</div>
+        <div class="mc-sub mc-info">% relative</div>
+      </div>
+      <div class="metric-card" style="border-radius:0;border:none;">
+        <div class="mc-label">AVG Temp</div>
+        <div class="mc-val" data-float="33.52">0.00</div>
+        <div class="mc-sub mc-warn">+1.04° diff</div>
+      </div>
+      <div class="metric-card" style="border-radius:0;border:none;">
+        <div class="mc-label">Readings</div>
+        <div class="mc-val" data-int="3984">0</div>
+        <div class="mc-sub mc-info">total rows</div>
+      </div>
+      <div class="metric-card" style="border-radius:0;border:none;">
+        <div class="mc-label">Moisture</div>
+        <div class="mc-val" data-float="72.56">0.00</div>
+        <div class="mc-sub mc-up">▲ % soil</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LATEST POST -->
+<section class="section" style="background:var(--bg2);border-bottom:1px solid var(--border);">
+  <div class="container">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2.5rem;flex-wrap:wrap;gap:1rem;">
+      <div class="reveal">
+        <div class="s-eye">Projects</div>
+        <h2 class="s-title">Published Work</h2>
+      </div>
+      <a href="blog.html" class="read-link reveal">All posts →</a>
+    </div>
+    <div class="posts-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;">
+      <div class="post-card reveal" onclick="window.location='post-details.html'">
+        <div class="post-img">
+          <img src="assets/P1/project1 - Home.png" alt="Dashboard"/>
+        </div>
+        <div class="post-body-wrap">
+          <span class="post-cat">Project 1 — Power BI Dashboard</span>
+          <div class="post-pills"><span class="pill">Power BI</span><span class="pill">SQL Server</span><span class="pill">DAX</span><span class="pill">Data Modeling</span></div>
+          <h2>My First End-to-End Power BI Dashboard: Plant Wilting Detection</h2>
+          <p class="post-excerpt">How I took sensor data stored in SQL Server, built a star schema, wrote DAX measures, and created a live Power BI report that tracks plant health in real time.</p>
+          <div class="post-footer">
+            <div class="post-author"><div class="author-chip">MJM</div>Mark John Merana · Mar 7, 2026 · 6 min</div>
+            <a href="post-details.html" class="read-link">Read →</a>
+          </div>
+        </div>
+      </div>
+      <div class="post-card reveal reveal-d1" style="opacity:.3;pointer-events:none;">
+        <div class="post-img"><div class="post-img-ph"><span class="ph-icon">📦</span><span>// Next project</span></div></div>
+        <div class="post-body-wrap">
+          <span class="post-cat">Coming Soon</span>
+          <h2>Sales and Demand Dashboard & Reports</h2>
+          <p class="post-excerpt">Stay tune on April...</p>
+          <div class="post-footer"><div class="post-author"><div class="author-chip">MJM</div>Mark John Merana</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="f-logo"><span class="logo-bracket">[</span><span class="logo-accent">ENGR_INSIGHT</span><span class="logo-bracket">]</span><span class="logo-dot">.</span></div>
+        <p>Engineering | Data | Analysis. A portfolio blog by Mark John Merana — Junior Data Analyst specializing in Power BI and SQL Server.</p>
+      </div>
+      <div><div class="f-col-title">// Navigation</div><div class="f-links"><a href="index.html">Home</a><a href="about.html">About</a><a href="blog.html">Blog</a><a href="post-details.html">Post Details</a><a href="contact.html">Contact Me</a></div></div>
+      <div><div class="f-col-title">// Tools</div><div class="f-links"><a href="#">Power BI</a><a href="#">SQL Server</a><a href="#">DAX</a><a href="#">Excel</a><a href="#">Data Modeling</a></div></div>
+    </div>
+    <div class="footer-bottom">
+      <span class="f-copy">© 2026 <span>Mark John Merana</span>. ENGR INSIGHT. All rights reserved.</span>
+      <span class="f-copy" style="font-size:.58rem;">Engineering | Data | Analysis</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>document.getElementById('navbar').classList.toggle('scrolled',scrollY>20));
+function toggleMenu(){document.getElementById('navMobile').classList.toggle('open');}
+
+// Reveal on scroll
+const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');io.unobserve(x.target);}}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// Skill bars animate in
+const sio=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.querySelectorAll('.skill-fill').forEach(b=>b.style.width=b.dataset.w+'%');sio.unobserve(x.target);}}),{threshold:.3});
+document.querySelectorAll('section').forEach(s=>sio.observe(s));
+
+// Counter animation
+function animVal(el,target,decimals){
+  const s=performance.now(),d=1500;
+  function tick(n){
+    const p=Math.min((n-s)/d,1),ease=1-Math.pow(1-p,3),v=target*ease;
+    el.textContent=decimals?v.toFixed(decimals):Math.floor(v).toLocaleString();
+    if(p<1)requestAnimationFrame(tick);
+    else el.textContent=decimals?target.toFixed(decimals):target.toLocaleString();
+  }
+  requestAnimationFrame(tick);
+}
+const cio=new IntersectionObserver(e=>e.forEach(x=>{
+  if(x.isIntersecting){
+    if(x.target.dataset.float) animVal(x.target,parseFloat(x.target.dataset.float),2);
+    if(x.target.dataset.int)   animVal(x.target,parseInt(x.target.dataset.int),0);
+    cio.unobserve(x.target);
+  }
+}),{threshold:.5});
+document.querySelectorAll('[data-float],[data-int]').forEach(el=>cio.observe(el));
+
+// Hero panel counters
+setTimeout(()=>{
+  animVal(document.getElementById('kpi1'),0.13,2);
+  animVal(document.getElementById('kpi2'),3984,0);
+  document.getElementById('kpi3').textContent='72.6%';
+  document.getElementById('kpi4').textContent='33.52°';
+},900);
+</script>
+</body>
+</html>
