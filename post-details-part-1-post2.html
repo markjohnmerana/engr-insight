@@ -15,10 +15,22 @@
   <div class="nav-inner">
     <a href="index.html" class="nav-logo"><span class="logo-bracket">[</span><span class="logo-accent">ENGR_INSIGHT</span><span class="logo-bracket">]</span><span class="logo-dot">.</span></a>
     <div class="nav-badge">Open to Work</div>
-    <div class="nav-links"><a href="index.html">Home</a><a href="about.html">About</a><a href="blog.html">Blog</a><a href="post-details.html">Post Details</a><a href="contact.html">Contact Me</a></div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="blog.html">Blog</a>
+      <a href="post-details-part-1-post2.html" class="active">Post Details</a>
+      <a href="contact.html">Contact Me</a>
+    </div>
     <button class="nav-toggle" onclick="toggleMenu()"><span></span><span></span><span></span></button>
   </div>
-  <div class="nav-mobile" id="navMobile"><a href="index.html">Home</a><a href="about.html">About</a><a href="blog.html">Blog</a><a href="post-details.html">Post Details</a><a href="contact.html">Contact Me</a></div>
+  <div class="nav-mobile" id="navMobile">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="blog.html" class="active">Blog</a>
+    <a href="post-details.html">Post Details</a>
+    <a href="contact.html">Contact Me</a>
+  </div>
 </nav>
 
 <section class="section" style="background:var(--bg);padding-top:4rem;">
@@ -50,13 +62,13 @@
           <h1 class="article-title">From Raw CSV to Professional Dashboard: Building a Sales Analytics Pipeline</h1>
           <div class="article-meta">
             <strong>Mark John Merana</strong>
-            <span class="sep">◆</span><span>2026</span>
+            <span class="sep">◆</span><span>March 11, 2026</span>
             <span class="sep">◆</span><span>8 min read</span>
             <span class="sep">◆</span><span>Python · SQL Server · Power BI · DAX</span>
           </div>
         </div>
 
-        <!-- Featured image placeholder -->
+        <!-- Featured image -->
         <div class="article-feat reveal">
           <img src="assets/Post 2/Descriptive/Dashboard.png" alt="Sales Analytics Descriptive Dashboard" onerror="this.style.display='none'"/>
         </div>
@@ -161,10 +173,10 @@ dim_customer — fact_sales — dim_product
     profit      DECIMAL(10,2)
 );</code></pre>
 
-          <!-- Fact table image — replace filename below -->
+          <!-- Star schema image -->
           <div class="img-block" style="margin:1.5rem 0;">
-            <img src="assets/Post 2/Descriptive/Star-Schema.png" alt="fact_sales table schema in SQL Server" style="width:100%;border-radius:var(--radius);display:block;"/>
-            <!--<div style="font-family:var(--mono);font-size:.58rem;color:var(--text-muted);text-align:center;margin-top:.5rem;">// fact_sales table — SQL Server</div>-->
+            <img src="assets/Post 2/Descriptive/Star-Schema.png" alt="Star schema design in SQL Server" style="width:100%;border-radius:var(--radius);display:block;"/>
+            <div style="font-family:var(--mono);font-size:.58rem;color:var(--text-muted);text-align:center;margin-top:.5rem;">// Star schema — fact_sales + 5 dimension tables</div>
           </div>
 
           <div class="callout">
@@ -271,15 +283,10 @@ ORDER BY d.year, d.month;</code></pre>
             </tbody>
           </table>
 
-          <!-- Dashboard image -->
-          <div class="img-block" style="margin:2rem 0;">
-            <img src="assets/P2/descriptive.png" alt="Descriptive Analysis Dashboard" onerror="this.style.display='none'" style="width:100%;border-radius:var(--radius);display:block;"/>
-          </div>
-
-          <!-- Dashboard walkthrough video — replace filename below -->
+          <!-- Dashboard walkthrough video -->
           <div class="img-block" style="margin:2rem 0;">
             <video src="assets/Post 2/Descriptive/dashboard-2.mp4" autoplay muted loop playsinline style="width:100%;border-radius:var(--radius);display:block;"></video>
-            <!--<div style="font-family:var(--mono);font-size:.58rem;color:var(--text-muted);text-align:center;margin-top:.5rem;">// Sales & Demand Descriptive Dashboard — Power BI</div>-->
+            <div style="font-family:var(--mono);font-size:.58rem;color:var(--text-muted);text-align:center;margin-top:.5rem;">// Sales & Demand Descriptive Dashboard — Power BI</div>
           </div>
 
           <h2>Key Business Insights</h2>
@@ -313,6 +320,9 @@ ORDER BY d.year, d.month;</code></pre>
             <li>Which products are losing the company money?</li>
             <li>What is the relationship between discounting and profit margin?</li>
           </ul>
+
+          <h2>Want To See the Source Code?</h2>
+          <p>Click the <strong>"gi"</strong> button below to see the code and technologies used.</p>
 
         </div><!-- end article-body -->
 
