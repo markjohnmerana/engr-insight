@@ -33,16 +33,6 @@
       <!-- POSTS -->
       <main>
 
-        <!-- ═══════════════════════════════════════════════════
-             HOW TO ADD A NEW POST:
-             1. Copy this entire <div class="post-card"> block
-             2. Paste it below the last post-card
-             3. Change the category, title, excerpt, pills, date
-             4. Create a new post-details-2.html for the full post
-             5. Update the href in <a href="post-details-2.html">
-             6. Add a recent-item in the sidebar below
-        ════════════════════════════════════════════════════ -->
-
         <!-- POST 1 — Plant Wilting Dashboard -->
         <div class="post-card reveal" onclick="window.location='post-details.html'">
           <div class="post-img">
@@ -54,7 +44,7 @@
               <span class="pill">Power BI</span>
               <span class="pill">SQL Server</span>
               <span class="pill">DAX</span>
-              <span class="pill">Star Schema</span>
+              <span class="pill">Flat Table</span>
               <span class="pill">Data Modeling</span>
             </div>
             <h2>My First End-to-End Power BI Dashboard: Plant Wilting Detection</h2>
@@ -71,15 +61,31 @@
           </div>
         </div>
 
-        <!-- PLACEHOLDER 2 -->
-        <div class="post-card reveal" style="opacity:.35;pointer-events:none;margin-top:1.5rem;">
-          <div class="post-img"><div class="post-img-ph"><span class="ph-icon">📦</span><span>// Next project</span></div></div>
+        <!-- POST 2 — Sales Analytics (LIVE) -->
+        <div class="post-card reveal" style="margin-top:1.5rem;" onclick="window.location='post-details-part-1-post2.html'">
+          <div class="post-img">
+            <img src="assets/Post 2/Descriptive/Dashboard.png" alt="Sales Analytics Dashboard" onerror="this.parentElement.innerHTML='<div class=\'post-img-ph\'><span class=\'ph-icon\'>📈</span><span>// Project 2</span></div>'"/>
+          </div>
           <div class="post-body-wrap">
-            <span class="post-cat">Coming Soon — Project 2</span>
-            <div class="post-pills"><span class="pill">Power BI</span><span class="pill">SQL Server</span></div>
-            <h2>Sales and Demand Dashboard & Reports</h2>
-            <p class="post-excerpt">Stay tune on April...</p>
-            <div class="post-footer"><div class="post-author"><div class="author-chip">MJM</div>Mark John Merana · Coming Soon</div></div>
+            <span class="post-cat">Project 2 — Sales &amp; Demand Analytics · Part 1 of 4</span>
+            <div class="post-pills">
+              <span class="pill">Power BI</span>
+              <span class="pill">SQL Server</span>
+              <span class="pill">Python</span>
+              <span class="pill">Star Schema</span>
+              <span class="pill">DAX</span>
+              <span class="pill">Descriptive</span>
+            </div>
+            <h2>From Raw CSV to Professional Dashboard: Building a Sales Analytics Pipeline</h2>
+            <p class="post-excerpt">
+              A complete end-to-end sales analytics pipeline — from a raw 9,994-row Kaggle CSV, through Python data cleaning,
+              star schema design in SQL Server, to an interactive Power BI dashboard. Part 1 of 4: Descriptive Analysis.
+              What happened? $2.30M revenue, 12.47% profit margin, and a Q4 spike every single year.
+            </p>
+            <div class="post-footer">
+              <div class="post-author"><div class="author-chip">MJM</div>Mark John Merana · March 11, 2026 · 8 min</div>
+              <a href="post-details-part-1-post2.html" class="read-link">Read Full Post →</a>
+            </div>
           </div>
         </div>
 
@@ -112,7 +118,15 @@
         <div class="widget reveal">
           <div class="w-head"><div class="w-head-dot"></div><span class="w-head-label">Recent Posts</span></div>
           <div class="w-body">
-            <!-- ADD new recent-item here when you publish a new post -->
+            <a href="post-details-part-1-post2.html" style="display:block;">
+              <div class="recent-item">
+                <div class="recent-thumb">📈</div>
+                <div class="recent-info">
+                  <h4>Sales Analytics Part 1 — Descriptive Analysis</h4>
+                  <span class="recent-date">March 11, 2026</span>
+                </div>
+              </div>
+            </a>
             <a href="post-details.html" style="display:block;">
               <div class="recent-item">
                 <div class="recent-thumb">📊</div>
@@ -122,11 +136,7 @@
                 </div>
               </div>
             </a>
-            <div class="recent-item" style="opacity:.4;">
-              <div class="recent-thumb">📦</div>
-              <div class="recent-info"><h4>Next Project — Coming Soon</h4><span class="recent-date">2026</span></div>
-            </div>
-            <div class="recent-item" style="opacity:.2;">
+            <div class="recent-item" style="opacity:.3;">
               <div class="recent-thumb">📦</div>
               <div class="recent-info"><h4>Future Post — Coming Soon</h4><span class="recent-date">2026</span></div>
             </div>
@@ -152,14 +162,14 @@
             <div class="tag-wrap">
               <span class="tag">Power BI</span>
               <span class="tag">SQL Server</span>
+              <span class="tag">Python</span>
               <span class="tag">DAX</span>
               <span class="tag">Excel</span>
-              <span class="tag">Data Modeling</span>
               <span class="tag">Star Schema</span>
               <span class="tag">KPI</span>
               <span class="tag">Dashboard</span>
-              <span class="tag">Reporting</span>
-              <span class="tag">BI</span>
+              <span class="tag">Descriptive</span>
+              <span class="tag">pyodbc</span>
             </div>
           </div>
         </div>

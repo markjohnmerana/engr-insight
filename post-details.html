@@ -31,7 +31,7 @@
           <span class="article-cat">Project 1 — Power BI Dashboard</span>
           <div class="post-pills" style="margin-bottom:.8rem;">
             <span class="pill">Power BI</span><span class="pill">SQL Server</span>
-            <span class="pill">DAX</span><span class="pill">Star Schema</span><span class="pill">Data Modeling</span>
+            <span class="pill">DAX</span><span class="pill">Flat Table</span><span class="pill">Data Modeling</span>
           </div>
           <h1 class="article-title">My First End-to-End Power BI Dashboard: Plant Wilting Detection</h1>
           <div class="article-meta">
@@ -57,24 +57,20 @@
           <p>The key output on the dashboard is a <strong>Wilt Risk Score</strong> — a number between 0 and 1. Currently sitting at <strong>0.13</strong>, which means low risk. All three plants are healthy.</p>
 
           <div class="callout">
-            <strong>Note:</strong> The IoT hardware and data collection pipeline (ESP32, Google Sheets, Airflow, Python) was my undergraduate thesis use for this project. My goal right now is building the SQL Server schema and the Power BI dashboard on top of that data.
+            <strong>Note:</strong> The IoT hardware and data collection pipeline (ESP32, Google Sheets, Airflow, Python) was my undergraduate thesis used for this project. My goal right now is building the SQL Server schema and the Power BI dashboard on top of that data.
           </div>
 
           <h2>The Data Model — Flat Table</h2>
-          <p>The first thing I had to figure out was how to structure the data in SQL Server so that Power BI could work with it cleanly. 
-             While researching data modeling techniques, I learned about star schemas — a design that uses a central fact table 
-             connected to several dimension tables. However, since my dataset is relatively small and comes from a single source, 
-             I decided to keep the structure simple and use a flat table where all the sensor data is stored in one table.</p>
+          <p>The first thing I had to figure out was how to structure the data in SQL Server so that Power BI could work with it cleanly. While researching data modeling techniques, I learned about star schemas — a design that uses a central fact table connected to several dimension tables. However, since my dataset is relatively small and comes from a single source, I decided to keep the structure simple and use a flat table where all the sensor data is stored in one table.</p>
           <table>
             <thead><tr><th>Table</th><th>Type</th><th>Key Columns</th></tr></thead>
             <tbody>
-              <tr><td><code>plant_monitoring</code></td><td>Flat Table</td><td>Timestamp, Plant Name,	Status,	Confidence Score (%),	Moisture Sensor,	Nitrogen,	Phosphorus,	Potassium, Outside Temperature,	Outside Humidity,	Inside Temperature, Inside Humidity</td></tr>
+              <tr><td><code>plant_monitoring</code></td><td>Flat Table</td><td>Timestamp, Plant Name, Status, Confidence Score (%), Moisture Sensor, Nitrogen, Phosphorus, Potassium, Outside Temperature, Outside Humidity, Inside Temperature, Inside Humidity</td></tr>
             </tbody>
           </table>
+          <p>Working with one flat table and Power BI relationships were a mess. The SQL direct query in Power BI made everything clear — relationships were straightforward and my DAX measures started making more sense.</p>
 
-          <p>Building this, Working with one flat table and Power BI relationships were a mess. The SQL direct query in Power BI made everything clear — relationships were straightforward and my DAX measures started making more sense.</p>
-
-          <h2>The SQL — Loading the Fact Table</h2>
+          <h2>The SQL — Loading the Flat Table</h2>
           <p>The raw sensor data came in with duplicates sometimes (retry logic from the hardware side), so I needed an upsert pattern — insert new rows, but skip if the same <code>plant_id + timestamp</code> already exists.</p>
 
           <pre><code>MERGE fact_sensor_readings AS target
@@ -104,8 +100,7 @@ AVERAGEX(
 
           <p>Simple, but it took me a while to understand <em>why</em> it works this way — specifically, why <code>AVERAGEX</code> with a column reference is different from just using <code>AVERAGE</code>. The iterator functions in DAX were confusing at first. I'm still building intuition for when to use each one.</p>
           <p>Other measures I wrote for this dashboard:</p>
-          <pre><code>
-Wilted % =
+          <pre><code>Wilted % =
 DIVIDE(
     COUNTROWS(
         FILTER(fact_sensor_readings,
@@ -128,9 +123,8 @@ DIVIDE(
           <p>One thing I learned: the order of visuals on the canvas matters a lot. I initially crammed everything in without thinking about reading order, and it looked cluttered. I rebuilt the layout starting from the most important metric (Wilt Risk Score) and working outward from there.</p>
 
           <h2>What the Data Shows</h2>
-          <p>Looking at Days 5 through 10 of monitoring:</p>
           <ul>
-            <li><strong>Day 6 anomaly:</strong> Plant 2's soil moisture dropped to ~18% — the lowest in the dataset. This was likely a missed watering. The wilt confidence score for all three plants dipped around the same time, which is interesting — I'm not sure if that's a real correlation or a model artifact.</li>
+            <li><strong>Day 6 anomaly:</strong> Plant 2's soil moisture dropped to ~18% — the lowest in the dataset. This was likely a missed watering. The wilt confidence score for all three plants dipped around the same time.</li>
             <li><strong>Recovery by Day 10:</strong> Moisture stabilized and confidence scores recovered to ~90% across all plants.</li>
             <li><strong>Overall:</strong> 3,984 readings, Wilt Risk Score of 0.13, only 0.04% of readings classified as wilting events. All three plants are currently healthy.</li>
           </ul>
@@ -153,10 +147,7 @@ DIVIDE(
           </ul>
 
           <h2>Want To See the Source Code?</h2>
-          <ul>
-            <li>Click the <strong>"gi"</strong> buttom below to see the codes and technologies I used.</li>
-          </ul>
-
+          <p>Click the <strong>"gi"</strong> button below to see the codes and technologies I used.</p>
 
         </div><!-- end article-body -->
 
@@ -165,17 +156,13 @@ DIVIDE(
           <div class="tag-wrap">
             <span style="font-family:var(--mono);font-size:.58rem;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase;margin-right:.3rem;">Tags:</span>
             <span class="tag">Power BI</span><span class="tag">SQL Server</span>
-            <span class="tag">DAX</span><span class="tag">Star Schema</span><span class="tag">Dashboard</span>
+            <span class="tag">DAX</span><span class="tag">Flat Table</span><span class="tag">Dashboard</span>
           </div>
           <div style="display:flex;align-items:center;gap:.5rem;">
             <span style="font-family:var(--mono);font-size:.58rem;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase;">Share:</span>
             <div class="share-btn" onclick="copyLink()" title="Copy link">🔗</div>
-            <a href="https://www.linkedin.com/in/markjohnmera%C3%B1a/" target="_blank">
-               <div class="share-btn" title="LinkedIn">in</div>
-            </a>
-            <a href="https://github.com/markjohnmerana/iot-wilting-dashboard" target="_blank">
-               <div class="share-btn" title="GitHub">gi</div>
-            </a>
+            <a href="https://www.linkedin.com/in/markjohnmera%C3%B1a/" target="_blank"><div class="share-btn" title="LinkedIn">in</div></a>
+            <a href="https://github.com/markjohnmerana/iot-wilting-dashboard" target="_blank"><div class="share-btn" title="GitHub">gi</div></a>
           </div>
         </div>
 
@@ -189,10 +176,17 @@ DIVIDE(
           </div>
         </div>
 
-        <!-- Nav -->
-        <div style="display:flex;justify-content:space-between;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border);">
-          <a href="blog.html" style="font-family:var(--mono);font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);display:flex;align-items:center;gap:.5rem;transition:color .2s;" onmouseover="this.style.color='var(--blue)'" onmouseout="this.style.color='var(--text-dim)'">← Back to Blog</a>
-          <span style="font-family:var(--mono);font-size:.65rem;color:var(--text-muted);">Next post coming soon →</span>
+        <!-- Nav — updated to link to Project 2 -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border);">
+          <a href="blog.html" style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.2rem;text-decoration:none;transition:border-color .2s;" onmouseover="this.style.borderColor='rgba(59,158,255,.3)'" onmouseout="this.style.borderColor='var(--border)'">
+            <div style="font-family:var(--mono);font-size:.58rem;color:var(--dim);margin-bottom:.3rem;">← Back</div>
+            <div style="font-family:var(--sans);font-size:.82rem;font-weight:600;color:var(--text);">All Projects</div>
+          </a>
+          <a href="post-details-part-1-post2.html" style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.2rem;text-decoration:none;text-align:right;transition:border-color .2s;" onmouseover="this.style.borderColor='rgba(59,158,255,.3)'" onmouseout="this.style.borderColor='var(--border)'">
+            <div style="font-family:var(--mono);font-size:.58rem;color:var(--dim);margin-bottom:.3rem;">Next →</div>
+            <div style="font-family:var(--sans);font-size:.82rem;font-weight:600;color:var(--text);">Sales Analytics Part 1</div>
+            <div style="font-family:var(--mono);font-size:.58rem;color:var(--blue);margin-top:.2rem;">Descriptive Analysis</div>
+          </a>
         </div>
       </article>
 
@@ -206,17 +200,22 @@ DIVIDE(
         <div class="widget reveal">
           <div class="w-head"><div class="w-head-dot"></div><span class="w-head-label">Recent Posts</span></div>
           <div class="w-body">
+            <a href="post-details-part-1-post2.html" style="display:block;">
+              <div class="recent-item">
+                <div class="recent-thumb">📈</div>
+                <div class="recent-info"><h4>Sales Analytics Part 1 — Descriptive Analysis</h4><span class="recent-date">2026</span></div>
+              </div>
+            </a>
             <a href="post-details.html" style="display:block;">
               <div class="recent-item">
                 <div class="recent-thumb">📊</div>
                 <div class="recent-info"><h4>My First Power BI Dashboard: Plant Wilting Detection</h4><span class="recent-date">March 7, 2026</span></div>
               </div>
             </a>
-            <div class="recent-item" style="opacity:.4;"><div class="recent-thumb">📦</div><div class="recent-info"><h4>Next Project — Coming Soon</h4><span class="recent-date">2026</span></div></div>
           </div>
         </div>
 
-        <!-- ✅ NEW: Technical Doc Download Widget -->
+        <!-- Technical Doc Download Widget -->
         <div class="widget reveal">
           <div class="w-head"><div class="w-head-dot"></div><span class="w-head-label">Technical Doc</span></div>
           <div class="w-body">
@@ -234,13 +233,13 @@ DIVIDE(
                  style="display:flex;align-items:center;justify-content:center;gap:.45rem;width:100%;padding:.65rem;background:var(--blue);color:#fff;border-radius:6px;font-family:var(--mono);font-size:.65rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:all .2s;"
                  onmouseover="this.style.background='#5aaeff';this.style.boxShadow='0 4px 16px rgba(59,158,255,.3)'"
                  onmouseout="this.style.background='var(--blue)';this.style.boxShadow='none'">
-                ⬇ Download PDF  
+                ⬇ Download PDF
               </a>
             </div>
           </div>
         </div>
 
-        <!-- Pipeline mini widget -->
+        <!-- What I Built -->
         <div class="widget reveal">
           <div class="w-head"><div class="w-head-dot"></div><span class="w-head-label">What I Built</span></div>
           <div class="w-body">
@@ -262,7 +261,7 @@ DIVIDE(
           <div class="w-body">
             <div class="tag-wrap">
               <span class="tag">Power BI</span><span class="tag">SQL Server</span>
-              <span class="tag">DAX</span><span class="tag">Flat Schema</span>
+              <span class="tag">DAX</span><span class="tag">Flat Table</span>
               <span class="tag">MERGE</span><span class="tag">KPI</span>
               <span class="tag">Dashboard</span><span class="tag">Data Modeling</span>
             </div>

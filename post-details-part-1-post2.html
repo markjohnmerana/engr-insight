@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='12' fill='%23080d12'/><text x='50' y='68' font-size='52' font-family='monospace' font-weight='bold' fill='%233b9eff' text-anchor='middle'>EI</text></svg>">
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sales Analytics Part 1 — ENGR INSIGHT</title>
+<link rel="stylesheet" href="style.css"/>
+<style>.reading-bar{position:fixed;top:0;left:0;height:2px;background:var(--blue);width:0%;z-index:300;}</style>
+</head>
+<body>
+<div class="grid-bg"></div>
+<div class="reading-bar" id="readBar"></div>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><span class="logo-bracket">[</span><span class="logo-accent">ENGR_INSIGHT</span><span class="logo-bracket">]</span><span class="logo-dot">.</span></a>
+    <div class="nav-badge">Open to Work</div>
+    <div class="nav-links"><a href="index.html">Home</a><a href="about.html">About</a><a href="blog.html">Blog</a><a href="post-details.html">Post Details</a><a href="contact.html">Contact Me</a></div>
+    <button class="nav-toggle" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+  </div>
+  <div class="nav-mobile" id="navMobile"><a href="index.html">Home</a><a href="about.html">About</a><a href="blog.html">Blog</a><a href="post-details.html">Post Details</a><a href="contact.html">Contact Me</a></div>
+</nav>
+
+<section class="section" style="background:var(--bg);padding-top:4rem;">
+  <div class="container">
+    <div class="blog-layout">
+
+      <!-- ARTICLE -->
+      <article>
+        <div class="reveal">
+
+          <!-- Part thread indicator -->
+          <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:1rem;flex-wrap:wrap;">
+            <span style="font-family:var(--mono);font-size:.6rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;background:rgba(59,158,255,.1);border:1px solid rgba(59,158,255,.2);color:var(--blue);padding:.3rem .8rem;border-radius:30px;">Project 2</span>
+            <span style="font-family:var(--mono);font-size:.6rem;color:var(--text-muted);">Sales & Demand Analytics Series</span>
+            <div style="display:flex;gap:.35rem;margin-left:auto;">
+              <span style="font-family:var(--mono);font-size:.58rem;font-weight:700;padding:.28rem .65rem;border-radius:20px;background:var(--blue);color:#fff;">Part 1</span>
+              <span style="font-family:var(--mono);font-size:.58rem;padding:.28rem .65rem;border-radius:20px;background:var(--card);border:1px solid var(--border);color:var(--dim);">Part 2</span>
+              <span style="font-family:var(--mono);font-size:.58rem;padding:.28rem .65rem;border-radius:20px;background:var(--card);border:1px solid var(--border);color:var(--dim);">Part 3</span>
+              <span style="font-family:var(--mono);font-size:.58rem;padding:.28rem .65rem;border-radius:20px;background:var(--card);border:1px solid var(--border);color:var(--dim);">Part 4</span>
+            </div>
+          </div>
+
+          <span class="article-cat">Project 2 — Sales & Demand Analytics · Part 1 of 4</span>
+          <div class="post-pills" style="margin-bottom:.8rem;">
+            <span class="pill">Power BI</span><span class="pill">SQL Server</span>
+            <span class="pill">Python</span><span class="pill">Star Schema</span>
+            <span class="pill">DAX</span><span class="pill">Descriptive Analysis</span>
+          </div>
+          <h1 class="article-title">From Raw CSV to Professional Dashboard: Building a Sales Analytics Pipeline</h1>
+          <div class="article-meta">
+            <strong>Mark John Merana</strong>
+            <span class="sep">◆</span><span>2026</span>
+            <span class="sep">◆</span><span>8 min read</span>
+            <span class="sep">◆</span><span>Python · SQL Server · Power BI · DAX</span>
+          </div>
+        </div>
+
+        <!-- Featured image placeholder -->
+        <div class="article-feat reveal">
+          <img src="assets/Post 2/Descriptive/Dashboard.png" alt="Sales Analytics Descriptive Dashboard" onerror="this.style.display='none'"/>
+        </div>
+
+        <!-- BODY -->
+        <div class="article-body">
+
+          <p><em>This is Part 1 of a 4-part series on building a complete sales analytics solution — Descriptive, Diagnostic, Predictive, and Prescriptive — all from a single dataset and one Power BI file. I'll document every step honestly, including the mistakes and what I learned from them.</em></p>
+
+          <!-- KPI strip -->
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin:1.8rem 0;">
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:.9rem 1rem;text-align:center;">
+              <div style="font-family:var(--mono);font-size:1.1rem;font-weight:700;color:var(--blue);">$2.30M</div>
+              <div style="font-family:var(--mono);font-size:.58rem;color:var(--dim);margin-top:.2rem;text-transform:uppercase;letter-spacing:.1em;">Total Revenue</div>
+            </div>
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:.9rem 1rem;text-align:center;">
+              <div style="font-family:var(--mono);font-size:1.1rem;font-weight:700;color:var(--green);">12.47%</div>
+              <div style="font-family:var(--mono);font-size:.58rem;color:var(--dim);margin-top:.2rem;text-transform:uppercase;letter-spacing:.1em;">Profit Margin</div>
+            </div>
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:.9rem 1rem;text-align:center;">
+              <div style="font-family:var(--mono);font-size:1.1rem;font-weight:700;color:var(--teal);">9,994</div>
+              <div style="font-family:var(--mono);font-size:.58rem;color:var(--dim);margin-top:.2rem;text-transform:uppercase;letter-spacing:.1em;">Clean Rows</div>
+            </div>
+          </div>
+
+          <h2>The Business Problem</h2>
+          <p>Descriptive analysis answers the most fundamental question in analytics: <strong>what happened?</strong> Before diagnosing problems or predicting the future, you need to understand the baseline — the numbers, patterns, and performance across time, product, and region.</p>
+          <p>The business questions I set out to answer:</p>
+          <ul>
+            <li>Which products generate the most revenue?</li>
+            <li>How did sales perform across different regions and categories?</li>
+            <li>What do monthly revenue trends look like over time?</li>
+            <li>What are the overall KPIs — total revenue, profit, orders, and units sold?</li>
+          </ul>
+          <p>The dataset is a retail sales dataset spanning <strong>2011 to 2014</strong>, containing over 9,900 transaction records across the United States — sourced from Kaggle.</p>
+
+          <h2>Step 1 — Data Cleaning with Python</h2>
+          <p>The first challenge was understanding the data properly. My initial cleaning attempt reduced the dataset from 9,994 rows to just 2,650 — a red flag that something went wrong.</p>
+          <p>The culprit was a common mistake:</p>
+
+          <pre><code>❌ Wrong — drops all products except the first per order
+df = df.drop_duplicates(subset=["Order ID"])</code></pre>
+
+          <p>One order can contain multiple products. Deduplicating by Order ID alone deletes all but one line item per order — losing thousands of valid transactions. The correct approach removes only truly identical rows:</p>
+
+          <pre><code>✅ Correct — only removes 100% identical rows
+df = df.drop_duplicates()</code></pre>
+
+          <p>The final cleaning script:</p>
+          <pre><code>import pandas as pd
+
+try:
+    df = pd.read_csv("raw_data.csv", encoding="utf-8")
+except UnicodeDecodeError:
+    df = pd.read_csv("raw_data.csv", encoding="latin1")
+
+# Parse dates with correct format
+df["Order Date"] = pd.to_datetime(df["Order Date"], format="%Y-%m-%d", errors="coerce")
+df["Ship Date"]  = pd.to_datetime(df["Ship Date"],  format="%Y-%m-%d", errors="coerce")
+
+# Drop rows where critical fields are null
+df = df.dropna(subset=["Order Date"])
+df = df.dropna(subset=["Order ID", "Product ID", "Customer ID", "Sales", "Quantity", "Profit"])
+
+# Remove only truly duplicate rows
+df = df.drop_duplicates()
+
+print(f"Total rows: {len(df)}")            # 9,994
+print(f"Unique orders: {df['Order ID'].nunique()}")     # 5,009
+print(f"Unique products: {df['Product ID'].nunique()}")  # 1,862</code></pre>
+
+          <h2>Step 2 — Star Schema Design</h2>
+          <p>Rather than dumping the flat CSV directly into Power BI, I designed a proper <strong>star schema</strong> in SQL Server. This is the industry-standard approach that makes dashboards faster, cleaner, and easier to maintain.</p>
+
+          <div class="callout">
+            <strong>Key rules I learned for schema design:</strong><br/><br/>
+            <strong style="color:var(--blue);">If you can SUM, AVG, or COUNT it to get a business insight — it's a FACT.</strong><br/>
+            <strong style="color:var(--teal);">If it describes WHO, WHAT, WHERE, WHEN — it's a DIMENSION.</strong><br/>
+            <strong style="color:var(--green);">Always use the most granular, unique identifier as your foreign key.</strong> It guarantees a clean one-to-one relationship between tables.
+          </div>
+
+          <p>The schema I designed — <code>fact_sales</code> at the center, connected to 5 dimension tables:</p>
+
+          <pre><code>         dim_date
+            |
+dim_customer — fact_sales — dim_product
+            |
+       dim_location
+            |
+         dim_order</code></pre>
+
+          <pre><code>CREATE TABLE fact_sales (
+    row_id      INT           PRIMARY KEY IDENTITY(1,1),
+    order_date  DATE,
+    order_id    VARCHAR(50),
+    product_id  VARCHAR(50),
+    customer_id VARCHAR(50),
+    postal_code INT,
+    sales       DECIMAL(10,2),
+    quantity    INT,
+    discount    DECIMAL(5,2),
+    profit      DECIMAL(10,2)
+);</code></pre>
+
+          <!-- Fact table image — replace filename below -->
+          <div class="img-block" style="margin:1.5rem 0;">
+            <img src="assets/Post 2/Descriptive/Star-Schema.png" alt="fact_sales table schema in SQL Server" style="width:100%;border-radius:var(--radius);display:block;"/>
+            <!--<div style="font-family:var(--mono);font-size:.58rem;color:var(--text-muted);text-align:center;margin-top:.5rem;">// fact_sales table — SQL Server</div>-->
+          </div>
+
+          <div class="callout">
+            <strong>Important:</strong> Always use <code>DECIMAL(10,2)</code> for financial columns — never <code>FLOAT</code>. Float has rounding errors that can corrupt money calculations silently.
+          </div>
+
+          <h2>Step 3 — Loading Data with Python + pyodbc</h2>
+          <p>With the schema ready, I wrote a Python script to extract each dimension table from the cleaned CSV and load them into SQL Server — dimensions first, fact table last.</p>
+
+          <pre><code>import pandas as pd
+import pyodbc
+
+conn = pyodbc.connect(
+    "DRIVER={SQL Server};"
+    "SERVER=MSI\\SQLEXPRESS;"
+    "DATABASE=sales_dw;"
+    "Trusted_Connection=yes;"
+)
+
+df = pd.read_csv("cleaned_data.csv")
+df["Order Date"] = pd.to_datetime(df["Order Date"], format="%Y-%m-%d").dt.strftime("%Y-%m-%d")</code></pre>
+
+          <p>Errors I hit and how I fixed them:</p>
+          <table>
+            <thead><tr><th>Error</th><th>Cause</th><th>Fix</th></tr></thead>
+            <tbody>
+              <tr><td>DateTime overflow</td><td>Pandas Timestamp not accepted by SQL Server</td><td>Convert to string <code>"%Y-%m-%d"</code> first</td></tr>
+              <tr><td>String truncation</td><td>Product names exceeded VARCHAR(100)</td><td>Increased to VARCHAR(255)</td></tr>
+              <tr><td>Wrong row count</td><td><code>dayfirst=True</code> broke date parsing</td><td>Used <code>format="%Y-%m-%d"</code> explicitly</td></tr>
+            </tbody>
+          </table>
+
+          <p>Final row counts after load:</p>
+          <table>
+            <thead><tr><th>Table</th><th>Rows</th></tr></thead>
+            <tbody>
+              <tr><td><code>fact_sales</code></td><td>9,994</td></tr>
+              <tr><td><code>dim_customer</code></td><td>793</td></tr>
+              <tr><td><code>dim_product</code></td><td>1,862</td></tr>
+              <tr><td><code>dim_order</code></td><td>5,009</td></tr>
+              <tr><td><code>dim_location</code></td><td>631</td></tr>
+              <tr><td><code>dim_date</code></td><td>484</td></tr>
+            </tbody>
+          </table>
+
+          <h2>Step 4 — Descriptive SQL Queries</h2>
+          <p>Before touching Power BI, I wrote the analytical queries that would power the dashboard visuals:</p>
+
+          <pre><code>-- Total Revenue and Orders
+SELECT
+    SUM(sales)               AS total_revenue,
+    COUNT(DISTINCT order_id) AS total_orders
+FROM fact_sales;
+
+-- Top 10 Products by Revenue
+SELECT TOP 10
+    p.product_name,
+    SUM(f.sales) AS total_revenue
+FROM fact_sales f
+JOIN dim_product p ON f.product_id = p.product_id
+GROUP BY p.product_name
+ORDER BY total_revenue DESC;
+
+-- Sales by Region and Category
+SELECT
+    l.region,
+    p.category,
+    SUM(f.sales)  AS total_revenue,
+    SUM(f.profit) AS total_profit
+FROM fact_sales f
+JOIN dim_location l ON f.postal_code = l.postal_code
+JOIN dim_product  p ON f.product_id  = p.product_id
+GROUP BY l.region, p.category
+ORDER BY l.region, total_revenue DESC;
+
+-- Monthly Revenue Trends
+SELECT
+    d.year,
+    d.month,
+    d.month_name,
+    SUM(f.sales)               AS total_revenue,
+    COUNT(DISTINCT f.order_id) AS total_orders
+FROM fact_sales f
+JOIN dim_date d ON f.order_date = d.order_date
+GROUP BY d.year, d.month, d.month_name
+ORDER BY d.year, d.month;</code></pre>
+
+          <h2>Step 5 — Power BI Dashboard</h2>
+          <p>With the data warehouse and queries ready, I connected Power BI Desktop to SQL Server and built the dashboard. Power BI auto-detected most relationships. All 5 foreign key relationships were set to One-to-Many from dimension to fact table.</p>
+          <p>The one DAX measure I wrote for this page:</p>
+
+          <pre><code>Profit Margin = DIVIDE(SUM(fact_sales[profit]), SUM(fact_sales[sales]))</code></pre>
+
+          <p>Formatted as Percentage — gives a clean 12.47% display on the KPI card.</p>
+
+          <p>Dashboard visuals built:</p>
+          <table>
+            <thead><tr><th>Visual</th><th>Type</th><th>Purpose</th></tr></thead>
+            <tbody>
+              <tr><td>KPI Cards</td><td>New Card</td><td>Total Revenue, Profit, Orders, Units Sold, Profit Margin</td></tr>
+              <tr><td>Top 10 Products</td><td>Clustered Bar Chart</td><td>Identify best performing products</td></tr>
+              <tr><td>Sales by Region & Category</td><td>Clustered Bar Chart</td><td>Compare regional performance</td></tr>
+              <tr><td>Monthly Revenue Trends</td><td>Line Chart</td><td>Identify seasonal patterns</td></tr>
+            </tbody>
+          </table>
+
+          <!-- Dashboard image -->
+          <div class="img-block" style="margin:2rem 0;">
+            <img src="assets/P2/descriptive.png" alt="Descriptive Analysis Dashboard" onerror="this.style.display='none'" style="width:100%;border-radius:var(--radius);display:block;"/>
+          </div>
+
+          <!-- Dashboard walkthrough video — replace filename below -->
+          <div class="img-block" style="margin:2rem 0;">
+            <video src="assets/Post 2/Descriptive/dashboard-2.mp4" autoplay muted loop playsinline style="width:100%;border-radius:var(--radius);display:block;"></video>
+            <!--<div style="font-family:var(--mono);font-size:.58rem;color:var(--text-muted);text-align:center;margin-top:.5rem;">// Sales & Demand Descriptive Dashboard — Power BI</div>-->
+          </div>
+
+          <h2>Key Business Insights</h2>
+          <ul>
+            <li><strong>Total Revenue:</strong> $2.30M across 2011–2014 with a 12.47% profit margin</li>
+            <li><strong>Top Product:</strong> Canon imageCLASS 2200 Advanced Copier at ~$60K revenue — significantly ahead of all others</li>
+            <li><strong>Regional Performance:</strong> West leads, South is the weakest performing region across all categories</li>
+            <li><strong>Seasonal Pattern:</strong> Sales consistently spike in Q4 (November–December) every year — classic holiday/year-end demand. Q1 is consistently the weakest period</li>
+            <li><strong>Category Breakdown:</strong> Technology and Office Supplies are the dominant revenue drivers across all regions</li>
+          </ul>
+
+          <h2>Python + pyodbc Lessons Learned</h2>
+          <div class="callout">
+            <strong>Things I'll always do differently next time:</strong><br/><br/>
+            1. Always use <code>format="%Y-%m-%d"</code> for dates — not <code>dayfirst=True</code><br/>
+            2. <code>VARCHAR(255)</code> for name/description columns — never guess short<br/>
+            3. Use <code>.astype(int)</code> for integer columns extracted from dates<br/>
+            4. <code>dropna()</code> on source df early — keeps all downstream tables clean<br/>
+            5. Add print statements <strong>before</strong> inserts — not after<br/>
+            6. Silent IntegrityError catch hides problems — make it verbose when debugging
+          </div>
+
+          <h2>What Made This Project Different</h2>
+          <p>Most Superstore dataset projects on Kaggle follow a simple path: download CSV → load to Power BI → make charts. This project took a different approach — built a proper data pipeline, designed a star schema following data warehouse best practices, used SQL Server as a proper data store, and backed every visual with SQL queries for transparency and reproducibility.</p>
+
+          <h2>What's Next — Part 2: Diagnostic Analysis</h2>
+          <p>In the next phase I investigate the <em>why</em> behind these numbers. This is where it gets technically challenging — mostly complex JOINs, validation logic, and unfamiliar chart types. Stay tuned.</p>
+          <ul>
+            <li>Why does West consistently outperform South?</li>
+            <li>Why is Furniture the weakest category nationally?</li>
+            <li>Which products are losing the company money?</li>
+            <li>What is the relationship between discounting and profit margin?</li>
+          </ul>
+
+        </div><!-- end article-body -->
+
+        <!-- Tags / Share -->
+        <div class="article-footer-row">
+          <div class="tag-wrap">
+            <span style="font-family:var(--mono);font-size:.58rem;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase;margin-right:.3rem;">Tags:</span>
+            <span class="tag">Power BI</span><span class="tag">SQL Server</span>
+            <span class="tag">Python</span><span class="tag">Star Schema</span>
+            <span class="tag">Descriptive</span><span class="tag">pyodbc</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:.5rem;">
+            <span style="font-family:var(--mono);font-size:.58rem;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase;">Share:</span>
+            <div class="share-btn" onclick="copyLink()" title="Copy link">🔗</div>
+            <a href="https://www.linkedin.com/in/markjohnmera%C3%B1a/" target="_blank"><div class="share-btn" title="LinkedIn">in</div></a>
+            <a href="https://github.com/markjohnmerana" target="_blank"><div class="share-btn" title="GitHub">gi</div></a>
+          </div>
+        </div>
+
+        <!-- Author box -->
+        <div class="author-box reveal">
+          <div class="author-avatar-lg">MJM</div>
+          <div>
+            <div class="author-name">Mark John Merana</div>
+            <div class="author-role">Junior Data Analyst — Power BI &amp; SQL Server</div>
+            <p class="author-bio">Learning data analytics by building real projects and writing honestly about the process. Currently specializing in Power BI, SQL Server, and DAX. This blog is my learning journal.</p>
+          </div>
+        </div>
+
+        <!-- Part navigation -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2rem;padding-top:2rem;border-top:1px solid var(--border);">
+          <a href="blog.html" style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.2rem;text-decoration:none;transition:border-color .2s;" onmouseover="this.style.borderColor='rgba(59,158,255,.3)'" onmouseout="this.style.borderColor='var(--border)'">
+            <div style="font-family:var(--mono);font-size:.58rem;color:var(--dim);margin-bottom:.3rem;">← Back</div>
+            <div style="font-family:var(--sans);font-size:.82rem;font-weight:600;color:var(--text);">All Projects</div>
+          </a>
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.2rem;opacity:.5;text-align:right;">
+            <div style="font-family:var(--mono);font-size:.58rem;color:var(--dim);margin-bottom:.3rem;">Next →</div>
+            <div style="font-family:var(--sans);font-size:.82rem;font-weight:600;color:var(--text);">Part 2: Diagnostic Analysis</div>
+            <div style="font-family:var(--mono);font-size:.58rem;color:var(--dim);margin-top:.2rem;">Coming soon</div>
+          </div>
+        </div>
+
+      </article>
+
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+
+        <!-- Series tracker -->
+        <div class="widget reveal">
+          <div class="w-head"><div class="w-head-dot"></div><span class="w-head-label">Series Progress</span></div>
+          <div class="w-body">
+            <div style="font-family:var(--mono);font-size:.6rem;color:var(--dim);margin-bottom:.8rem;">Project 2 — Sales & Demand</div>
+            <div style="display:flex;flex-direction:column;gap:.5rem;">
+              <div style="display:flex;align-items:center;gap:.7rem;padding:.6rem .8rem;background:rgba(59,158,255,.08);border:1px solid rgba(59,158,255,.25);border-radius:var(--radius);">
+                <span style="font-family:var(--mono);font-size:.6rem;font-weight:700;color:var(--blue);flex-shrink:0;">P1</span>
+                <span style="font-family:var(--sans);font-size:.78rem;font-weight:600;color:var(--text);flex:1;">Descriptive Analysis</span>
+                <span style="font-size:.7rem;">✅</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:.7rem;padding:.6rem .8rem;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);opacity:.5;">
+                <span style="font-family:var(--mono);font-size:.6rem;font-weight:700;color:var(--dim);flex-shrink:0;">P2</span>
+                <span style="font-family:var(--sans);font-size:.78rem;color:var(--dim);flex:1;">Diagnostic Analysis</span>
+                <span style="font-family:var(--mono);font-size:.55rem;color:var(--dim);">soon</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:.7rem;padding:.6rem .8rem;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);opacity:.35;">
+                <span style="font-family:var(--mono);font-size:.6rem;font-weight:700;color:var(--dim);flex-shrink:0;">P3</span>
+                <span style="font-family:var(--sans);font-size:.78rem;color:var(--dim);flex:1;">Predictive Analysis</span>
+                <span style="font-family:var(--mono);font-size:.55rem;color:var(--dim);">soon</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:.7rem;padding:.6rem .8rem;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);opacity:.2;">
+                <span style="font-family:var(--mono);font-size:.6rem;font-weight:700;color:var(--dim);flex-shrink:0;">P4</span>
+                <span style="font-family:var(--sans);font-size:.78rem;color:var(--dim);flex:1;">Prescriptive Analysis</span>
+                <span style="font-family:var(--mono);font-size:.55rem;color:var(--dim);">soon</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="widget reveal">
+          <div class="w-head"><div class="w-head-dot"></div><span class="w-head-label">Recent Posts</span></div>
+          <div class="w-body">
+            <a href="post-details-2.html" style="display:block;">
+              <div class="recent-item">
+                <div class="recent-thumb">📈</div>
+                <div class="recent-info"><h4>Sales Analytics Part 1 — Descriptive Analysis</h4><span class="recent-date">March 11, 2026</span></div>
+              </div>
+            </a>
+            <a href="post-details.html" style="display:block;">
+              <div class="recent-item">
+                <div class="recent-thumb">📊</div>
+                <div class="recent-info"><h4>My First Power BI Dashboard: Plant Wilting Detection</h4><span class="recent-date">March 7, 2026</span></div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Tech stack used -->
+        <div class="widget reveal">
+          <div class="w-head"><div class="w-head-dot"></div><span class="w-head-label">Tech Stack Used</span></div>
+          <div class="w-body">
+            <div style="background:#050a0f;border:1px solid var(--border);border-radius:var(--radius);padding:.9rem 1rem;font-family:var(--mono);font-size:.65rem;line-height:2.1;color:var(--text-muted);">
+              <div style="color:var(--blue);margin-bottom:.2rem;">// this project</div>
+              <div style="color:var(--teal);">🐍 Python (pandas, pyodbc)</div>
+              <div style="color:var(--teal);">🗄️ SQL Server (SSMS)</div>
+              <div style="color:var(--teal);">📊 Power BI Desktop</div>
+              <div style="color:var(--teal);">📐 DAX Measures</div>
+              <div style="color:var(--teal);">📁 Excel (EDA)</div>
+              <div style="color:var(--teal);">🐙 GitHub</div>
+              <div style="margin-top:.5rem;padding-top:.5rem;border-top:1px solid var(--border);color:var(--green);">rows loaded: 9,994 ✓</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Key metrics -->
+        <div class="widget reveal">
+          <div class="w-head"><div class="w-head-dot"></div><span class="w-head-label">Project Metrics</span></div>
+          <div class="w-body">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem;">
+              <div style="background:#050a0f;border:1px solid var(--border);border-radius:var(--radius);padding:.7rem;text-align:center;">
+                <div style="font-family:var(--mono);font-size:.9rem;font-weight:700;color:var(--blue);">$2.30M</div>
+                <div style="font-family:var(--mono);font-size:.52rem;color:var(--dim);margin-top:.15rem;">Revenue</div>
+              </div>
+              <div style="background:#050a0f;border:1px solid var(--border);border-radius:var(--radius);padding:.7rem;text-align:center;">
+                <div style="font-family:var(--mono);font-size:.9rem;font-weight:700;color:var(--green);">12.47%</div>
+                <div style="font-family:var(--mono);font-size:.52rem;color:var(--dim);margin-top:.15rem;">Margin</div>
+              </div>
+              <div style="background:#050a0f;border:1px solid var(--border);border-radius:var(--radius);padding:.7rem;text-align:center;">
+                <div style="font-family:var(--mono);font-size:.9rem;font-weight:700;color:var(--teal);">5,009</div>
+                <div style="font-family:var(--mono);font-size:.52rem;color:var(--dim);margin-top:.15rem;">Orders</div>
+              </div>
+              <div style="background:#050a0f;border:1px solid var(--border);border-radius:var(--radius);padding:.7rem;text-align:center;">
+                <div style="font-family:var(--mono);font-size:.9rem;font-weight:700;color:var(--amber);">38K</div>
+                <div style="font-family:var(--mono);font-size:.52rem;color:var(--dim);margin-top:.15rem;">Units Sold</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="widget reveal">
+          <div class="w-head"><div class="w-head-dot"></div><span class="w-head-label">Tags</span></div>
+          <div class="w-body">
+            <div class="tag-wrap">
+              <span class="tag">Power BI</span><span class="tag">SQL Server</span>
+              <span class="tag">Python</span><span class="tag">Star Schema</span>
+              <span class="tag">pyodbc</span><span class="tag">DAX</span>
+              <span class="tag">Descriptive</span><span class="tag">Kaggle</span>
+            </div>
+          </div>
+        </div>
+
+      </aside>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand"><div class="f-logo"><span class="logo-bracket">[</span><span class="logo-accent">ENGR_INSIGHT</span><span class="logo-bracket">]</span><span class="logo-dot">.</span></div><p>Junior Data Analyst portfolio blog by Mark John Merana.</p></div>
+      <div><div class="f-col-title">// Navigation</div><div class="f-links"><a href="index.html">Home</a><a href="about.html">About</a><a href="blog.html">Blog</a><a href="post-details.html">Post Details</a><a href="contact.html">Contact Me</a></div></div>
+      <div><div class="f-col-title">// Tools</div><div class="f-links"><a href="#">Power BI</a><a href="#">SQL Server</a><a href="#">Python</a><a href="#">DAX</a></div></div>
+    </div>
+    <div class="footer-bottom"><span class="f-copy">© 2026 <span>Mark John Merana</span>. ENGR INSIGHT.</span><span class="f-copy" style="font-size:.58rem;">Engineering | Data | Analysis</span></div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>{
+  document.getElementById('navbar').classList.toggle('scrolled',scrollY>20);
+  const p=(scrollY/(document.body.scrollHeight-window.innerHeight))*100;
+  document.getElementById('readBar').style.width=Math.min(p,100)+'%';
+});
+function toggleMenu(){document.getElementById('navMobile').classList.toggle('open');}
+const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');io.unobserve(x.target);}}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+function copyLink(){navigator.clipboard.writeText(location.href).then(()=>alert('Link copied!'));}
+</script>
+</body>
+</html>
