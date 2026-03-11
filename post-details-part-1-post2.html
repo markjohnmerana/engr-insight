@@ -5,7 +5,172 @@
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Sales Analytics Part 1 — ENGR INSIGHT</title>
 <link rel="stylesheet" href="style.css"/>
-<style>.reading-bar{position:fixed;top:0;left:0;height:2px;background:var(--blue);width:0%;z-index:300;}</style>
+<style>
+/* ── Reading progress bar ── */
+.reading-bar{position:fixed;top:0;left:0;height:2px;background:var(--blue);width:0%;z-index:300;}
+
+/* ── Global overflow guard ── */
+*,*::before,*::after{box-sizing:border-box;}
+html,body{overflow-x:hidden;}
+
+/* ── Article grid item must shrink ── */
+article{min-width:0;overflow-x:hidden;}
+.blog-layout{overflow-x:hidden;}
+
+/* ── Code blocks — always scroll, never blow out ── */
+pre{overflow-x:auto;max-width:100%;white-space:pre;}
+pre code{display:block;white-space:pre;word-break:normal;}
+
+/* ── Tables — scroll on small screens ── */
+.table-scroll{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%;}
+.article-body table{width:100%;}
+
+/* ── Images & video — never wider than container ── */
+.article-body img,
+.article-body video,
+.article-feat img{max-width:100%;height:auto;display:block;}
+.img-block{overflow:hidden;max-width:100%;}
+
+/* ══════════════════════════════════════
+   POST-2-SPECIFIC COMPONENT STYLES
+   (mirrors post-1's pattern: classes only,
+    no inline grid overrides needed)
+══════════════════════════════════════ */
+
+/* ── Part thread indicator ── */
+.part-thread{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;margin-bottom:1rem;}
+.part-thread-badge{
+  font-family:var(--mono);font-size:.6rem;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;
+  background:rgba(59,158,255,.1);border:1px solid rgba(59,158,255,.2);
+  color:var(--blue);padding:.3rem .8rem;border-radius:30px;white-space:nowrap;
+}
+.part-thread-label{font-family:var(--mono);font-size:.6rem;color:var(--text-muted);white-space:nowrap;}
+.part-pills{display:flex;gap:.35rem;flex-wrap:wrap;}
+.part-pill-active{
+  font-family:var(--mono);font-size:.58rem;font-weight:700;
+  padding:.28rem .65rem;border-radius:20px;
+  background:var(--blue);color:#fff;white-space:nowrap;
+}
+.part-pill-inactive{
+  font-family:var(--mono);font-size:.58rem;
+  padding:.28rem .65rem;border-radius:20px;
+  background:var(--card);border:1px solid var(--border);
+  color:var(--dim);white-space:nowrap;
+}
+
+/* ── KPI strip (3-col → 2-col → 1-col) ── */
+.kpi-strip{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:.8rem;margin:1.8rem 0;
+}
+.kpi-box{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:.9rem 1rem;text-align:center;
+}
+.kpi-val{font-family:var(--mono);font-size:1.1rem;font-weight:700;line-height:1.2;}
+.kpi-lbl{font-family:var(--mono);font-size:.58rem;color:var(--dim);margin-top:.2rem;text-transform:uppercase;letter-spacing:.1em;}
+.kpi-blue{color:var(--blue);}
+.kpi-green{color:var(--green);}
+.kpi-teal{color:var(--teal);}
+
+/* ── Schema diagram block ── */
+.schema-diagram{
+  background:#080d12;border:1px solid var(--border);
+  border-left:2px solid var(--blue);border-radius:var(--radius-md);
+  padding:1.4rem 1.8rem;overflow-x:auto;
+  font-family:var(--mono);font-size:.8rem;line-height:1.7;
+  color:#7ec8a0;margin:1.8rem 0;
+  -webkit-overflow-scrolling:touch;
+}
+
+/* ── Part navigation ── */
+.part-nav-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:1rem;
+  margin-top:2rem;padding-top:2rem;border-top:1px solid var(--border);
+}
+.part-nav-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:1rem 1.2rem;
+  text-decoration:none;transition:border-color .2s;
+}
+.part-nav-card:hover{border-color:rgba(59,158,255,.3);}
+.part-nav-card.right{text-align:right;}
+.part-nav-dir{font-family:var(--mono);font-size:.58rem;color:var(--dim);margin-bottom:.3rem;}
+.part-nav-title{font-family:var(--sans);font-size:.82rem;font-weight:600;color:var(--text);}
+.part-nav-sub{font-family:var(--mono);font-size:.58rem;color:var(--dim);margin-top:.2rem;}
+
+/* ── Sidebar: series tracker ── */
+.series-list{display:flex;flex-direction:column;gap:.5rem;}
+.series-item{
+  display:flex;align-items:center;gap:.7rem;
+  padding:.6rem .8rem;border-radius:var(--radius);
+}
+.series-item.active{background:rgba(59,158,255,.08);border:1px solid rgba(59,158,255,.25);}
+.series-item.inactive{background:var(--card);border:1px solid var(--border);}
+.series-num{font-family:var(--mono);font-size:.6rem;font-weight:700;flex-shrink:0;}
+.series-num.c-blue{color:var(--blue);}
+.series-num.c-dim{color:var(--dim);}
+.series-name{font-family:var(--sans);font-size:.78rem;flex:1;}
+.series-name.c-text{font-weight:600;color:var(--text);}
+.series-name.c-dim{color:var(--dim);}
+.series-badge{font-family:var(--mono);font-size:.55rem;}
+.series-badge.done{color:var(--green);}
+.series-badge.soon{color:var(--dim);}
+
+/* ── Sidebar: tech stack ── */
+.tech-stack-box{
+  background:#050a0f;border:1px solid var(--border);
+  border-radius:var(--radius);padding:.9rem 1rem;
+  font-family:var(--mono);font-size:.65rem;line-height:2.1;color:var(--text-muted);
+}
+.tech-comment{color:var(--blue);margin-bottom:.2rem;}
+.tech-item{color:var(--teal);}
+.tech-footer{
+  margin-top:.5rem;padding-top:.5rem;
+  border-top:1px solid var(--border);color:var(--green);
+}
+
+/* ── Sidebar: project metrics grid ── */
+.metrics-2x2{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;}
+.m-box{
+  background:#050a0f;border:1px solid var(--border);
+  border-radius:var(--radius);padding:.7rem;text-align:center;
+}
+.m-val{font-family:var(--mono);font-size:.9rem;font-weight:700;}
+.m-lbl{font-family:var(--mono);font-size:.52rem;color:var(--dim);margin-top:.15rem;}
+
+/* ══════════════════════════════════════
+   RESPONSIVE OVERRIDES
+══════════════════════════════════════ */
+@media(max-width:768px){
+  /* Part thread — stack label + pills */
+  .part-thread-label{display:none;}
+
+  /* KPI strip — 2 cols */
+  .kpi-strip{grid-template-columns:repeat(2,1fr);}
+
+  /* Part nav — stack */
+  .part-nav-grid{grid-template-columns:1fr;}
+  .part-nav-card.right{text-align:left;}
+
+  /* Article meta — wrap */
+  .article-meta{flex-wrap:wrap;gap:.3rem;}
+  .article-meta .sep{display:none;}
+
+  /* Pills — wrap */
+  .post-pills{flex-wrap:wrap;}
+}
+
+@media(max-width:480px){
+  /* KPI strip — 1 col */
+  .kpi-strip{grid-template-columns:1fr;gap:.5rem;}
+
+  pre{font-size:.68rem;padding:.8rem 1rem;}
+  .schema-diagram{font-size:.68rem;padding:.8rem 1rem;}
+}
+</style>
 </head>
 <body>
 <div class="grid-bg"></div>
@@ -18,8 +183,8 @@
     <div class="nav-links">
       <a href="index.html">Home</a>
       <a href="about.html">About</a>
-      <a href="blog.html">Blog</a>
-      <a href="post-details-part-1-post2.html" class="active">Post Details</a>
+      <a href="blog.html" >Blog</a>
+      <a href="post-details.html" class="active">Post Details</a>
       <a href="contact.html">Contact Me</a>
     </div>
     <button class="nav-toggle" onclick="toggleMenu()"><span></span><span></span><span></span></button>
@@ -42,18 +207,18 @@
         <div class="reveal">
 
           <!-- Part thread indicator -->
-          <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:1rem;flex-wrap:wrap;">
-            <span style="font-family:var(--mono);font-size:.6rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;background:rgba(59,158,255,.1);border:1px solid rgba(59,158,255,.2);color:var(--blue);padding:.3rem .8rem;border-radius:30px;">Project 2</span>
-            <span style="font-family:var(--mono);font-size:.6rem;color:var(--text-muted);">Sales & Demand Analytics Series</span>
-            <div style="display:flex;gap:.35rem;margin-left:auto;">
-              <span style="font-family:var(--mono);font-size:.58rem;font-weight:700;padding:.28rem .65rem;border-radius:20px;background:var(--blue);color:#fff;">Part 1</span>
-              <span style="font-family:var(--mono);font-size:.58rem;padding:.28rem .65rem;border-radius:20px;background:var(--card);border:1px solid var(--border);color:var(--dim);">Part 2</span>
-              <span style="font-family:var(--mono);font-size:.58rem;padding:.28rem .65rem;border-radius:20px;background:var(--card);border:1px solid var(--border);color:var(--dim);">Part 3</span>
-              <span style="font-family:var(--mono);font-size:.58rem;padding:.28rem .65rem;border-radius:20px;background:var(--card);border:1px solid var(--border);color:var(--dim);">Part 4</span>
+          <div class="part-thread">
+            <span class="part-thread-badge">Project 2</span>
+            <span class="part-thread-label">Sales &amp; Demand Analytics Series</span>
+            <div class="part-pills">
+              <span class="part-pill-active">Part 1</span>
+              <span class="part-pill-inactive">Part 2</span>
+              <span class="part-pill-inactive">Part 3</span>
+              <span class="part-pill-inactive">Part 4</span>
             </div>
           </div>
 
-          <span class="article-cat">Project 2 — Sales & Demand Analytics · Part 1 of 4</span>
+          <span class="article-cat">Project 2 — Sales &amp; Demand Analytics · Part 1 of 4</span>
           <div class="post-pills" style="margin-bottom:.8rem;">
             <span class="pill">Power BI</span><span class="pill">SQL Server</span>
             <span class="pill">Python</span><span class="pill">Star Schema</span>
@@ -78,19 +243,19 @@
 
           <p><em>This is Part 1 of a 4-part series on building a complete sales analytics solution — Descriptive, Diagnostic, Predictive, and Prescriptive — all from a single dataset and one Power BI file. I'll document every step honestly, including the mistakes and what I learned from them.</em></p>
 
-          <!-- KPI strip -->
-          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin:1.8rem 0;">
-            <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:.9rem 1rem;text-align:center;">
-              <div style="font-family:var(--mono);font-size:1.1rem;font-weight:700;color:var(--blue);">$2.30M</div>
-              <div style="font-family:var(--mono);font-size:.58rem;color:var(--dim);margin-top:.2rem;text-transform:uppercase;letter-spacing:.1em;">Total Revenue</div>
+          <!-- KPI strip — uses CSS class, not inline grid -->
+          <div class="kpi-strip">
+            <div class="kpi-box">
+              <div class="kpi-val kpi-blue">$2.30M</div>
+              <div class="kpi-lbl">Total Revenue</div>
             </div>
-            <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:.9rem 1rem;text-align:center;">
-              <div style="font-family:var(--mono);font-size:1.1rem;font-weight:700;color:var(--green);">12.47%</div>
-              <div style="font-family:var(--mono);font-size:.58rem;color:var(--dim);margin-top:.2rem;text-transform:uppercase;letter-spacing:.1em;">Profit Margin</div>
+            <div class="kpi-box">
+              <div class="kpi-val kpi-green">12.47%</div>
+              <div class="kpi-lbl">Profit Margin</div>
             </div>
-            <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:.9rem 1rem;text-align:center;">
-              <div style="font-family:var(--mono);font-size:1.1rem;font-weight:700;color:var(--teal);">9,994</div>
-              <div style="font-family:var(--mono);font-size:.58rem;color:var(--dim);margin-top:.2rem;text-transform:uppercase;letter-spacing:.1em;">Clean Rows</div>
+            <div class="kpi-box">
+              <div class="kpi-val kpi-teal">9,994</div>
+              <div class="kpi-lbl">Clean Rows</div>
             </div>
           </div>
 
@@ -126,18 +291,25 @@ except UnicodeDecodeError:
     df = pd.read_csv("raw_data.csv", encoding="latin1")
 
 # Parse dates with correct format
-df["Order Date"] = pd.to_datetime(df["Order Date"], format="%Y-%m-%d", errors="coerce")
-df["Ship Date"]  = pd.to_datetime(df["Ship Date"],  format="%Y-%m-%d", errors="coerce")
+df["Order Date"] = pd.to_datetime(
+    df["Order Date"], format="%Y-%m-%d", errors="coerce"
+)
+df["Ship Date"] = pd.to_datetime(
+    df["Ship Date"], format="%Y-%m-%d", errors="coerce"
+)
 
 # Drop rows where critical fields are null
 df = df.dropna(subset=["Order Date"])
-df = df.dropna(subset=["Order ID", "Product ID", "Customer ID", "Sales", "Quantity", "Profit"])
+df = df.dropna(subset=[
+    "Order ID", "Product ID", "Customer ID",
+    "Sales", "Quantity", "Profit"
+])
 
 # Remove only truly duplicate rows
 df = df.drop_duplicates()
 
-print(f"Total rows: {len(df)}")            # 9,994
-print(f"Unique orders: {df['Order ID'].nunique()}")     # 5,009
+print(f"Total rows: {len(df)}")                          # 9,994
+print(f"Unique orders: {df['Order ID'].nunique()}")      # 5,009
 print(f"Unique products: {df['Product ID'].nunique()}")  # 1,862</code></pre>
 
           <h2>Step 2 — Star Schema Design</h2>
@@ -152,16 +324,19 @@ print(f"Unique products: {df['Product ID'].nunique()}")  # 1,862</code></pre>
 
           <p>The schema I designed — <code>fact_sales</code> at the center, connected to 5 dimension tables:</p>
 
-          <pre><code>         dim_date
-            |
+          <!-- ASCII diagram in its own scrollable block -->
+          <div class="schema-diagram">
+<pre>      dim_date
+         |
 dim_customer — fact_sales — dim_product
-            |
-       dim_location
-            |
-         dim_order</code></pre>
+         |
+    dim_location
+         |
+      dim_order</pre>
+          </div>
 
           <pre><code>CREATE TABLE fact_sales (
-    row_id      INT           PRIMARY KEY IDENTITY(1,1),
+    row_id      INT            PRIMARY KEY IDENTITY(1,1),
     order_date  DATE,
     order_id    VARCHAR(50),
     product_id  VARCHAR(50),
@@ -175,8 +350,7 @@ dim_customer — fact_sales — dim_product
 
           <!-- Star schema image -->
           <div class="img-block" style="margin:1.5rem 0;">
-            <img src="assets/Post 2/Descriptive/Star-Schema.png" alt="Star schema design in SQL Server" style="width:100%;border-radius:var(--radius);display:block;"/>
-          </div>
+            <img src="assets/Post 2/Descriptive/Star-Schema.png" alt="Star schema design in SQL Server"/>
 
           <div class="callout">
             <strong>Important:</strong> Always use <code>DECIMAL(10,2)</code> for financial columns — never <code>FLOAT</code>. Float has rounding errors that can corrupt money calculations silently.
@@ -196,30 +370,51 @@ conn = pyodbc.connect(
 )
 
 df = pd.read_csv("cleaned_data.csv")
-df["Order Date"] = pd.to_datetime(df["Order Date"], format="%Y-%m-%d").dt.strftime("%Y-%m-%d")</code></pre>
+df["Order Date"] = (
+    pd.to_datetime(df["Order Date"], format="%Y-%m-%d")
+    .dt.strftime("%Y-%m-%d")
+)</code></pre>
 
           <p>Errors I hit and how I fixed them:</p>
-          <table>
-            <thead><tr><th>Error</th><th>Cause</th><th>Fix</th></tr></thead>
-            <tbody>
-              <tr><td>DateTime overflow</td><td>Pandas Timestamp not accepted by SQL Server</td><td>Convert to string <code>"%Y-%m-%d"</code> first</td></tr>
-              <tr><td>String truncation</td><td>Product names exceeded VARCHAR(100)</td><td>Increased to VARCHAR(255)</td></tr>
-              <tr><td>Wrong row count</td><td><code>dayfirst=True</code> broke date parsing</td><td>Used <code>format="%Y-%m-%d"</code> explicitly</td></tr>
-            </tbody>
-          </table>
+          <div class="table-scroll">
+            <table>
+              <thead>
+                <tr><th>Error</th><th>Cause</th><th>Fix</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>DateTime overflow</td>
+                  <td>Pandas Timestamp not accepted by SQL Server</td>
+                  <td>Convert to string <code>"%Y-%m-%d"</code> first</td>
+                </tr>
+                <tr>
+                  <td>String truncation</td>
+                  <td>Product names exceeded VARCHAR(100)</td>
+                  <td>Increased to VARCHAR(255)</td>
+                </tr>
+                <tr>
+                  <td>Wrong row count</td>
+                  <td><code>dayfirst=True</code> broke date parsing</td>
+                  <td>Used <code>format="%Y-%m-%d"</code> explicitly</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
           <p>Final row counts after load:</p>
-          <table>
-            <thead><tr><th>Table</th><th>Rows</th></tr></thead>
-            <tbody>
-              <tr><td><code>fact_sales</code></td><td>9,994</td></tr>
-              <tr><td><code>dim_customer</code></td><td>793</td></tr>
-              <tr><td><code>dim_product</code></td><td>1,862</td></tr>
-              <tr><td><code>dim_order</code></td><td>5,009</td></tr>
-              <tr><td><code>dim_location</code></td><td>631</td></tr>
-              <tr><td><code>dim_date</code></td><td>484</td></tr>
-            </tbody>
-          </table>
+          <div class="table-scroll">
+            <table>
+              <thead><tr><th>Table</th><th>Rows</th></tr></thead>
+              <tbody>
+                <tr><td><code>fact_sales</code></td><td>9,994</td></tr>
+                <tr><td><code>dim_customer</code></td><td>793</td></tr>
+                <tr><td><code>dim_product</code></td><td>1,862</td></tr>
+                <tr><td><code>dim_order</code></td><td>5,009</td></tr>
+                <tr><td><code>dim_location</code></td><td>631</td></tr>
+                <tr><td><code>dim_date</code></td><td>484</td></tr>
+              </tbody>
+            </table>
+          </div>
 
           <h2>Step 4 — Descriptive SQL Queries</h2>
           <p>Before touching Power BI, I wrote the analytical queries that would power the dashboard visuals:</p>
@@ -235,7 +430,8 @@ SELECT TOP 10
     p.product_name,
     SUM(f.sales) AS total_revenue
 FROM fact_sales f
-JOIN dim_product p ON f.product_id = p.product_id
+JOIN dim_product p
+  ON f.product_id = p.product_id
 GROUP BY p.product_name
 ORDER BY total_revenue DESC;
 
@@ -267,24 +463,30 @@ ORDER BY d.year, d.month;</code></pre>
           <p>With the data warehouse and queries ready, I connected Power BI Desktop to SQL Server and built the dashboard. Power BI auto-detected most relationships. All 5 foreign key relationships were set to One-to-Many from dimension to fact table.</p>
           <p>The one DAX measure I wrote for this page:</p>
 
-          <pre><code>Profit Margin = DIVIDE(SUM(fact_sales[profit]), SUM(fact_sales[sales]))</code></pre>
+          <pre><code>Profit Margin =
+DIVIDE(
+    SUM(fact_sales[profit]),
+    SUM(fact_sales[sales])
+)</code></pre>
 
           <p>Formatted as Percentage — gives a clean 12.47% display on the KPI card.</p>
 
           <p>Dashboard visuals built:</p>
-          <table>
-            <thead><tr><th>Visual</th><th>Type</th><th>Purpose</th></tr></thead>
-            <tbody>
-              <tr><td>KPI Cards</td><td>New Card</td><td>Total Revenue, Profit, Orders, Units Sold, Profit Margin</td></tr>
-              <tr><td>Top 10 Products</td><td>Clustered Bar Chart</td><td>Identify best performing products</td></tr>
-              <tr><td>Sales by Region & Category</td><td>Clustered Bar Chart</td><td>Compare regional performance</td></tr>
-              <tr><td>Monthly Revenue Trends</td><td>Line Chart</td><td>Identify seasonal patterns</td></tr>
-            </tbody>
-          </table>
+          <div class="table-scroll">
+            <table>
+              <thead><tr><th>Visual</th><th>Type</th><th>Purpose</th></tr></thead>
+              <tbody>
+                <tr><td>KPI Cards</td><td>New Card</td><td>Total Revenue, Profit, Orders, Units Sold, Profit Margin</td></tr>
+                <tr><td>Top 10 Products</td><td>Clustered Bar Chart</td><td>Identify best performing products</td></tr>
+                <tr><td>Sales by Region &amp; Category</td><td>Clustered Bar Chart</td><td>Compare regional performance</td></tr>
+                <tr><td>Monthly Revenue Trends</td><td>Line Chart</td><td>Identify seasonal patterns</td></tr>
+              </tbody>
+            </table>
+          </div>
 
           <!-- Dashboard walkthrough video -->
           <div class="img-block" style="margin:2rem 0;">
-            <video src="assets/Post 2/Descriptive/dashboard-2.mp4" autoplay muted loop playsinline style="width:100%;border-radius:var(--radius);display:block;"></video>
+            <video src="assets/Post 2/Descriptive/dashboard-2.mp4" autoplay muted loop playsinline></video>
           </div>
 
           <h2>Key Business Insights</h2>
@@ -332,7 +534,7 @@ ORDER BY d.year, d.month;</code></pre>
             <span class="tag">Python</span><span class="tag">Star Schema</span>
             <span class="tag">Descriptive</span><span class="tag">pyodbc</span>
           </div>
-          <div style="display:flex;align-items:center;gap:.5rem;">
+          <div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;">
             <span style="font-family:var(--mono);font-size:.58rem;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase;">Share:</span>
             <div class="share-btn" onclick="copyLink()" title="Copy link">🔗</div>
             <a href="https://www.linkedin.com/in/markjohnmera%C3%B1a/" target="_blank"><div class="share-btn" title="LinkedIn">in</div></a>
@@ -351,15 +553,15 @@ ORDER BY d.year, d.month;</code></pre>
         </div>
 
         <!-- Part navigation -->
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2rem;padding-top:2rem;border-top:1px solid var(--border);">
-          <a href="blog.html" style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.2rem;text-decoration:none;transition:border-color .2s;" onmouseover="this.style.borderColor='rgba(59,158,255,.3)'" onmouseout="this.style.borderColor='var(--border)'">
-            <div style="font-family:var(--mono);font-size:.58rem;color:var(--dim);margin-bottom:.3rem;">← Back</div>
-            <div style="font-family:var(--sans);font-size:.82rem;font-weight:600;color:var(--text);">All Projects</div>
+        <div class="part-nav-grid">
+          <a href="blog.html" class="part-nav-card">
+            <div class="part-nav-dir">← Back</div>
+            <div class="part-nav-title">All Projects</div>
           </a>
-          <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.2rem;opacity:.5;text-align:right;">
-            <div style="font-family:var(--mono);font-size:.58rem;color:var(--dim);margin-bottom:.3rem;">Next →</div>
-            <div style="font-family:var(--sans);font-size:.82rem;font-weight:600;color:var(--text);">Part 2: Diagnostic Analysis</div>
-            <div style="font-family:var(--mono);font-size:.58rem;color:var(--dim);margin-top:.2rem;">Coming soon</div>
+          <div class="part-nav-card right" style="opacity:.5;cursor:default;">
+            <div class="part-nav-dir">Next →</div>
+            <div class="part-nav-title">Part 2: Diagnostic Analysis</div>
+            <div class="part-nav-sub">Coming soon</div>
           </div>
         </div>
 
@@ -372,36 +574,37 @@ ORDER BY d.year, d.month;</code></pre>
         <div class="widget reveal">
           <div class="w-head"><div class="w-head-dot"></div><span class="w-head-label">Series Progress</span></div>
           <div class="w-body">
-            <div style="font-family:var(--mono);font-size:.6rem;color:var(--dim);margin-bottom:.8rem;">Project 2 — Sales & Demand</div>
-            <div style="display:flex;flex-direction:column;gap:.5rem;">
-              <div style="display:flex;align-items:center;gap:.7rem;padding:.6rem .8rem;background:rgba(59,158,255,.08);border:1px solid rgba(59,158,255,.25);border-radius:var(--radius);">
-                <span style="font-family:var(--mono);font-size:.6rem;font-weight:700;color:var(--blue);flex-shrink:0;">P1</span>
-                <span style="font-family:var(--sans);font-size:.78rem;font-weight:600;color:var(--text);flex:1;">Descriptive Analysis</span>
-                <span style="font-size:.7rem;">✅</span>
+            <div style="font-family:var(--mono);font-size:.6rem;color:var(--dim);margin-bottom:.8rem;">Project 2 — Sales &amp; Demand</div>
+            <div class="series-list">
+              <div class="series-item active">
+                <span class="series-num c-blue">P1</span>
+                <span class="series-name c-text">Descriptive Analysis</span>
+                <span class="series-badge done">✅</span>
               </div>
-              <div style="display:flex;align-items:center;gap:.7rem;padding:.6rem .8rem;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);opacity:.5;">
-                <span style="font-family:var(--mono);font-size:.6rem;font-weight:700;color:var(--dim);flex-shrink:0;">P2</span>
-                <span style="font-family:var(--sans);font-size:.78rem;color:var(--dim);flex:1;">Diagnostic Analysis</span>
-                <span style="font-family:var(--mono);font-size:.55rem;color:var(--dim);">soon</span>
+              <div class="series-item inactive" style="opacity:.5;">
+                <span class="series-num c-dim">P2</span>
+                <span class="series-name c-dim">Diagnostic Analysis</span>
+                <span class="series-badge soon">soon</span>
               </div>
-              <div style="display:flex;align-items:center;gap:.7rem;padding:.6rem .8rem;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);opacity:.35;">
-                <span style="font-family:var(--mono);font-size:.6rem;font-weight:700;color:var(--dim);flex-shrink:0;">P3</span>
-                <span style="font-family:var(--sans);font-size:.78rem;color:var(--dim);flex:1;">Predictive Analysis</span>
-                <span style="font-family:var(--mono);font-size:.55rem;color:var(--dim);">soon</span>
+              <div class="series-item inactive" style="opacity:.35;">
+                <span class="series-num c-dim">P3</span>
+                <span class="series-name c-dim">Predictive Analysis</span>
+                <span class="series-badge soon">soon</span>
               </div>
-              <div style="display:flex;align-items:center;gap:.7rem;padding:.6rem .8rem;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);opacity:.2;">
-                <span style="font-family:var(--mono);font-size:.6rem;font-weight:700;color:var(--dim);flex-shrink:0;">P4</span>
-                <span style="font-family:var(--sans);font-size:.78rem;color:var(--dim);flex:1;">Prescriptive Analysis</span>
-                <span style="font-family:var(--mono);font-size:.55rem;color:var(--dim);">soon</span>
+              <div class="series-item inactive" style="opacity:.2;">
+                <span class="series-num c-dim">P4</span>
+                <span class="series-name c-dim">Prescriptive Analysis</span>
+                <span class="series-badge soon">soon</span>
               </div>
             </div>
           </div>
         </div>
 
+        <!-- Recent Posts -->
         <div class="widget reveal">
           <div class="w-head"><div class="w-head-dot"></div><span class="w-head-label">Recent Posts</span></div>
           <div class="w-body">
-            <a href="post-details-2.html" style="display:block;">
+            <a href="post-details-part-1-post2.html" style="display:block;">
               <div class="recent-item">
                 <div class="recent-thumb">📈</div>
                 <div class="recent-info"><h4>Sales Analytics Part 1 — Descriptive Analysis</h4><span class="recent-date">March 11, 2026</span></div>
@@ -420,44 +623,45 @@ ORDER BY d.year, d.month;</code></pre>
         <div class="widget reveal">
           <div class="w-head"><div class="w-head-dot"></div><span class="w-head-label">Tech Stack Used</span></div>
           <div class="w-body">
-            <div style="background:#050a0f;border:1px solid var(--border);border-radius:var(--radius);padding:.9rem 1rem;font-family:var(--mono);font-size:.65rem;line-height:2.1;color:var(--text-muted);">
-              <div style="color:var(--blue);margin-bottom:.2rem;">// this project</div>
-              <div style="color:var(--teal);">🐍 Python (pandas, pyodbc)</div>
-              <div style="color:var(--teal);">🗄️ SQL Server (SSMS)</div>
-              <div style="color:var(--teal);">📊 Power BI Desktop</div>
-              <div style="color:var(--teal);">📐 DAX Measures</div>
-              <div style="color:var(--teal);">📁 Excel (EDA)</div>
-              <div style="color:var(--teal);">🐙 GitHub</div>
-              <div style="margin-top:.5rem;padding-top:.5rem;border-top:1px solid var(--border);color:var(--green);">rows loaded: 9,994 ✓</div>
+            <div class="tech-stack-box">
+              <div class="tech-comment">// this project</div>
+              <div class="tech-item">🐍 Python (pandas, pyodbc)</div>
+              <div class="tech-item">🗄️ SQL Server (SSMS)</div>
+              <div class="tech-item">📊 Power BI Desktop</div>
+              <div class="tech-item">📐 DAX Measures</div>
+              <div class="tech-item">📁 Excel (EDA)</div>
+              <div class="tech-item">🐙 GitHub</div>
+              <div class="tech-footer">rows loaded: 9,994 ✓</div>
             </div>
           </div>
         </div>
 
-        <!-- Key metrics -->
+        <!-- Project metrics -->
         <div class="widget reveal">
           <div class="w-head"><div class="w-head-dot"></div><span class="w-head-label">Project Metrics</span></div>
           <div class="w-body">
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem;">
-              <div style="background:#050a0f;border:1px solid var(--border);border-radius:var(--radius);padding:.7rem;text-align:center;">
-                <div style="font-family:var(--mono);font-size:.9rem;font-weight:700;color:var(--blue);">$2.30M</div>
-                <div style="font-family:var(--mono);font-size:.52rem;color:var(--dim);margin-top:.15rem;">Revenue</div>
+            <div class="metrics-2x2">
+              <div class="m-box">
+                <div class="m-val" style="color:var(--blue);">$2.30M</div>
+                <div class="m-lbl">Revenue</div>
               </div>
-              <div style="background:#050a0f;border:1px solid var(--border);border-radius:var(--radius);padding:.7rem;text-align:center;">
-                <div style="font-family:var(--mono);font-size:.9rem;font-weight:700;color:var(--green);">12.47%</div>
-                <div style="font-family:var(--mono);font-size:.52rem;color:var(--dim);margin-top:.15rem;">Margin</div>
+              <div class="m-box">
+                <div class="m-val" style="color:var(--green);">12.47%</div>
+                <div class="m-lbl">Margin</div>
               </div>
-              <div style="background:#050a0f;border:1px solid var(--border);border-radius:var(--radius);padding:.7rem;text-align:center;">
-                <div style="font-family:var(--mono);font-size:.9rem;font-weight:700;color:var(--teal);">5,009</div>
-                <div style="font-family:var(--mono);font-size:.52rem;color:var(--dim);margin-top:.15rem;">Orders</div>
+              <div class="m-box">
+                <div class="m-val" style="color:var(--teal);">5,009</div>
+                <div class="m-lbl">Orders</div>
               </div>
-              <div style="background:#050a0f;border:1px solid var(--border);border-radius:var(--radius);padding:.7rem;text-align:center;">
-                <div style="font-family:var(--mono);font-size:.9rem;font-weight:700;color:var(--amber);">38K</div>
-                <div style="font-family:var(--mono);font-size:.52rem;color:var(--dim);margin-top:.15rem;">Units Sold</div>
+              <div class="m-box">
+                <div class="m-val" style="color:var(--amber);">38K</div>
+                <div class="m-lbl">Units Sold</div>
               </div>
             </div>
           </div>
         </div>
 
+        <!-- Tags -->
         <div class="widget reveal">
           <div class="w-head"><div class="w-head-dot"></div><span class="w-head-label">Tags</span></div>
           <div class="w-body">
@@ -478,11 +682,30 @@ ORDER BY d.year, d.month;</code></pre>
 <footer>
   <div class="container">
     <div class="footer-grid">
-      <div class="footer-brand"><div class="f-logo"><span class="logo-bracket">[</span><span class="logo-accent">ENGR_INSIGHT</span><span class="logo-bracket">]</span><span class="logo-dot">.</span></div><p>Junior Data Analyst portfolio blog by Mark John Merana.</p></div>
-      <div><div class="f-col-title">// Navigation</div><div class="f-links"><a href="index.html">Home</a><a href="about.html">About</a><a href="blog.html">Blog</a><a href="post-details.html">Post Details</a><a href="contact.html">Contact Me</a></div></div>
-      <div><div class="f-col-title">// Tools</div><div class="f-links"><a href="#">Power BI</a><a href="#">SQL Server</a><a href="#">Python</a><a href="#">DAX</a></div></div>
+      <div class="footer-brand">
+        <div class="f-logo"><span class="logo-bracket">[</span><span class="logo-accent">ENGR_INSIGHT</span><span class="logo-bracket">]</span><span class="logo-dot">.</span></div>
+        <p>Junior Data Analyst portfolio blog by Mark John Merana.</p>
+      </div>
+      <div>
+        <div class="f-col-title">// Navigation</div>
+        <div class="f-links">
+          <a href="index.html">Home</a><a href="about.html">About</a>
+          <a href="blog.html">Blog</a><a href="post-details.html">Post Details</a>
+          <a href="contact.html">Contact Me</a>
+        </div>
+      </div>
+      <div>
+        <div class="f-col-title">// Tools</div>
+        <div class="f-links">
+          <a href="#">Power BI</a><a href="#">SQL Server</a>
+          <a href="#">Python</a><a href="#">DAX</a>
+        </div>
+      </div>
     </div>
-    <div class="footer-bottom"><span class="f-copy">© 2026 <span>Mark John Merana</span>. ENGR INSIGHT.</span><span class="f-copy" style="font-size:.58rem;">Engineering | Data | Analysis</span></div>
+    <div class="footer-bottom">
+      <span class="f-copy">© 2026 <span>Mark John Merana</span>. ENGR INSIGHT.</span>
+      <span class="f-copy" style="font-size:.58rem;">Engineering | Data | Analysis</span>
+    </div>
   </div>
 </footer>
 
@@ -493,7 +716,9 @@ window.addEventListener('scroll',()=>{
   document.getElementById('readBar').style.width=Math.min(p,100)+'%';
 });
 function toggleMenu(){document.getElementById('navMobile').classList.toggle('open');}
-const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');io.unobserve(x.target);}}),{threshold:.1});
+const io=new IntersectionObserver(e=>e.forEach(x=>{
+  if(x.isIntersecting){x.target.classList.add('visible');io.unobserve(x.target);}
+}),{threshold:.1});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 function copyLink(){navigator.clipboard.writeText(location.href).then(()=>alert('Link copied!'));}
 </script>
