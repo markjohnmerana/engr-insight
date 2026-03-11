@@ -62,53 +62,21 @@
 
           <h2>The Data Model — Flat Table</h2>
           <p>The first thing I had to figure out was how to structure the data in SQL Server so that Power BI could work with it cleanly. While researching data modeling techniques, I learned about star schemas — a design that uses a central fact table connected to several dimension tables. However, since my dataset is relatively small and comes from a single source, I decided to keep the structure simple and use a flat table where all the sensor data is stored in one table.</p>
-          <table>
-            <thead><tr><th>Table</th><th>Type</th><th>Key Columns</th></tr></thead>
-            <tbody>
-              <tr><td><code>plant_monitoring</code></td><td>Flat Table</td><td>Timestamp, Plant Name, Status, Confidence Score (%), Moisture Sensor, Nitrogen, Phosphorus, Potassium, Outside Temperature, Outside Humidity, Inside Temperature, Inside Humidity</td></tr>
-            </tbody>
-          </table>
+         
           <p>Working with one flat table and Power BI relationships were a mess. The SQL direct query in Power BI made everything clear — relationships were straightforward and my DAX measures started making more sense.</p>
 
           <h2>The SQL — Loading the Flat Table</h2>
           <p>The raw sensor data came in with duplicates sometimes (retry logic from the hardware side), so I needed an upsert pattern — insert new rows, but skip if the same <code>plant_id + timestamp</code> already exists.</p>
 
-          <pre><code>MERGE fact_sensor_readings AS target
-USING staging_sensor_data AS source
-  ON target.plant_id  = source.plant_id
- AND target.timestamp = source.timestamp
-WHEN NOT MATCHED THEN
-  INSERT (plant_id, date_id, time_id,
-          inside_temp, inside_humidity,
-          soil_moisture, wilt_confidence)
-  VALUES (source.plant_id, source.date_id,
-          source.time_id, source.inside_temp,
-          source.inside_humidity,
-          source.soil_moisture,
-          source.wilt_confidence);</code></pre>
 
           <p>This was the first time I'd used a <code>MERGE</code> statement. I had to look it up and test it a few times before it worked correctly — but it's now one of my go-to patterns for loading data.</p>
 
           <h2>The DAX — Wilt Risk Score Measure</h2>
           <p>In Power BI, the main KPI card on the dashboard shows the <strong>Wilt Risk Score</strong>. This is a DAX measure that averages the <code>wilt_confidence</code> column across the filtered context (date range, plant selection, etc.).</p>
 
-          <pre><code>Wilt Risk Score =
-AVERAGEX(
-    fact_sensor_readings,
-    [wilt_confidence]
-)</code></pre>
 
           <p>Simple, but it took me a while to understand <em>why</em> it works this way — specifically, why <code>AVERAGEX</code> with a column reference is different from just using <code>AVERAGE</code>. The iterator functions in DAX were confusing at first. I'm still building intuition for when to use each one.</p>
           <p>Other measures I wrote for this dashboard:</p>
-          <pre><code>Wilted % =
-DIVIDE(
-    COUNTROWS(
-        FILTER(fact_sensor_readings,
-               fact_sensor_readings[wilt_confidence] >= 0.75)
-    ),
-    COUNTROWS(fact_sensor_readings),
-    0
-) * 100</code></pre>
 
           <!-- Video -->
           <div class="img-block">
@@ -182,7 +150,7 @@ DIVIDE(
             <div style="font-family:var(--mono);font-size:.58rem;color:var(--dim);margin-bottom:.3rem;">← Back</div>
             <div style="font-family:var(--sans);font-size:.82rem;font-weight:600;color:var(--text);">All Projects</div>
           </a>
-          <a href="post-details-part-1-post2.html" style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.2rem;text-decoration:none;text-align:right;transition:border-color .2s;" onmouseover="this.style.borderColor='rgba(59,158,255,.3)'" onmouseout="this.style.borderColor='var(--border)'">
+          <a href="post-details 2.html" style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.2rem;text-decoration:none;text-align:right;transition:border-color .2s;" onmouseover="this.style.borderColor='rgba(59,158,255,.3)'" onmouseout="this.style.borderColor='var(--border)'">
             <div style="font-family:var(--mono);font-size:.58rem;color:var(--dim);margin-bottom:.3rem;">Next →</div>
             <div style="font-family:var(--sans);font-size:.82rem;font-weight:600;color:var(--text);">Sales Analytics Part 1</div>
             <div style="font-family:var(--mono);font-size:.58rem;color:var(--blue);margin-top:.2rem;">Descriptive Analysis</div>
@@ -200,7 +168,7 @@ DIVIDE(
         <div class="widget reveal">
           <div class="w-head"><div class="w-head-dot"></div><span class="w-head-label">Recent Posts</span></div>
           <div class="w-body">
-            <a href="post-details-part-1-post2.html" style="display:block;">
+            <a href="post-details 2.html" style="display:block;">
               <div class="recent-item">
                 <div class="recent-thumb">📈</div>
                 <div class="recent-info"><h4>Sales Analytics Part 1 — Descriptive Analysis</h4><span class="recent-date">March 11, 2026</span></div>
