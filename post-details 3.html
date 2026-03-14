@@ -3,7 +3,7 @@
 <head>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='12' fill='%23080d12'/><text x='50' y='68' font-size='52' font-family='monospace' font-weight='bold' fill='%233b9eff' text-anchor='middle'>EI</text></svg>">
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Plant Wilting Dashboard — ENGR INSIGHT</title>
+<title>Sales Analytics Dashboard Pt. 1 — ENGR INSIGHT</title>
 <link rel="stylesheet" href="style.css"/>
 <style>.reading-bar{position:fixed;top:0;left:0;height:2px;background:var(--blue);width:0%;z-index:300;}</style>
 </head>
@@ -28,94 +28,142 @@
       <!-- ARTICLE -->
       <article>
         <div class="reveal">
-          <span class="article-cat">Project 1 — Power BI Dashboard</span>
+          <span class="article-cat">Project 2 — Diagnostic Analysis</span>
           <div class="post-pills" style="margin-bottom:.8rem;">
             <span class="pill">Power BI</span><span class="pill">SQL Server</span>
-            <span class="pill">DAX</span><span class="pill">Flat Table</span><span class="pill">Data Modeling</span>
+            <span class="pill">DAX</span><span class="pill">Star Schema</span><span class="pill">Data Modeling</span><span class="pill">Python</span>
           </div>
-          <h1 class="article-title">My First End-to-End Power BI Dashboard: Plant Wilting Detection</h1>
+          <h1 class="article-title">From Raw CSV to Professional Dashboard: Building a Sales Analytics Pipeline</h1>
           <div class="article-meta">
             <strong>Mark John Merana</strong>
-            <span class="sep">◆</span><span>March 7, 2026</span>
-            <span class="sep">◆</span><span>6 min read</span>
-            <span class="sep">◆</span><span>Power BI · SQL Server · DAX</span>
+            <span class="sep">◆</span><span>March 14, 2026</span>
+            <span class="sep">◆</span><span>7 min read</span>
+            <span class="sep">◆</span><span>Power BI · SQL Server · DAX · Star Schema · Data Modeling · Python</span>
           </div>
         </div>
 
         <!-- Featured image -->
         <div class="article-feat reveal">
-          <img src="assets/P1/project1.png" alt="Plant Wilting Dashboard in Power BI"/>
+          <img src="assets/Post 3/Dashboard.png" alt="Plant Wilting Dashboard in Power BI"/>
         </div>
 
         <!-- BODY -->
         <div class="article-body">
 
-          <p><em>This is a write-up of my first end-to-end Power BI project — from raw data in SQL Server to a published dashboard. I'm a junior analyst still learning, and I'm documenting this honestly, including what I found difficult and what I'd do differently.</em></p>
+          <p><em>Phase 2 of a four-part sales analytics series. Having established what happened in the descriptive analysis, this phase investigates why — digging into discount patterns, loss-making products, regional differences, and seasonal demand.</em></p>
 
-          <h2>What This Project Is</h2>
-          <p>The project tracks the health of three indoor plants using sensor data — temperature, humidity, and soil moisture — that was already being collected and stored using Python and Airflow in a SQL Server database. My job was the analysis and reporting layer: take that raw data, model it properly, and build a Power BI dashboard that makes the plant health status immediately visible.</p>
-          <p>The key output on the dashboard is a <strong>Wilt Risk Score</strong> — a number between 0 and 1. Currently sitting at <strong>0.13</strong>, which means low risk. All three plants are healthy.</p>
+          <h2>Introduction</h2>
+          <p>Diagnostic analysis answers the question: <strong>why did it happen?</strong> The descriptive dashboard told us West leads in revenue, Central underperforms, and Canon is the top product. This phase investigates the root causes behind those patterns using SQL queries, Power BI visuals, and DAX measures.</p>
+          <p>This is Part 2 of four phases: Descriptive Analysis, <strong>Diagnostic Analysis</strong> (this post), Predictive Analysis, and Prescriptive Analysis.</p>
+
+          <h2>The Business Questions</h2>
+          <p>Going into this phase, four questions drove the investigation: why does East lead in Technology sales, why is South the weakest region, why is Canon imageCLASS the top seller by such a large margin, and what is causing Central region's low profit margin despite decent revenue?</p>
+
+          <h2>Investigation 1: Why is Canon the Top Seller?</h2>
+          <p>Rather than assuming, I wrote a SQL query to find exactly who buys Canon, where, and at what margin:</p>
+
+<div class="pre-wrap"><pre><code>SELECT l.region, c.segment,
+  SUM(f.sales)    AS total_revenue,
+  SUM(f.quantity) AS total_quantity,
+  AVG(f.discount) AS avg_discount,
+  SUM(f.profit)   AS total_profit
+FROM fact_sales f
+JOIN dim_product  p ON f.product_id  = p.product_id
+JOIN dim_location l ON f.postal_code = l.postal_code
+JOIN dim_customer c ON f.customer_id = c.customer_id
+WHERE p.product_name LIKE '%Canon imageCLASS%'
+GROUP BY l.region, c.segment
+ORDER BY total_revenue DESC;</code></pre></div>
+
+          <p>The results revealed that <strong>Central Corporate</strong> leads Canon purchases at $20,299 revenue with a healthy 45% margin. But East Corporate showed a critical problem — only $839 revenue at a <strong>40% discount</strong>, nearly zeroing out the profit margin.</p>
 
           <div class="callout">
-            <strong>Note:</strong> The IoT hardware and data collection pipeline (ESP32, Google Sheets, Airflow, Python) was my undergraduate thesis used for this project. My goal right now is building the SQL Server schema and the Power BI dashboard on top of that data.
+            <strong>Finding:</strong> Canon sells best to Corporate customers. But East Corporate is being over-discounted at 40% — someone is giving away margin to close deals.
           </div>
 
-          <h2>The Data Model — Flat Table</h2>
-          <p>The first thing I had to figure out was how to structure the data in SQL Server so that Power BI could work with it cleanly. While researching data modeling techniques, I learned about star schemas — a design that uses a central fact table connected to several dimension tables. However, since my dataset is relatively small and comes from a single source, I decided to keep the structure simple and use a flat table where all the sensor data is stored in one table.</p>
-         
-          <p>Working with one flat table and Power BI relationships were a mess. The SQL direct query in Power BI made everything clear — relationships were straightforward and my DAX measures started making more sense.</p>
+          <h2>Investigation 2: Why is South the Weakest Region?</h2>
+          <p>To diagnose South, I looked at what South actually buys most — by units, not revenue:</p>
 
-          <h2>The SQL — Loading the Flat Table</h2>
-          <p>The raw sensor data came in with duplicates sometimes (retry logic from the hardware side), so I needed an upsert pattern — insert new rows, but skip if the same <code>plant_id + timestamp</code> already exists.</p>
+<div class="pre-wrap"><pre><code>SELECT TOP 10 p.product_name, p.category,
+  SUM(f.sales)    AS total_revenue,
+  SUM(f.quantity) AS total_units
+FROM fact_sales f
+JOIN dim_product  p ON f.product_id  = p.product_id
+JOIN dim_location l ON f.postal_code = l.postal_code
+WHERE l.region = 'South'
+GROUP BY p.product_name, p.category
+ORDER BY total_units DESC;</code></pre></div>
 
+          <p>The results showed South's top 10 products are almost entirely cheap Office Supplies — Staples, Paper, Binders, Fasteners. Zero Technology in the top 10. Canon is a high-end printer. South customers aren't Technology buyers — they're consumables buyers.</p>
 
-          <p>This was the first time I'd used a <code>MERGE</code> statement. I had to look it up and test it a few times before it worked correctly — but it's now one of my go-to patterns for loading data.</p>
+          <div class="callout">
+            <strong>Cross-sell opportunity:</strong> South already buys paper and binders heavily — both printer consumables. Bundling Canon with paper promotions positions it as a natural productivity upgrade rather than a foreign product category.
+          </div>
 
-          <h2>The DAX — Wilt Risk Score Measure</h2>
-          <p>In Power BI, the main KPI card on the dashboard shows the <strong>Wilt Risk Score</strong>. This is a DAX measure that averages the <code>wilt_confidence</code> column across the filtered context (date range, plant selection, etc.).</p>
+          <h2>Investigation 3: The Discount Problem</h2>
+          <p>After spotting discount issues in individual products, I investigated discount patterns across all regions:</p>
 
+<div class="pre-wrap"><pre><code>SELECT l.region,
+  AVG(f.discount)               AS avg_discount,
+  SUM(f.sales)                  AS total_revenue,
+  SUM(f.profit)                 AS total_profit
+FROM fact_sales f
+JOIN dim_location l ON f.postal_code = l.postal_code
+GROUP BY l.region
+ORDER BY avg_discount DESC;</code></pre></div>
 
-          <p>Simple, but it took me a while to understand <em>why</em> it works this way — specifically, why <code>AVERAGEX</code> with a column reference is different from just using <code>AVERAGE</code>. The iterator functions in DAX were confusing at first. I'm still building intuition for when to use each one.</p>
-          <p>Other measures I wrote for this dashboard:</p>
+          <p>Results showed a clear pattern — Central discounts at 24% average and has only 7.92% profit margin. West discounts at 10.9% and has 14.94% margin. The inverse relationship is unmistakable.</p>
 
-          <!-- Video -->
-          <div class="img-block">
-               <video src="assets/P1/dashboard.mp4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;">
+          <h2>Investigation 4: Loss-Making Products</h2>
+          <p>To surface products that are actively losing money, I created a DAX measure that only shows negative profit values:</p>
+
+<div class="pre-wrap"><pre><code>Loss Products =
+IF(SUM(fact_sales[profit]) < 0,
+   SUM(fact_sales[profit]),
+   BLANK())</code></pre></div>
+
+          <p>The biggest offender: <strong>Cubify CubeX 3D Printer</strong> in East region — $6,299 revenue but <strong>-$9,239 profit</strong> due to a 70% discount. Someone authorized a 70% discount on a 3D printer and the company lost more than the product's revenue.</p>
+
+              <div class="img-block">
+               <video src="assets/Post 3/Dashboard.mp4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;">
                <div class="img-ph"></div>
                </video>
+
+          <h2>Dashboard — Sales Drivers Page</h2>
+          <p>The diagnostic page was built with 6 visuals, each answering a specific business question:</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Type</th><th>Question Answered</th></tr></thead>
+              <tbody>
+                <td>Line &amp; Column Chart</td><td>Does higher discount = lower margin?</td></tr>
+                <td>Matrix</td><td>Which region+category is losing money?</td></tr>
+                <td>Bar Chart</td><td>Which products have negative profit?</td></tr>
+                <td>Scatter Plot</td><td>What is the overall discount-profit relationship?</td></tr>
+                <td>Line Chart</td><td>What are the seasonal demand patterns?</td></tr>
+                <td>Treemap</td><td>Which sub-categories drive the most revenue?</td></tr>
+              </tbody>
+            </table>
           </div>
+          <p>A region slicer was added as button-style cards at the top — allowing stakeholders to filter the entire page by region interactively.</p>
 
-          <h2>Dashboard Layout &amp; Design Decisions</h2>
-          <p>The dashboard has four KPI cards at the top (Wilt Risk Score, Wilted %, AVG Moisture, AVG Temp), a line chart showing moisture and confidence score trends over time, and a table showing the latest reading per plant.</p>
-          <p>I added <strong>slicers</strong> for plant selection and date range so the report is actually interactive — you can filter down to a single plant or a specific day. This was one of the more satisfying parts to build because it made the data feel usable rather than just decorative.</p>
-          <p>One thing I learned: the order of visuals on the canvas matters a lot. I initially crammed everything in without thinking about reading order, and it looked cluttered. I rebuilt the layout starting from the most important metric (Wilt Risk Score) and working outward from there.</p>
-
-          <h2>What the Data Shows</h2>
+          <h2>Key Diagnostic Insights</h2>
           <ul>
-            <li><strong>Day 6 anomaly:</strong> Plant 2's soil moisture dropped to ~18% — the lowest in the dataset. This was likely a missed watering. The wilt confidence score for all three plants dipped around the same time.</li>
-            <li><strong>Recovery by Day 10:</strong> Moisture stabilized and confidence scores recovered to ~90% across all plants.</li>
-            <li><strong>Overall:</strong> 3,984 readings, Wilt Risk Score of 0.13, only 0.04% of readings classified as wilting events. All three plants are currently healthy.</li>
+            <li><strong>Central is over-discounting Furniture</strong> — -1.75% profit margin, the only negative margin in the entire dataset</li>
+            <li><strong>Cubify CubeX is the biggest loss product</strong> — 70% discount causing -$9,239 loss in East region</li>
+            <li><strong>West is the best practice region</strong> — lowest discount at 10.9%, highest margin at 14.94%</li>
+            <li><strong>South needs a cross-sell strategy</strong> — not a revenue problem, it's a product mix problem</li>
+            <li><strong>Q4 is peak season for all categories</strong> — Technology most volatile, Office Supplies most stable</li>
+            <li><strong>Technology dominates revenue</strong> — Phones and Machines are the two largest treemap boxes</li>
           </ul>
 
-          <div class="callout">
-            <strong>Current status:</strong> Wilt Risk Score 0.13 — all plants healthy. AVG moisture 72.56%, AVG inside temp 33.52°C.
-          </div>
-
-          <h2>What I'd Do Differently</h2>
-          <p><strong>Build the date dimension table first.</strong> I added it halfway through and had to redo several relationships. It's easier to start with a proper calendar table before building any measures that rely on dates.</p>
-          <p><strong>Name measures consistently from the start.</strong> My first version had measures named things like "measure1" and "avg test". Renaming them later while maintaining report visuals was annoying.</p>
-          <p><strong>Use a color theme file.</strong> I spent too long manually picking colors. Power BI supports JSON theme files — I'll use that on the next project so the palette stays consistent.</p>
+          <h2>What Made This Analysis Different</h2>
+          <p>Most Kaggle analyses stop at "West has the highest sales." This diagnostic phase went deeper — it found the specific products losing money, the exact discount percentages killing margin, and a cross-selling opportunity in South that the descriptive analysis alone would never surface. Every finding is backed by a SQL query, not just a visual observation.</p>
 
           <h2>What's Next</h2>
-          <ul>
-            <li>Add time intelligence measures (month-over-month, rolling 7-day average)</li>
-            <li>Build a second page with plant-level drill-through</li>
-            <li>Learn Power Query M so I can transform data inside Power BI itself</li>
-            <li>Work toward the PL-300 certification</li>
-          </ul>
+          <p>Phase 3 is <strong>Predictive Analysis</strong> — using Python machine learning to forecast future sales trends and predict which products are at risk of declining demand. The diagnostic findings will inform the features used in the model.</p>
 
           <h2>Want To See the Source Code?</h2>
-          <p>Click the <strong>"gi"</strong> button below to see the codes and technologies I used.</p>
+          <p>Click the <strong>"gi"</strong> button below to view all SQL queries and DAX measures on GitHub.</p>
 
         </div><!-- end article-body -->
 
@@ -146,14 +194,14 @@
 
         <!-- Nav — updated to link to Project 2 -->
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border);">
-          <a href="blog.html" style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.2rem;text-decoration:none;transition:border-color .2s;" onmouseover="this.style.borderColor='rgba(59,158,255,.3)'" onmouseout="this.style.borderColor='var(--border)'">
-            <div style="font-family:var(--mono);font-size:.58rem;color:var(--dim);margin-bottom:.3rem;">← Back</div>
-            <div style="font-family:var(--sans);font-size:.82rem;font-weight:600;color:var(--text);">All Projects</div>
-          </a>
-          <a href="post-details 2.html" style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.2rem;text-decoration:none;text-align:right;transition:border-color .2s;" onmouseover="this.style.borderColor='rgba(59,158,255,.3)'" onmouseout="this.style.borderColor='var(--border)'">
-            <div style="font-family:var(--mono);font-size:.58rem;color:var(--dim);margin-bottom:.3rem;">Next →</div>
+          <a href="post-details 2.html" style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.2rem;text-decoration:none;transition:border-color .2s;" onmouseover="this.style.borderColor='rgba(59,158,255,.3)'" onmouseout="this.style.borderColor='var(--border)'">
+            <div style="font-family:var(--mono);font-size:.58rem;color:var(--dim);margin-bottom:.3rem;">Back ←</div>
             <div style="font-family:var(--sans);font-size:.82rem;font-weight:600;color:var(--text);">Sales Analytics Part 1</div>
             <div style="font-family:var(--mono);font-size:.58rem;color:var(--blue);margin-top:.2rem;">Descriptive Analysis</div>
+          </a>
+          <a href="blog.html" style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.2rem;text-decoration:none;text-align:right;transition:border-color .2s;" onmouseover="this.style.borderColor='rgba(59,158,255,.3)'" onmouseout="this.style.borderColor='var(--border)'">
+            <div style="font-family:var(--mono);font-size:.58rem;color:var(--dim);margin-bottom:.3rem;">→ See</div>
+            <div style="font-family:var(--sans);font-size:.82rem;font-weight:600;color:var(--text);">All Projects</div>
           </a>
         </div>
       </article>
@@ -171,7 +219,7 @@
             <a href="post-details 2.html" style="display:block;">
               <div class="recent-item">
                 <div class="recent-thumb">🧩</div>
-                <div class="recent-info"><h4>Sales Analytics Part 2 — Diagnostic Analysis</h4><span class="recent-date">March 14, 2026</span></div>
+                <div class="recent-info"><h4>Sales Analytics Part 2 — Descriptive Analysis</h4><span class="recent-date">March 14, 2026</span></div>
               </div>
             </a>
             <a href="post-details 2.html" style="display:block;">
@@ -197,7 +245,7 @@
               <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:.8rem;">
                 <div style="width:38px;height:38px;border-radius:8px;background:rgba(59,158,255,.1);border:1px solid rgba(59,158,255,.2);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;">📄</div>
                 <div>
-                  <div style="font-family:var(--sans);font-size:.8rem;font-weight:600;color:var(--text);line-height:1.3;">Plant Wilting Detection</div>
+                  <div style="font-family:var(--sans);font-size:.8rem;font-weight:600;color:var(--text);line-height:1.3;">Sales and Demand</div>
                   <div style="font-family:var(--mono);font-size:.58rem;color:var(--text-muted);margin-top:.1rem;">Technical Documentation</div>
                 </div>
               </div>
@@ -235,7 +283,7 @@
           <div class="w-body">
             <div class="tag-wrap">
               <span class="tag">Power BI</span><span class="tag">SQL Server</span>
-              <span class="tag">DAX</span><span class="tag">Flat Table</span>
+              <span class="tag">DAX</span><span class="tag">Star Schema</span>
               <span class="tag">MERGE</span><span class="tag">KPI</span>
               <span class="tag">Dashboard</span><span class="tag">Data Modeling</span>
             </div>
