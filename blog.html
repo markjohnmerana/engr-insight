@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='12' fill='%23080d12'/><text x='50' y='68' font-size='52' font-family='monospace' font-weight='bold' fill='%233b9eff' text-anchor='middle'>EI</text></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='12' fill='%231a2b4a'/><text x='50' y='68' font-size='52' font-family='monospace' font-weight='bold' fill='%23c9a84c' text-anchor='middle'>EI</text></svg>">
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Blog — ENGR INSIGHT | Mark John Merana</title>
 <link rel="stylesheet" href="style.css"/>
@@ -12,10 +12,22 @@
   <div class="nav-inner">
     <a href="index.html" class="nav-logo"><span class="logo-bracket">[</span><span class="logo-accent">ENGR_INSIGHT</span><span class="logo-bracket">]</span><span class="logo-dot">.</span></a>
     <div class="nav-badge">Open to Work</div>
-    <div class="nav-links"><a href="index.html">Home</a><a href="about.html">About</a><a href="blog.html" class="active">Blog</a><a href="post-details.html">Post Details</a><a href="contact.html">Contact Me</a></div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="projects.html">Projects</a>
+      <a href="blog.html" class="active">Blog</a>
+      <a href="post-details.html">Post Details</a>
+      <a href="contact.html">Contact Me</a></div>
     <button class="nav-toggle" onclick="toggleMenu()"><span></span><span></span><span></span></button>
   </div>
-  <div class="nav-mobile" id="navMobile"><a href="index.html">Home</a><a href="about.html">About</a><a href="blog.html" class="active">Blog</a><a href="post-details.html">Post Details</a><a href="contact.html">Contact Me</a></div>
+  <div class="nav-mobile" id="navMobile">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="projects.html">Projects</a>
+    <a href="blog.html" class="active">Blog</a>
+    <a href="post-details.html">Post Details</a>
+    <a href="contact.html">Contact Me</a></div>
 </nav>
 
 <div class="page-banner">
@@ -107,7 +119,7 @@
             <h2>From Raw CSV to Professional Dashboard: Building a Sales Analytics Pipeline</h2>
             <p class="post-excerpt">
               A complete end-to-end sales analytics pipeline — from a raw 9,994-row Kaggle CSV, through Python data cleaning,
-              star schema design in SQL Server, to an interactive Power BI dashboard. Part 1 of 4: Descriptive Analysis.
+              star schema design in SQL Server, to an interactive Power BI dashboard. Part 2 of 4: Descriptive Analysis.
               What happened? $2.30M revenue, 12.47% profit margin, and a Q4 spike every single year.
             </p>
             <div class="post-footer">
@@ -118,7 +130,7 @@
         </div>
 
         <!-- PLACEHOLDER 4 -->
-        <div class="post-card reveal" style="opacity:.18;pointer-events:none;margin-top:1.5rem;">
+       <!-- <div class="post-card reveal" style="opacity:.18;pointer-events:none;margin-top:1.5rem;">
           <div class="post-img"><div class="post-img-ph"><span class="ph-icon">📦</span><span>// Future project</span></div></div>
           <div class="post-body-wrap">
             <span class="post-cat">Coming Soon — Project 3</span>
@@ -126,7 +138,7 @@
             <p class="post-excerpt">...</p>
             <div class="post-footer"><div class="post-author"><div class="author-chip">MJM</div>Mark John Merana · Coming Soon</div></div>
           </div>
-        </div>
+        </div>-->
 
       </main>
 
@@ -179,7 +191,7 @@
         </div>
 
         <!-- Dashboard stats widget -->
-        <div class="widget reveal">
+        <!--<div class="widget reveal">
           <div class="w-head"><div class="w-head-dot"></div><span class="w-head-label">Project Metrics</span></div>
           <div class="w-body">
             <div class="mini-stats">
@@ -189,7 +201,7 @@
               <div class="ms-box"><div class="ms-val" style="color:var(--green);">Low</div><div class="ms-label">Risk Level</div></div>
             </div>
           </div>
-        </div>
+        </div>-->
 
         <div class="widget reveal">
           <div class="w-head"><div class="w-head-dot"></div><span class="w-head-label">Tags</span></div>
@@ -229,7 +241,7 @@
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand"><div class="f-logo"><span class="logo-bracket">[</span><span class="logo-accent">ENGR_INSIGHT</span><span class="logo-bracket">]</span><span class="logo-dot">.</span></div><p>Junior Data Analyst portfolio blog by Mark John Merana.</p></div>
-      <div><div class="f-col-title">// Navigation</div><div class="f-links"><a href="index.html">Home</a><a href="about.html">About</a><a href="blog.html">Blog</a><a href="post-details.html">Post Details</a><a href="contact.html">Contact Me</a></div></div>
+      <div><div class="f-col-title">// Navigation</div><div class="f-links"><a href="index.html">Home</a><a href="about.html">About</a><a href="projects.html">Projects</a><a href="blog.html">Blog</a><a href="post-details.html">Post Details</a><a href="contact.html">Contact Me</a></div></div>
       <div><div class="f-col-title">// Tools</div><div class="f-links"><a href="#">Power BI</a><a href="#">SQL Server</a><a href="#">DAX</a><a href="#">Excel</a></div></div>
     </div>
     <div class="footer-bottom"><span class="f-copy">© 2026 <span>Mark John Merana</span>. ENGR INSIGHT.</span><span class="f-copy" style="font-size:.58rem;">Engineering | Data | Analysis</span></div>
@@ -240,6 +252,7 @@ window.addEventListener('scroll',()=>document.getElementById('navbar').classList
 function toggleMenu(){document.getElementById('navMobile').classList.toggle('open');}
 const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');io.unobserve(x.target);}}),{threshold:.1});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+setTimeout(()=>document.querySelectorAll('.reveal:not(.visible)').forEach(el=>el.classList.add('visible')),800);
 function doSearch(){const q=document.getElementById('si').value.trim();if(q)alert('Search: "'+q+'" — connect to a backend to enable full search.');}
 </script>
 </body>

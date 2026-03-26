@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='12' fill='%231a2b4a'/><text x='50' y='68' font-size='52' font-family='monospace' font-weight='bold' fill='%23c9a84c' text-anchor='middle'>EI</text></svg>">
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Side Projects — ENGR INSIGHT | Mark John Merana</title>
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<div class="grid-bg"></div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><span class="logo-bracket">[</span><span class="logo-accent">ENGR_INSIGHT</span><span class="logo-bracket">]</span><span class="logo-dot">.</span></a>
+    <div class="nav-badge">Open to Work</div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="projects.html" class="active">Projects</a>
+      <a href="blog.html">Blog</a>
+      <a href="post-details.html">Post Details</a>
+      <a href="contact.html">Contact Me</a>
+    </div>
+    <button class="nav-toggle" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+  </div>
+  <div class="nav-mobile" id="navMobile">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="projects.html" class="active">Projects</a>
+    <a href="blog.html">Blog</a>
+    <a href="post-details.html">Post Details</a>
+    <a href="contact.html">Contact Me</a>
+  </div>
+</nav>
+
+<!-- PAGE BANNER -->
+<div class="page-banner">
+  <div class="banner-bg-word">PROJECTS</div>
+  <div class="container">
+    <div class="banner-eyebrow">Side Projects</div>
+    <h1 class="banner-title">Apps &amp; <em>Tools I've Built.</em></h1>
+  </div>
+</div>
+
+<!-- MAIN SECTION -->
+<section class="section" style="background:var(--bg);">
+  <div class="container">
+
+    <!-- Intro row -->
+    <div style="display:grid;grid-template-columns:1fr auto;align-items:end;gap:2rem;margin-bottom:2.4rem;" class="reveal">
+      <div>
+        <div class="s-eye">Beyond the Dashboards</div>
+        <h2 class="s-title" style="margin-bottom:.6rem;">Things I Built <em>Outside of Work.</em></h2>
+        <p style="color:var(--text-dim);font-size:.92rem;line-height:1.75;max-width:520px;">
+          Small applications and tools built while learning — Python scripts, web utilities, and
+          experiments that don't fit into the main blog. Built to solve a problem or just to 
+          see if I could.
+        </p>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-family:var(--mono);font-size:.55rem;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.3rem;">// Total</div>
+        <div style="font-family:var(--mono);font-size:2.2rem;font-weight:700;color:var(--blue);line-height:1;">02</div>
+        <div style="font-family:var(--mono);font-size:.58rem;color:var(--text-muted);">Projects live</div>
+      </div>
+    </div>
+
+    <!-- Filter bar -->
+    <div class="filter-bar reveal">
+      <span class="filter-label">// Filter</span>
+      <button class="filter-btn active" onclick="filterProjects('all', this)">All</button>
+      <button class="filter-btn" onclick="filterProjects('python', this)">Python</button>
+      <button class="filter-btn" onclick="filterProjects('web', this)">Web App</button>
+      <button class="filter-btn" onclick="filterProjects('tool', this)">CLI Tool</button>
+      <button class="filter-btn" onclick="filterProjects('wip', this)">WIP</button>
+    </div>
+
+    <!-- Projects grid -->
+    <div class="projects-grid" id="projectsGrid">
+
+      <!-- ── PROJECT 1: Python tool ────────────────── -->
+      <div class="proj-card reveal" data-tags="python tool">
+
+        <!-- Top bar -->
+        <div class="proj-card-bar">
+          <div class="proj-card-bar-dot" style="background:#f85149;"></div>
+          <div class="proj-card-bar-dot" style="background:#f0a500;"></div>
+          <div class="proj-card-bar-dot" style="background:#3fb950;"></div>
+          <span class="proj-card-bar-title">sql_export_tool.py — Python 3.11</span>
+          <span class="proj-card-bar-status"><span class="blink-dot"></span>Live</span>
+        </div>
+
+        <!-- Terminal-style preview -->
+        <div class="proj-preview">
+          <div class="proj-terminal">
+            <div class="t-comment"># sql_export_tool.py — export SQL Server query results to CSV/Excel</div>
+            <div class="t-dim">─────────────────────────────────────────────</div>
+            <div><span class="t-blue">import</span> <span class="t-white">pyodbc, pandas, argparse</span></div>
+            <div><span class="t-blue">from</span> <span class="t-white">pathlib</span> <span class="t-blue">import</span> <span class="t-white">Path</span></div>
+            <br/>
+            <div><span class="t-teal">def</span> <span class="t-green">run_export</span><span class="t-white">(query, output, fmt):</span></div>
+            <div>&nbsp;&nbsp;<span class="t-white">conn = pyodbc.connect(</span><span class="t-amber">CONNECTION_STR</span><span class="t-white">)</span></div>
+            <div>&nbsp;&nbsp;<span class="t-white">df = pd.read_sql(query, conn)</span></div>
+            <div>&nbsp;&nbsp;<span class="t-blue">if</span> <span class="t-white">fmt ==</span> <span class="t-amber">'excel'</span><span class="t-white">:</span></div>
+            <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-white">df.to_excel(output, index=</span><span class="t-teal">False</span><span class="t-white">)</span></div>
+            <div>&nbsp;&nbsp;<span class="t-blue">else</span><span class="t-white">: df.to_csv(output, index=</span><span class="t-teal">False</span><span class="t-white">)</span></div>
+            <div>&nbsp;&nbsp;<span class="t-green">print</span><span class="t-white">(</span><span class="t-amber">f"✓ Exported {len(df)} rows → {output}"</span><span class="t-white">)</span></div>
+            <br/>
+            <div class="t-dim">$ python sql_export.py --fmt excel --out report.xlsx</div>
+            <div class="t-green">✓ Exported 9,994 rows → report.xlsx</div>
+          </div>
+        </div>
+
+        <!-- Body -->
+        <div class="proj-body">
+          <div class="proj-type">// Python · CLI Tool</div>
+          <div class="proj-title">SQL Server → CSV / Excel Exporter</div>
+          <p class="proj-desc">
+            A command-line tool that connects to SQL Server via <code style="font-family:var(--mono);font-size:.78rem;color:var(--blue);background:var(--blue-sub);padding:.1em .35em;border-radius:3px;">pyodbc</code>, 
+            runs any SELECT query, and exports the result directly to a 
+            <code style="font-family:var(--mono);font-size:.78rem;color:#c9a84c;background:rgba(46,203,193,.08);padding:.1em .35em;border-radius:3px;">.csv</code> or 
+            <code style="font-family:var(--mono);font-size:.78rem;color:#c9a84c;background:rgba(46,203,193,.08);padding:.1em .35em;border-radius:3px;">.xlsx</code> file. 
+            Built because I got tired of exporting data manually from SSMS. Supports connection string config via <code style="font-family:var(--mono);font-size:.78rem;color:var(--blue);background:var(--blue-sub);padding:.1em .35em;border-radius:3px;">.env</code>.
+          </p>
+          <div class="proj-pills">
+            <span class="pill">Python</span>
+            <span class="pill">pyodbc</span>
+            <span class="pill">pandas</span>
+            <span class="pill">argparse</span>
+            <span class="pill">CLI</span>
+          </div>
+          <div class="proj-links">
+            <a href="https://github.com/markjohnmerana" target="_blank" class="proj-link primary">⬡ View on GitHub →</a>
+            <a href="#" class="proj-link">📄 Read Write-up</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── PROJECT 2: Web App ─────────────────────── -->
+      <div class="proj-card reveal" data-tags="web python wip">
+      <div class="proj-ribbon">WIP</div>
+
+        <!-- Top bar -->
+        <div class="proj-card-bar">
+          <div class="proj-card-bar-dot" style="background:#f85149;"></div>
+          <div class="proj-card-bar-dot" style="background:#f0a500;"></div>
+          <div class="proj-card-bar-dot" style="background:#3fb950;"></div>
+          <span class="proj-card-bar-title">dashboard_validator.html — HTML/JS</span>
+        </div>
+
+        <!-- Web preview with code -->
+        <div class="proj-preview">
+          <div class="proj-web-preview">
+            <div class="t-comment">&lt;!-- DAX Measure Validator — paste DAX, get instant feedback --&gt;</div>
+            <br/>
+            <div><span class="t-teal">&lt;div</span> <span class="t-blue">class</span><span class="t-white">="validator-wrap"&gt;</span></div>
+            <div>&nbsp;&nbsp;<span class="t-teal">&lt;textarea</span> <span class="t-blue">id</span><span class="t-white">="daxInput"</span></div>
+            <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-blue">placeholder</span><span class="t-white">="Paste your DAX measure..."</span></div>
+            <div>&nbsp;&nbsp;<span class="t-white">/&gt;</span></div>
+            <div>&nbsp;&nbsp;<span class="t-teal">&lt;button</span> <span class="t-blue">onclick</span><span class="t-white">="validate()"&gt;Check DAX&lt;/button&gt;</span></div>
+            <div><span class="t-teal">&lt;/div&gt;</span></div>
+            <br/>
+            <div class="t-dim">// Checks for: unclosed CALCULATE(), missing VAR RETURN,</div>
+            <div class="t-dim">// mismatched brackets, and common beginner mistakes.</div>
+            <br/>
+            <div class="t-green">✓ Syntax looks OK &nbsp;⚠ 1 warning: missing RETURN</div>
+          </div>
+        </div>
+
+        <!-- Body -->
+        <div class="proj-body">
+          <div class="proj-type">// Web App · HTML / JS</div>
+          <div class="proj-title">DAX Measure Syntax Checker</div>
+          <p class="proj-desc">
+            A browser-based tool that parses DAX measure code and highlights common mistakes — 
+            unclosed <code style="font-family:var(--mono);font-size:.78rem;color:var(--blue);background:var(--blue-sub);padding:.1em .35em;border-radius:3px;">CALCULATE()</code>, 
+            missing <code style="font-family:var(--mono);font-size:.78rem;color:var(--blue);background:var(--blue-sub);padding:.1em .35em;border-radius:3px;">RETURN</code>, 
+            mismatched brackets — before you paste it into Power BI. No install needed, runs entirely in the browser. 
+            <em style="color:var(--text-muted);">Still in early development.</em>
+          </p>
+          <div class="proj-pills">
+            <span class="pill">HTML</span>
+            <span class="pill">JavaScript</span>
+            <span class="pill">DAX</span>
+            <span class="pill">Power BI</span>
+            <span class="pill">No Backend</span>
+          </div>
+          <div class="proj-links">
+            <a href="https://github.com/markjohnmerana" target="_blank" class="proj-link primary">⬡ View on GitHub →</a>
+            <span class="proj-link" style="color:var(--amber);cursor:default;">⚠ Not deployed yet</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── PLACEHOLDER 3 ──────────────────────────── -->
+      <div class="proj-coming-soon reveal">
+        <div class="cs-ico">📦</div>
+        <div class="cs-label">// Coming Soon</div>
+        <div class="cs-title">Next Side Project</div>
+      </div>
+
+      <!-- ── PLACEHOLDER 4 ──────────────────────────── -->
+      <div class="proj-coming-soon reveal">
+        <div class="cs-ico">🔧</div>
+        <div class="cs-label">// In the Pipeline</div>
+        <div class="cs-title">Another Tool / App</div>
+      </div>
+
+    </div><!-- /projects-grid -->
+
+  </div>
+</section>
+
+<!-- CTA STRIP -->
+<section class="section-sm" style="background:var(--bg2);border-top:1px solid var(--border);">
+  <div class="container">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem;" class="reveal">
+      <div>
+        <div style="font-family:var(--mono);font-size:.6rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);margin-bottom:.4rem;">// Also Check Out</div>
+        <h3 style="font-family:var(--sans);font-size:1.25rem;font-weight:700;color:var(--text);margin-bottom:.3rem;">Power BI &amp; SQL Blog Posts</h3>
+        <p style="font-size:.88rem;color:var(--text-dim);">Full write-ups of my main data analytics projects — dashboards, pipelines, and case studies.</p>
+      </div>
+      <a href="blog.html" class="btn-blue" style="flex-shrink:0;">Browse the Blog →</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="f-logo"><span class="logo-bracket">[</span><span class="logo-accent">ENGR_INSIGHT</span><span class="logo-bracket">]</span><span class="logo-dot">.</span></div>
+        <p>Engineering | Data | Analysis. A portfolio blog by Mark John Merana — Junior Data Analyst specializing in Power BI and SQL Server.</p>
+      </div>
+      <div><div class="f-col-title">// Navigation</div><div class="f-links"><a href="index.html">Home</a><a href="about.html">About</a><a href="projects.html">Projects</a><a href="blog.html">Blog</a><a href="contact.html">Contact Me</a></div></div>
+      <div><div class="f-col-title">// Tools</div><div class="f-links"><a href="#">Power BI</a><a href="#">SQL Server</a><a href="#">Python</a><a href="#">DAX</a><a href="#">Excel</a></div></div>
+    </div>
+    <div class="footer-bottom">
+      <span class="f-copy">© 2026 <span>Mark John Merana</span>. ENGR INSIGHT.</span>
+      <span class="f-copy" style="font-size:.58rem;">Engineering | Data | Analysis</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* Nav scroll + mobile */
+window.addEventListener('scroll', () =>
+  document.getElementById('navbar').classList.toggle('scrolled', scrollY > 20)
+);
+function toggleMenu() {
+  document.getElementById('navMobile').classList.toggle('open');
+}
+
+/* Reveal on scroll */
+const io = new IntersectionObserver(e => e.forEach(x => {
+  if (x.isIntersecting) { x.target.classList.add('visible'); io.unobserve(x.target); }
+}), { threshold: .1 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* Filter logic */
+function filterProjects(tag, btn) {
+  // Update active button
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  const cards = document.querySelectorAll('#projectsGrid .proj-card');
+  cards.forEach(card => {
+    const tags = card.dataset.tags || '';
+    const show = tag === 'all' || tags.split(' ').includes(tag);
+    card.style.display = show ? '' : 'none';
+  });
+}
+</script>
+</body>
+</html>

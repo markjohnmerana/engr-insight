@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='12' fill='%23080d12'/><text x='50' y='68' font-size='52' font-family='monospace' font-weight='bold' fill='%233b9eff' text-anchor='middle'>EI</text></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='12' fill='%231a2b4a'/><text x='50' y='68' font-size='52' font-family='monospace' font-weight='bold' fill='%23c9a84c' text-anchor='middle'>EI</text></svg>">
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Sales Analytics Dashboard — ENGR INSIGHT</title>
@@ -31,10 +31,22 @@
   <div class="nav-inner">
     <a href="index.html" class="nav-logo"><span class="logo-bracket">[</span><span class="logo-accent">ENGR_INSIGHT</span><span class="logo-bracket">]</span><span class="logo-dot">.</span></a>
     <div class="nav-badge">Open to Work</div>
-    <div class="nav-links"><a href="index.html">Home</a><a href="about.html">About</a><a href="blog.html">Blog</a><a href="post-details 2.html" class="active">Post Details</a><a href="contact.html">Contact Me</a></div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="projects.html">Projects</a>
+      <a href="blog.html">Blog</a>
+      <a href="post-details_2.html" class="active">Post Details</a>
+      <a href="contact.html">Contact Me</a></div>
     <button class="nav-toggle" onclick="toggleMenu()"><span></span><span></span><span></span></button>
   </div>
-  <div class="nav-mobile" id="navMobile"><a href="index.html">Home</a><a href="about.html">About</a><a href="blog.html">Blog</a><a href="post-details 2.html" class="active">Post Details</a><a href="contact.html">Contact Me</a></div>
+  <div class="nav-mobile" id="navMobile">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="projects.html">Projects</a>
+    <a href="blog.html">Blog</a>
+    <a href="post-details_2.html" class="active">Post Details</a>
+    <a href="contact.html">Contact Me</a></div>
 </nav>
 
 <section class="section" style="background:var(--bg);padding-top:4rem;">
@@ -214,7 +226,7 @@
             <span style="font-family:var(--mono);font-size:.58rem;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase;">Share:</span>
             <div class="share-btn" onclick="copyLink()" title="Copy link">🔗</div>
             <a href="https://www.linkedin.com/in/markjohnmera%C3%B1a/" target="_blank"><div class="share-btn" title="LinkedIn">in</div></a>
-            <a href="https://github.com/markjohnmerana" target="_blank"><div class="share-btn" title="GitHub">gi</div></a>
+            <a href="https://github.com/markjohnmerana/sales-and-demand-project" target="_blank"><div class="share-btn" title="GitHub">gi</div></a>
           </div>
         </div>
 
@@ -235,7 +247,7 @@
             <div style="font-family:var(--sans);font-size:.82rem;font-weight:600;color:var(--text);">Plant Wilting Dashboard</div>
             <div style="font-family:var(--mono);font-size:.58rem;color:var(--blue);margin-top:.2rem;">My First Power BI Dashboard</div>
           </a>
-          <a href="post-details 3.html" style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.2rem;text-decoration:none;text-align:right;transition:border-color .2s;" onmouseover="this.style.borderColor='rgba(59,158,255,.3)'" onmouseout="this.style.borderColor='var(--border)'">
+          <a href="post-details_3.html" style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.2rem;text-decoration:none;text-align:right;transition:border-color .2s;" onmouseover="this.style.borderColor='rgba(59,158,255,.3)'" onmouseout="this.style.borderColor='var(--border)'">
             <div style="font-family:var(--mono);font-size:.58rem;color:var(--dim);margin-bottom:.3rem;">Next →</div>
             <div style="font-family:var(--sans);font-size:.82rem;font-weight:600;color:var(--text);">Sales Analytics Part 2</div>
             <div style="font-family:var(--mono);font-size:.58rem;color:var(--blue);margin-top:.2rem;">Diagnostic Analysis</div>
@@ -252,13 +264,13 @@
         <div class="widget reveal">
           <div class="w-head"><div class="w-head-dot"></div><span class="w-head-label">Recent Posts</span></div>
           <div class="w-body">
-            <a href="post-details 3.html" style="display:block;">
+            <a href="post-details_3.html" style="display:block;">
               <div class="recent-item">
                 <div class="recent-thumb">🧩</div>
                 <div class="recent-info"><h4>Sales Analytics Part 2 — Diagnostic  Analysis</h4><span class="recent-date">March 14, 2026</span></div>
               </div>
             </a>
-            <a href="post-details 2.html" style="display:block;">
+            <a href="post-details_2.html" style="display:block;">
               <div class="recent-item">
                 <div class="recent-thumb">📈</div>
                 <div class="recent-info"><h4>Sales Analytics Part 1 — Descriptive Analysis</h4><span class="recent-date">March 11, 2026</span></div>
@@ -277,7 +289,7 @@
         <div class="widget reveal">
           <div class="w-head"><div class="w-head-dot"></div><span class="w-head-label">Technical Doc</span></div>
           <div class="w-body">
-            <div style="background:#050a0f;border:1px solid var(--border);border-radius:var(--radius);padding:1rem;">
+            <div style="background:#f8f6f1;border:1px solid var(--border);border-radius:var(--radius);padding:1rem;">
               <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:.8rem;">
                 <div style="width:38px;height:38px;border-radius:8px;background:rgba(59,158,255,.1);border:1px solid rgba(59,158,255,.2);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;">📄</div>
                 <div>
@@ -301,14 +313,14 @@
         <div class="widget reveal">
           <div class="w-head"><div class="w-head-dot"></div><span class="w-head-label">What I Built</span></div>
           <div class="w-body">
-            <div style="background:#050a0f;border:1px solid var(--border);border-radius:var(--radius);padding:.9rem 1rem;font-family:var(--mono);font-size:.65rem;line-height:2.1;color:var(--text-muted);">
+            <div style="background:#f8f6f1;border:1px solid var(--border);border-radius:var(--radius);padding:.9rem 1rem;font-family:var(--mono);font-size:.65rem;line-height:2.1;color:var(--text-muted);">
               <div style="color:var(--blue);margin-bottom:.2rem;">// my work</div>
               <div>Raw CSV (9,994 rows)</div>
-              <div style="padding-left:.8rem;color:var(--teal);">→ Python data cleaning</div>
-              <div style="padding-left:.8rem;color:var(--teal);">→ Star schema design</div>
-              <div style="padding-left:.8rem;color:var(--teal);">→ SQL Server load</div>
-              <div style="padding-left:.8rem;color:var(--teal);">→ DAX measures</div>
-              <div style="padding-left:.8rem;color:var(--teal);">→ Dashboard layout</div>
+              <div style="padding-left:.8rem;color:#c9a84c;">→ Python data cleaning</div>
+              <div style="padding-left:.8rem;color:#c9a84c;">→ Star schema design</div>
+              <div style="padding-left:.8rem;color:#c9a84c;">→ SQL Server load</div>
+              <div style="padding-left:.8rem;color:#c9a84c;">→ DAX measures</div>
+              <div style="padding-left:.8rem;color:#c9a84c;">→ Dashboard layout</div>
               <div style="margin-top:.5rem;padding-top:.5rem;border-top:1px solid var(--border);color:var(--green);">orders: 5,009 ✓</div>
             </div>
           </div>
@@ -335,7 +347,7 @@
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand"><div class="f-logo"><span class="logo-bracket">[</span><span class="logo-accent">ENGR_INSIGHT</span><span class="logo-bracket">]</span><span class="logo-dot">.</span></div><p>Junior Data Analyst portfolio blog by Mark John Merana.</p></div>
-      <div><div class="f-col-title">// Navigation</div><div class="f-links"><a href="index.html">Home</a><a href="about.html">About</a><a href="blog.html">Blog</a><a href="post-details.html">Post Details</a><a href="contact.html">Contact Me</a></div></div>
+      <div><div class="f-col-title">// Navigation</div><div class="f-links"><a href="index.html">Home</a><a href="about.html">About</a><a href="projects.html">Projects</a><a href="blog.html">Blog</a><a href="post-details.html">Post Details</a><a href="contact.html">Contact Me</a></div></div>
       <div><div class="f-col-title">// Tools</div><div class="f-links"><a href="#">Power BI</a><a href="#">SQL Server</a><a href="#">DAX</a><a href="#">Python</a></div></div>
     </div>
     <div class="footer-bottom"><span class="f-copy">© 2026 <span>Mark John Merana</span>. ENGR INSIGHT.</span><span class="f-copy" style="font-size:.58rem;">Engineering | Data | Analysis</span></div>
@@ -351,6 +363,7 @@ window.addEventListener('scroll',()=>{
 function toggleMenu(){document.getElementById('navMobile').classList.toggle('open');}
 const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');io.unobserve(x.target);}}),{threshold:.1});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+setTimeout(()=>document.querySelectorAll('.reveal:not(.visible)').forEach(el=>el.classList.add('visible')),800);
 function copyLink(){navigator.clipboard.writeText(location.href).then(()=>alert('Link copied!'));}
 </script>
 </body>

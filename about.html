@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='12' fill='%23080d12'/><text x='50' y='68' font-size='52' font-family='monospace' font-weight='bold' fill='%233b9eff' text-anchor='middle'>EI</text></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='12' fill='%231a2b4a'/><text x='50' y='68' font-size='52' font-family='monospace' font-weight='bold' fill='%23c9a84c' text-anchor='middle'>EI</text></svg>">
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>About — ENGR INSIGHT | Mark John Merana</title>
 <link rel="stylesheet" href="style.css"/>
@@ -12,10 +12,21 @@
   <div class="nav-inner">
     <a href="index.html" class="nav-logo"><span class="logo-bracket">[</span><span class="logo-accent">ENGR_INSIGHT</span><span class="logo-bracket">]</span><span class="logo-dot">.</span></a>
     <div class="nav-badge">Open to Work</div>
-    <div class="nav-links"><a href="index.html">Home</a><a href="about.html" class="active">About</a><a href="blog.html">Blog</a><a href="post-details.html">Post Details</a><a href="contact.html">Contact Me</a></div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="about.html" class="active">About</a>
+      <a href="projects.html">Projects</a>
+      <a href="blog.html">Blog</a>
+      <a href="post-details.html">Post Details</a>
+      <a href="contact.html">Contact Me</a></div>
     <button class="nav-toggle" onclick="toggleMenu()"><span></span><span></span><span></span></button>
   </div>
-  <div class="nav-mobile" id="navMobile"><a href="index.html">Home</a><a href="about.html" class="active">About</a><a href="blog.html">Blog</a><a href="post-details.html">Post Details</a><a href="contact.html">Contact Me</a></div>
+  <div class="nav-mobile" id="navMobile">
+    <a href="index.html">Home</a>
+    <a href="about.html" class="active">About</a>
+    <a href="projects.html">Projects</a>
+    <a href="blog.html">Blog</a><a href="post-details.html">Post Details</a>
+    <a href="contact.html">Contact Me</a></div>
 </nav>
 
 <div class="page-banner">
@@ -133,7 +144,7 @@
         <h2 class="s-title reveal" style="margin-bottom:1.5rem;">On the Roadmap</h2>
         <div style="display:flex;flex-direction:column;gap:.8rem;">
           <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius-md);padding:1.1rem 1.3rem;display:flex;align-items:center;gap:1rem;" class="reveal">
-            <div style="width:8px;height:8px;border-radius:50%;background:var(--blue);flex-shrink:0;"></div>
+            <div style="width:8px;height:8px;border-radius:50%;background:#1a2b4a;flex-shrink:0;"></div>
             <div>
               <div style="font-family:var(--sans);font-size:.88rem;font-weight:600;color:var(--text);margin-bottom:.15rem;">Advanced DAX</div>
               <div style="font-size:.8rem;color:var(--text-dim);">CALCULATE, context transition, FILTER, iterator functions</div>
@@ -192,7 +203,7 @@
         <div class="f-logo"><span class="logo-bracket">[</span><span class="logo-accent">ENGR_INSIGHT</span><span class="logo-bracket">]</span><span class="logo-dot">.</span></div>
         <p>Engineering | Data | Analysis. A portfolio blog by Mark John Merana — Junior Data Analyst specializing in Power BI and SQL Server.</p>
       </div>
-      <div><div class="f-col-title">// Navigation</div><div class="f-links"><a href="index.html">Home</a><a href="about.html">About</a><a href="blog.html">Blog</a><a href="post-details.html">Post Details</a><a href="contact.html">Contact Me</a></div></div>
+      <div><div class="f-col-title">// Navigation</div><div class="f-links"><a href="index.html">Home</a><a href="about.html">About</a><a href="projects.html">Projects</a><a href="blog.html">Blog</a><a href="post-details.html">Post Details</a><a href="contact.html">Contact Me</a></div></div>
       <div><div class="f-col-title">// Tools</div><div class="f-links"><a href="#">Power BI</a><a href="#">SQL Server</a><a href="#">DAX</a><a href="#">Excel</a><a href="#">Data Modeling</a></div></div>
     </div>
     <div class="footer-bottom">
@@ -207,6 +218,7 @@ window.addEventListener('scroll',()=>document.getElementById('navbar').classList
 function toggleMenu(){document.getElementById('navMobile').classList.toggle('open');}
 const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');io.unobserve(x.target);}}),{threshold:.1});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+setTimeout(()=>document.querySelectorAll('.reveal:not(.visible)').forEach(el=>el.classList.add('visible')),800);
 const sio=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.querySelectorAll('.skill-fill').forEach(b=>b.style.width=b.dataset.w+'%');sio.unobserve(x.target);}}),{threshold:.25});
 document.querySelectorAll('.skill-bar-section').forEach(el=>sio.observe(el));
 function animVal(el,t,d){const s=performance.now(),dur=1400;function tk(n){const p=Math.min((n-s)/dur,1),v=t*(1-Math.pow(1-p,3));el.textContent=d?v.toFixed(d):Math.floor(v).toLocaleString();if(p<1)requestAnimationFrame(tk);}requestAnimationFrame(tk);}
